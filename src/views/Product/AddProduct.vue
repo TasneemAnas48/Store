@@ -1,7 +1,5 @@
 <template>
-    <div class="body-page" id="body-page">
-        <nav-bar />
-        <side-bar />
+    <div class="body-page add-product" id="body-page">
         <div class="body">
             <div class="card">
                 <div class="card-header">
@@ -35,43 +33,69 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row align-items-center">
-
                         <div class="col-lg-6">
-                            <form class="form-input">
-                                <div class="form-row">
-                                    <label for="address" class="col-lg-2 label-input">عنوان</label>
-                                    <b-form-input v-model="product.address" class="col-lg-9 input-field" name="address" required></b-form-input>
-                                </div>
+                            <v-app>
+                                <form class="form-input">
+                                    <div class="form-row">
+                                        <div class="my-input col-lg-12 row">
+                                            <label for="address" class="col-lg-4 label-input">عنوان</label>
+                                            <b-form-input class="col-lg-7 col-md-11 col-sm-11 col-10 input-field"
+                                                v-model="product.address" name="address">
+                                            </b-form-input>
+                                            <v-tooltip color="error" right v-if="v$.product.address.$error">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                                        mdi-exclamation
+                                                    </v-icon>
+                                                </template>
+                                                <span>{{ v$.product.address.$errors[0].$message }}</span>
+                                            </v-tooltip>
+                                        </div>
+                                    </div>
 
-                                <div class="form-row">
-                                    <label for="discription" class="col-lg-2 label-input">شرح</label>
+                                    <div class="form-row">
+                                        <div class="my-input col-lg-12 row" style="margin-top: -12px">
+                                            <label for="discription" class="col-lg-4 col-md-6 label-input">الوصف
+                                                </label>
+                                            <b-form-textarea
+                                                class="col-lg-7 col-md-11 col-sm-11 col-10 input-field discription"
+                                                v-model="product.discription" name="discription">
+                                            </b-form-textarea>
+                                            <v-tooltip color="error" right v-if="v$.product.discription.$error">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                                        mdi-exclamation
+                                                    </v-icon>
+                                                </template>
+                                                <span>{{ v$.product.discription.$errors[0].$message }}</span>
+                                            </v-tooltip>
+                                        </div>
 
-                                    <b-form-textarea v-model="product.discription" class="col-lg-9 input-field discription" name="discription"
-                                        required></b-form-textarea>
-                                </div>
-                                <div class="form-row">
-                                    <label for="img" class="col-lg-2 label-input">صورة</label>
-                                    <input type="file" @change="onFileSelected"  class="col-lg-9 input-field" >
-                                    <!-- <picture-input v-model="product.image" name="img" class="col-lg-9" ref="pictureInput" width="300"
-                                        height="100" accept="image/jpeg,image/png" size="10" button-class="btn"
-                                        :custom-strings="{
-                                            upload: '<h1>Bummer!</h1>',
-                                            drag: 'إضافة صورة',
-                                        }" @change="onChange">
-                                    </picture-input> -->
-                                </div>
-                                <div class="float-left row-bottom">
-                                    <router-link to="/add-product2">
-                                        <b-button type="submit" class="button-add" >
-                                            <font-awesome-icon icon="fas fa-arrow-left" class="icon-button" />التالي
-                                        </b-button>
-                                    </router-link>
-                                </div>
+                                    </div>
 
+                                    <div class="form-row">
+                                        <div class="my-input col-lg-12 row" style="margin-top: -12px">
+                                            <label for="img" class="col-lg-4 label-input"
+                                                style="margin-left: -15px">صورة</label>
+                                            <v-file-input type="file" prepend-icon="mdi-camera"
+                                                placeholder="اختيار صورة" @change="onFileSelected"
+                                                class="col-lg-8 col-md-11 col-sm-11 col-10  input-field " filled
+                                                color=var(--main-color)>
+                                            </v-file-input>
+                                        </div>
 
-                            </form>
+                                    </div>
+                                    <div class="float-left row-bottom">
+                                        <!-- <router-link to="/add-product2"> -->
+                                            <b-button type="button" class=" button-add" v-on:click="submitForm">
+                                                <font-awesome-icon icon="fas fa-arrow-left" class="icon-button-left" />
+                                                التالي
+                                            </b-button>
+                                        <!-- </router-link> -->
+                                    </div>
+                                </form>
+                            </v-app>
                         </div>
                         <div class="col-lg-6 d-none d-xl-block d-lg-block">
                             <img src="../../assets/img/add_product1.png" class="img-thumbnail img" />
@@ -84,30 +108,49 @@
 </template>
 
 <script>
-import PictureInput from "vue-picture-input";
-import NavBar from "@/components/Main/Navbar.vue";
-import SideBar from '@/components/Main/Sidebar.vue';
+import useVuelidate from '@vuelidate/core'
+import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
 
 export default {
     name: "AddProduct",
+    setup() {
+        return { v$: useVuelidate() }
+    },
     data() {
         return {
-            
         };
     },
-    components: {
-        PictureInput,
-        NavBar,
-        SideBar,
+    validations() {
+        return {
+            product: {
+                address: { required: helpers.withMessage('هذا الحقل مطلوب', required) },
+                discription: {
+                    required: helpers.withMessage('هذا الحقل مطلوب', required),
+                    minLength: helpers.withMessage('يجب أن يتكون هذا الحقل من 10 أحرف على الأقل', minLength(10)),
+                    maxLength: helpers.withMessage('أقصى طول مسموح به هو 50', maxLength(50))
+                },
+                image: "",
+            }
+
+        }
     },
-    computed:{
-        product(){
+    components: {
+    },
+    computed: {
+        product() {
             return this.$store.state.product;
         }
     },
     methods: {
-        onFileSelected(e){
-            this.$store.state.product.image = e.target.files[0];
+        onFileSelected(files) {
+            this.$store.state.product.image = files;
+        },
+
+        submitForm() {
+            this.v$.$validate();
+            if (!this.v$.$error) {
+                this.$router.replace({ name: 'add-product2' })
+            }
         },
     },
 };
@@ -115,6 +158,9 @@ export default {
 
 
 <style lang="scss">
+.add-product .v-application--wrap {
+    min-height: 50% !important;
+}
 .body-page .line {
     height: 100px;
     margin-bottom: 30px;
@@ -183,126 +229,11 @@ export default {
 }
 
 
-.body .card {
-    height: auto;
-    padding-bottom: 40px;
-    box-shadow: 0 1px 10px rgb(32 33 36 / 15%);
-    border-radius: 30px !important;
-    margin: 20px;
-}
-
-.body .card-header {
-    font-size: 17px;
-    padding: 15px;
-    border-top-left-radius: 10px !important;
-    border-top-right-radius: 10px !important;
-    background-color: white;
-    margin-bottom: 10px;
-    height: 70px;
-}
-
-.add {
-    padding-right: 10px;
-    color: var(--main-color);
-}
-
 .button-view {
     border-radius: 20px !important;
     background-color: var(--main-color) !important;
     font-size: 15px !important;
     border-color: var(--main-color) !important;
-}
-
-.button-add {
-    border-radius: 20px !important;
-    background-color: var(--main-color) !important;
-    font-size: 15px !important;
-    border-color: var(--main-color) !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    margin-left: 10px !important;
-}
-
-.form-input {
-    margin-right: 40px;
-}
-
-.input-field {
-    border-radius: 30px !important;
-    height: 45px !important;
-}
-
-.form-control:focus {
-    border-color: var(--main-color) !important;
-    box-shadow: none !important;
-}
-
-.discription {
-    height: 100px !important;
-}
-
-.label-input {
-    font-size: 16px;
-    color: var(--gray-medium);
-    margin-left: 20px;
-}
-
-.form-row {
-    margin-top: 40px;
-    margin-bottom: 40px;
-}
-
-.img {
-    border: none !important;
-    max-width: 70% !important;
-}
-
-.picture-preview {
-    border-radius: 20px !important;
-    background-color: var(--second-color) !important;
-    border: 1px solid #ced4da !important;
-}
-
-.picture-inner {
-    border-radius: 20px !important;
-    background-color: white !important;
-    border: 1px dashed var(--main-color) !important;
-}
-
-.picture-inner-text {
-    background-color: var(--second-color) !important;
-    height: 30px !important;
-    width: 140px !important;
-    border-radius: 10px !important;
-    color: var(--main-color) !important;
-    font-size: 16px !important;
-    margin-top: 4px !important;
-}
-
-.picture-inner .picture-inner-text[data-v-431cb064] {
-    display: block !important;
-}
-
-.btn-secondary:focus,
-.btn-secondary.focus {
-    box-shadow: 0 0 0 2px rgba(255, 0, 242, 0.116) !important;
-}
-
-.picture-inner[data-v-431cb064] {
-    width: calc(100% - 3.5em) !important;
-    height: calc(100% - 3.2em) !important;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-}
-
-.preview-container {
-    max-width: none !important;
-}
-
-.picture-input[data-v-431cb064] {
-    margin: 0px !important;
-    padding-left: 0px !important;
 }
 
 .icon-button {
@@ -312,7 +243,33 @@ export default {
     margin-top: 6px;
     margin-right: 6px;
 }
-.row-bottom{
-    margin-top:50px
+
+.row-bottom {
+    margin-top: 10px;
+    margin-bottom: 50px;
 }
+
+@media (max-width: 1263px) {
+    .add-product .mdi-exclamation {
+        margin-top: -1px !important;
+    }
+}
+
+.add-product .mdi-exclamation {
+    position: static !important;
+    left: -29px;
+    margin-right: -33px;
+    z-index: 100;
+    margin-top: -10px;
+}
+
+.add-product .v-input__slot {
+    border: 1px solid #ced4da;
+    background: white !important;
+    border-radius: 30px !important;
+    height: 45px !important;
+    box-shadow: none !important;
+    min-height: 45px !important;
+}
+
 </style>

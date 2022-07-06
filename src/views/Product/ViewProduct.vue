@@ -1,7 +1,5 @@
 <template>
-    <div class="body-page" id="body-page">
-        <nav-bar />
-        <side-bar />
+    <div class="body-page view" id="body-page">
         <div class="body">
             <div class="card">
                 <div class="card-header">
@@ -13,39 +11,51 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="datatable" class="table dt-responsive">
-                            <thead>
+                    <v-app>
+                        <v-card-title class="search">
+                            <b-form-input v-model="search" class="col-lg-3 input-field" label="Search"
+                                placeholder="ابحث" append-icon="mdi-magnify" single-line hide-details>
+                            </b-form-input>
+                        </v-card-title>
+                        <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search" :fixed-header="true"
+                            :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true">
+                            <template v-slot:items="props">
+                                <td>{{ props.item.id }}</td>
+                                <td>{{ props.item.title }}</td>
+                                <td>{{ props.item.userId }}</td>
+                                <td>{{ props.item.userId }}</td>
+                                <td>{{ props.item.userId }}</td>
+                            </template>
 
-                                <tr>
-                                    <th scope="col" v-for="(h, index) in header" :key="index"> {{h}}</th>
+                            <template v-slot:top>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(r, index) in row" :key="index">
-                                    <td>{{r.title}}</td>
-                                    <td><img src="../../assets/img/image.jpg" class="table-img" /></td>
-                                    <td>{{r.discription}}</td>
-                                    <td>{{r.sell}}</td>
-                                    <td>{{r.cost}}</td>
-                                    <td >
-                                        <b-li v-for="(c, i) in r.classification" :key="i">
-                                            {{ c.text }}  
-                                        </b-li>
-                                    </td>
-                                    <td>{{r.group}}</td>
-                                    <td>
-                                        <div class="row">
-                                            <font-awesome-icon icon="fa fa-trash" class="fa-trash" />
-                                            <!-- <router-link to="/edit-group"> -->
-                                                <font-awesome-icon icon="fas fa-edit" class=" fa-edit" />
-                                            <!-- </router-link> -->
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    
+                                <v-dialog v-model="dialogDelete" max-width="500px">
+                                    <v-card>
+                                        <v-spacer></v-spacer>
+                                        <v-card-title class="justify-content-center" style="padding-top: 30px">هل انت
+                                            متأكد من انك تريد حذف المنتج؟
+                                        </v-card-title>
+                                        <v-card-actions style="padding-bottom: 30px">
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="var(--gray-medium)" text @click="closeDelete">لا تراجع
+                                            </v-btn>
+                                            <v-btn color="red" text @click="deleteItemConfirm">نعم تأكيد
+                                            </v-btn>
+                                            <v-spacer></v-spacer>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+                            </template>
+                            <template v-slot:[`item.mangement`]="{ item }">
+                                <font-awesome-icon icon="fa fa-trash" class="fa-trash" @click="deleteItem(item)" />
+                                <font-awesome-icon icon="fas fa-edit" class=" fa-edit" />
+                            </template>
+                        </v-data-table>
+                        <div class="text-center">
+                            <v-pagination color=var(--main-color) v-model="page" :length="pageCount" circle>
+                            </v-pagination>
+                        </div>
+                    </v-app>
                 </div>
             </div>
         </div>
@@ -55,58 +65,70 @@
 
 </script>
 <script>
-import $ from "jquery";
-import NavBar from "@/components/Main/Navbar.vue";
-import SideBar from '@/components/Main/Sidebar.vue';
 export default {
     name: "ViewProduct",
     data() {
         return {
-            header:['عنوان', 'صورة', 'شرح', 'سعر المبيع', 'سعر التكلفة', 'التصنيف', 'المجموعة', 'ادارة' ],
-            row:[
+            page: 1,
+            pageCount: 0,
+            search: '',
+            dialogDelete: false,
+            headers: [
                 {
-                    title:'', 
-                    image:'',
-                    discription:'',
-                    sell:'',
-                    cost:'',
-                    classification: [
-                        { value: '', text: '' },
-                    ],
-                    group:'',
+                    text: 'عنوان',
+                    align: 'start',
+                    value: 'id',
                 },
-            
-            ]
+                { text: 'شرح', value: 'title', sortable: false, width: '270px', },
+                { text: 'سعر المبيع', value: 'userId' },
+                { text: 'سعر التكلفة', value: 'userId' },
+                { text: 'المجموعة', value: 'userId' },
+                { text: 'إدارة', value: 'mangement' , sortable: false,},
+            ],
+            rows: [],
+            editedIndex: -1,
+            delete: ''
         };
     },
     components: {
-        NavBar,
-        SideBar,
+    },
+    watch: {
+        dialogDelete (val) {
+            val || this.closeDelete()
+        },
+    },
+    methods: {
+        deleteItem (item) {
+            this.editedIndex = this.rows.indexOf(item)
+            this.delete = item
+            this.dialogDelete = true
+        },
+        deleteItemConfirm () {
+            this.rows.splice(this.editedIndex, 1)
+            this.sendIdDeleted()
+            this.closeDelete()
+        },
+        closeDelete () {
+            this.dialogDelete = false
+        },
+        sendIdDeleted() {
+            this.axios
+                .post("https://jsonplaceholder.typicode.com/posts",this.delete.id)
+                .then((res) => {
+                    console.log(res.data);
+                    console.log(this.delete.id);
+                });
+        },
+        getData(){
+            this.axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(res => {
+                this.rows = res.data;
+                console.log(res.data);
+            });
+        }
     },
     mounted() {
-        this.axios.get('https://jsonplaceholder.typicode.com/posts/1')
-        .then(res => {
-            this.row[0].title = res.data.userId;
-            this.row[0].image = res.data.userId;
-            this.row[0].discription = res.data.userId;
-            this.row[0].sell = res.data.userId;
-            this.row[0].cost = res.data.userId;
-            this.row[0].classification[0].text = res.data.userId;
-            this.row[0].group = res.data.userId;
-        });
-
-        $("#datatable").DataTable({
-            
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/ar.json"
-            },
-            lengthMenu: [
-                [5, 10, 25, 50, -1],
-                [5, 10, 25, 50, "All"],
-            ],
-            pageLength: 5,
-        });
-
+        this.getData()
     },
     
 };

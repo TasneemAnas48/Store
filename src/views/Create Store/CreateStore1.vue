@@ -1,13 +1,13 @@
 <template>
-    <div class="create-store">
-        <div class="side-left col-lg-3">
+    <div class="create-store create-store1 ">
+        <div class="side-left col-lg-3 d-none d-lg-block">
             <div class="image">
                 <img src="../../assets/img/create_store1.png" class="img-thumbnail img" />
             </div>
         </div>
         <div class="side-right col-lg-9">
             <div class="address">
-                <p>إنشاء متجر</p>
+                <p style="margin-bottom: 0px">إنشاء متجر</p>
             </div>
             <div class="line">
                 <div class="timeline">
@@ -22,146 +22,220 @@
                     </div>
                 </div>
             </div>
-            <form class="form-input">
-                <div class="form-row">
-                    <label for="name" class="col-lg-2 label-input">اسم المتجر</label>
-                    <b-form-input class="col-lg-3 input-field" v-model="storeInfo.name" name="name" required>
-                    </b-form-input>
+            <v-app>
+                <form class="form-input">
+                    <div class="form-row">
+                        <div class="my-input col-lg-6 row">
+                            <label for="name" class="col-lg-4 label-input">اسم المتجر</label>
+                            <b-form-input class="col-lg-6 input-field" v-model="createStore.name" name="name">
+                            </b-form-input>
+                            <v-tooltip color="error" right v-if="v$.createStore.name.$error">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                        mdi-exclamation
+                                    </v-icon>
+                                </template>
+                                <span>{{ v$.createStore.name.$errors[0].$message }}</span>
+                            </v-tooltip>
+                        </div>
+                        <div class="my-input col-lg-6 row" style="margin-top: -12px">
+                            <label for="place" class="col-lg-4 label-input">أماكن التوصيل</label>
+                            <b-form-input class="col-lg-6 input-field" v-model="createStore.place" name="place">
+                            </b-form-input>
+                            <v-tooltip color="error" right v-if="v$.createStore.place.$error">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                        mdi-exclamation
+                                    </v-icon>
+                                </template>
+                                <span>{{ v$.createStore.place.$errors[0].$message }}</span>
+                            </v-tooltip>
+                        </div>
+                    </div>
 
-                    <div class="col-lg-1"></div>
+                    <div class="form-row">
+                        <div class="my-input col-lg-6 row" style="margin-top: -12px">
+                            <label for="discription" class="col-lg-4 label-input">وصف المتجر</label>
+                            <b-form-textarea class="col-lg-6 input-field discription" v-model="createStore.discription"
+                                name="discription">
+                            </b-form-textarea>
+                            <v-tooltip color="error" right v-if="v$.createStore.discription.$error">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                        mdi-exclamation
+                                    </v-icon>
+                                </template>
+                                <span>{{ v$.createStore.discription.$errors[0].$message }}</span>
+                            </v-tooltip>
+                        </div>
 
-                    <label for="place" class="col-lg-2 label-input">أماكن التوصيل</label>
-                    <b-form-input class="col-lg-3 input-field" v-model="storeInfo.place" name="place" required>
-                    </b-form-input>
-                </div>
 
-                <div class="form-row">
-                    <label for="discription" class="col-lg-2 label-input">وصف المتجر</label>
-                    <b-form-textarea class="col-lg-3 input-field discription" v-model="storeInfo.discription"
-                        name="discription" required>
-                    </b-form-textarea>
+                        <div class="my-input col-lg-6 row" style="margin-top: -12px">
+                            <label for="facebook" class="col-lg-4 label-input">حساب Facebook</label>
+                            <b-form-textarea class="col-lg-6 input-field discription" v-model="createStore.facebook"
+                                name="facebook">
+                            </b-form-textarea>
+                            <v-tooltip color="error" right v-if="v$.createStore.facebook.$error">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                        mdi-exclamation
+                                    </v-icon>
+                                </template>
+                                <span>{{ v$.createStore.facebook.$errors[0].$message }}</span>
+                            </v-tooltip>
+                        </div>
+                    </div>
 
-                    <div class="col-lg-1"></div>
+                    <div class="form-row">
+                        <div class="my-input col-lg-6 row" style="margin-top: -12px">
+                            <label for="logo" class="col-lg-4 label-input" style="margin-left: -12px">العلامة التجارية</label>
+                            <v-file-input type="file" prepend-icon="mdi-camera" placeholder="اختيار صورة"
+                                @change="onFileSelected" class="col-lg-7 col-md-7 input-field " filled color=var(--main-color)></v-file-input>
+                        </div>
 
-                    <label for="facebook" class="col-lg-2 label-input">حساب Facebook</label>
-                    <b-form-textarea class="col-lg-3 input-field discription" v-model="storeInfo.facebook"
-                        name="facebook" required>
-                    </b-form-textarea>
-                </div>
+                        <div class="my-input col-lg-6 row" style="margin-top: -12px">
+                            <label for="cover" class="col-lg-4 label-input" style="margin-left: -12px">صورة الغلاف</label>
+                            <v-file-input type="file" placeholder="اختيار صورة" @change="onFileSelected2"
+                                class="col-lg-7 col-md-7 input-field " filled prepend-icon="mdi-camera" color=var(--main-color)></v-file-input>
+                        </div>
+                    </div>
 
-                <div class="form-row">
-                    <label for="logo" class="col-lg-2 label-input">العلامة التجارية</label>
-                    <!-- <picture-input name="logo" class="col-lg-3" ref="pictureInput" width="300" height="100"
-                        accept="image/jpeg,image/png" size="10" button-class="btn" v-model="storeInfo.logo"
-                        :custom-strings="{
-                            upload: '<h1>Bummer!</h1>',
-                            drag: 'إضافة صورة',
-                        }" @change="onChangeLogo">
-                    </picture-input> -->
-                    <input type="file" @change="onFileSelected"  class="col-lg-3 input-field" >
-                    <div class="col-lg-1"></div>
-
-                    <label for="cover" class="col-lg-2 label-input">صورة الغلاف</label>
-                    <!-- <input id="file-upload" type="file"/> -->
-                    <input type="file" @change="onFileSelected2"  class="col-lg-3 input-field" >
-                    <!-- <picture-input name="cover" class="col-lg-3" ref="pictureInput" width="300" height="100"
-                        accept="image/jpeg,image/png" size="10" button-class="btn" v-model="storeInfo.cover"
-                        :custom-strings="{
-                            upload: '<h1>Bummer!</h1>',
-                            drag: 'إضافة صورة',
-                        }" @change="onChangeCover">
-                    </picture-input> -->
-                    <!-- <b-form-file  v-model="storeInfo.cover" class="col-lg-3  input-field" ></b-form-file> -->
-                </div>
-
-                <div class="float-center" style="margin-top: 100px">
-                    <router-link to="/create-store2">
+                    <div class="float-center" style="margin-top: 20px">
+                        <!-- <router-link to="/create-store2"> -->
                         <b-button type="button" class="button-add" v-on:click="submitForm">
                             <font-awesome-icon icon="fas fa-arrow-left" class="icon-button" />التالي
                         </b-button>
-                    </router-link>
-                </div>
-            </form>
+                        <!-- </router-link> -->
+                    </div>
+                </form>
+            </v-app>
         </div>
     </div>
 </template>
 
 <script>
-import PictureInput from "vue-picture-input";
+import useVuelidate from '@vuelidate/core'
+import { required, minLength, maxLength, helpers, url } from '@vuelidate/validators'
 
 export default {
     name: "CreateStore1",
+    setup() {
+        return { v$: useVuelidate() }
+    },
     data() {
         return {
-            storeInfo: {
-                name: "",
-                place: "",
-                discription: "",
-                facebook: "",
+            
+        };
+    },
+    validations() {
+        return {
+            createStore: {
+                name: { required: helpers.withMessage('هذا الحقل مطلوب', required)}, 
+                place: { required: helpers.withMessage('هذا الحقل مطلوب', required)}, 
+                discription: { required: helpers.withMessage('هذا الحقل مطلوب', required),
+                                minLength: helpers.withMessage('يجب أن يتكون هذا الحقل من 10 أحرف على الأقل', minLength(10)),
+                                maxLength: helpers.withMessage('أقصى طول مسموح به هو 50', maxLength(50)) },
+                facebook: { url: helpers.withMessage('يجب ادخال رابط صالح', url)},
                 logo: "",
                 cover: "",
             },
-        };
+        }
     },
-    components: {
-        PictureInput,
+    computed: {
+        createStore() {
+            return this.$store.state.createStore;
+        }
     },
 
     methods: {
-        onFileSelected(e){
-            this.storeInfo.logo = e.target.files[0];
-        },
-        onFileSelected2(e){
-            this.storeInfo.cover = e.target.files[0];
-        },
         submitForm() {
-            const formData = new FormData();
-            formData.append('name', this.storeInfo.name);
-            formData.append('place', this.storeInfo.place);
-            formData.append('discription', this.storeInfo.discription);
-            formData.append('facebook', this.storeInfo.facebook);
-            formData.append('logo', this.storeInfo.logo);
-            formData.append('cover', this.storeInfo.cover);
-            this.axios
-                .post("https://jsonplaceholder.typicode.com/posts", formData)
-                .then((res) => console.log(res));
+            this.v$.$validate();
+            if (!this.v$.$error){
+                this.$router.replace({ name: 'create-store2' })
+            }
         },
-        // submitForm() {
-        //     const formData = new FormData();
-        //     formData.append('name', this.storeInfo.name);
-        //     formData.append('place', this.storeInfo.place);
-        //     formData.append('discription', this.storeInfo.discription);
-        //     formData.append('facebook', this.storeInfo.facebook);
-        //     formData.append('logo', this.storeInfo.logo);
-        //     formData.append('cover', this.storeInfo.cover);
-        //     this.axios
-        //         .post("https://jsonplaceholder.typicode.com/posts", formData)
-        //         .then((res) => console.log(res));
-        // },
-        // onChangeLogo(image) {
-        //     if (image) {
-        //         this.storeInfo.image = image;
-        //         this.storeInfo.logo = image;
-        //     } else {
-        //         console.log("FileReader API not supported");
-        //     }
-        // },
-        // onChangeCover(image) {
-        //     if (image) {
-        //         this.storeInfo.image = image;
-        //         this.storeInfo.cover = image;
-        //     } else {
-        //         console.log("FileReader API not supported");
-        //     }
-        // },
+        onFileSelected(files) {
+            this.$store.state.createStore.logo = files;
+        },
+        onFileSelected2(files) {
+            this.$store.state.createStore.cover = files;
+        },
     },
 };
 </script>
 
 <style lang="scss">
-.side-left {
-    display: flex;
-    align-items: center;
+.create-store body{
+    padding-right: 0px !important;
+}
+@media (max-width: 1160px) {
+    .create-store1 .mdi-exclamation {
+        top: -19px !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .create-store1 .mdi-exclamation {
+        position: absolute !important;
+        top: 80px !important;
+        left: 14px !important;
+    }
+}
+
+.create-store1 .mdi-exclamation {
+    top: -5px;
+    left: 36px;
+    color: red;
+}
+
+
+@media (max-width: 992px) {
+    .label-input {
+        text-align: right !important;
+    }
+}
+
+@media (max-width: 820px) {
+    .create-store .timeline:before {
+        width: 60% !important;
+        top: 54% !important;
+        left: 19.5% !important;
+    }
+}
+
+.theme--light.v-text-field>.v-input__control>.v-input__slot:before,
+.v-text-field>.v-input__control>.v-input__slot:after {
+    display: none !important;
+}
+
+.v-input__slot:active,
+.v-input__slot:focus-within {
+    border-color: var(--main-color) !important;
+}
+
+.mdi-camera::before {
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.v-input__prepend-outer {
+    display: none;
+}
+
+.image {
+    position: absolute;
+    top: 25%;
+}
+
+.create-store .v-input__slot {
+    border: 1px solid #ced4da;
+    background: white !important;
+    border-radius: 30px !important;
+
+}
+
+.create-store .side-left {
+    position: relative;
     box-shadow: 0 1px 10px rgb(32 33 36 / 15%);
     border-radius: 30px;
     background-color: white;
@@ -170,11 +244,11 @@ export default {
     margin: 20px;
 }
 
-.side-left .img {
+.create-store .side-left .img {
     max-width: 100% !important;
 }
 
-.address {
+.create-store .address {
     display: flex;
     justify-content: center;
     padding-top: 30px;
@@ -185,18 +259,18 @@ export default {
     font-size: 40px;
 }
 
-.form-input {
+.create-store .form-input {
     margin-right: 40px;
     margin-left: 40px;
 }
 
-.label-input {
+.create-store .label-input {
     text-align: left;
 }
 
-.form-row {
-    margin-top: 60px;
-    margin-bottom: 40px;
+.create-store1 .form-row {
+    margin-top: 30px;
+    margin-bottom: 0px;
 }
 
 .create-store .line {
@@ -215,9 +289,9 @@ export default {
 .create-store .timeline:before {
     content: "";
     position: absolute;
-    width: 33%;
+    width: 38%;
     top: 54%;
-    left: 33.5%;
+    left: 31.5%;
     height: 3px;
     margin-top: -77px;
     background: white;

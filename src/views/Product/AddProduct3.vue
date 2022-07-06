@@ -1,7 +1,5 @@
 <template>
-    <div class="body-page" id="add-product3">
-        <nav-bar />
-        <side-bar />
+    <div class="body-page add-product add-product3" id="add-product3">
         <div class="body">
             <div class="card">
                 <div class="card-header">
@@ -37,59 +35,62 @@
                     </div>
                     <div class="row align-items-center">
                         <div class="col-lg-6">
-                            <form class="form-input">
-                                <div class="form-row">
-                                    <label for="classification" class="col-lg-3 label-input">التصنيف</label>
-                                    <!-- <select v-model="product.classification" class="selectpicker col-lg-9 input-field" data-live-search="true" name="classification">
-                                        <option v-for="classification in classification" :key="classification.value" :value="classification.value">{{ classification.text }}</option>
+                            <v-app>
+                                <form class="form-input">
+                                    <div class="form-row">
+                                        <div class="my-input col-lg-12 row">
+                                            <label for="classification"
+                                                class="col-lg-4 col-md-5 label-input">التصنيف</label>
+                                            <v-select class="col-lg-7 col-md-11 col-sm-11 col-10 input-field" multiple
+                                                :items="classification" v-model="product.selectedClassification" dense
+                                                solo></v-select>
+                                            <v-tooltip color="error" right v-if="v$.product.selectedClassification.$error">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                                        mdi-exclamation
+                                                    </v-icon>
+                                                </template>
+                                                <span>{{ v$.product.selectedClassification.$errors[0].$message }}</span>
+                                            </v-tooltip>
+                                        </div>
+                                    </div>
 
-                                    </select> -->
+                                    <div class="form-row">
+                                        <div class="my-input col-lg-12 row">
+                                            <label for="group" class="col-lg-4 col-md-5 label-input">المجموعة</label>
+                                            <v-select class="col-lg-7 col-md-11 col-sm-11 col-10 input-field"
+                                                :items="group" v-model="product.selectedGroup" dense solo></v-select>
+                                            <v-tooltip color="error" right v-if="v$.product.selectedGroup.$error">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                                        mdi-exclamation
+                                                    </v-icon>
+                                                </template>
+                                                <span>{{ v$.product.selectedGroup.$errors[0].$message }}</span>
+                                            </v-tooltip>
+                                        </div>
+                                    </div>
 
-                                    <select multiple class="col-lg-8 input-field" v-model="product.selectedClassification">
-                                        <option v-for="classification in classification" :key="classification.id"
-                                            :value="classification.id">{{ classification.title }}</option>
-
-                                    </select>
-
-                                    <!-- {{selectedClassification}} -->
-                                    <!-- <b-form-select class="col-lg-9 input-field" v-model="selectedClassification" :options="options"></b-form-select> -->
-                                </div>
-
-                                <div class="form-row">
-                                    <label for="group" class="col-lg-3 label-input">المجموعة</label>
-                                    <!-- <select v-model="product.group" class="selectpicker col-lg-9 input-field" data-live-search="true" name="group">
-                                        <option v-for="group in group" :key="group.value" :value="group.value" >{{ group.text }}</option>
-                                    </select> -->
-
-                                    <select class="col-lg-8 input-field" v-model="product.selectedGroup">
-                                        <option v-for="group in group" :key="group.id"
-                                            :value="group.id">{{ group.title }}</option>
-
-                                    </select>
-                                    <!-- {{selectedGroup}} -->
-
-                                    <!-- <b-form-select class="col-lg-9 input-field" v-model="selectedGroup"
-                                        :options="options"></b-form-select> -->
-                                </div>
-
-                                <div class="float-left row-bottom">
-                                    <router-link to="/add-product4">
-                                        <b-button type="submit" class="button-add">
+                                    <div class="float-left row-bottom">
+                                        <!-- <router-link to="/add-product4"> -->
+                                        <b-button type="button" class="button-add" v-on:click="submitForm">
                                             <font-awesome-icon icon="fas fa-arrow-left" class="icon-button-left" />
                                             التالي
                                         </b-button>
-                                    </router-link>
-                                </div>
+                                        <!-- </router-link> -->
+                                    </div>
 
-                                <div class="float-left row-bottom">
-                                    <router-link to="/add-product2">
-                                        <b-button type="submit" class="button-add">
-                                            <font-awesome-icon icon="fas fa-arrow-right" class="icon-button-right" />
-                                            السابق
-                                        </b-button>
-                                    </router-link>
-                                </div>
-                            </form>
+                                    <div class="float-left row-bottom">
+                                        <router-link to="/add-product2">
+                                            <b-button type="submit" class="button-add">
+                                                <font-awesome-icon icon="fas fa-arrow-right"
+                                                    class="icon-button-right" />
+                                                السابق
+                                            </b-button>
+                                        </router-link>
+                                    </div>
+                                </form>
+                            </v-app>
                         </div>
                         <div class="col-lg-6 d-none d-xl-block d-lg-block">
                             <img src="../../assets/img/add_product3.png" class="img-thumbnail img" />
@@ -102,39 +103,52 @@
 </template>
 
 <script>
-//import select picker
-import "bootstrap-select/dist/css/bootstrap-select.min.css";
-import "bootstrap-select/dist/js/bootstrap-select.min.js";
 
-import NavBar from "@/components/Main/Navbar.vue";
-import SideBar from '@/components/Main/Sidebar.vue';
-
-// $('.selectpicker').selectpicker('render');
+import useVuelidate from '@vuelidate/core'
+import { required, helpers } from '@vuelidate/validators'
 
 export default {
     name: "AddProduct3",
+    setup() {
+        return { v$: useVuelidate() }
+    },
     data() {
         return {
-            classification: [],
-            group: [],
-
+            classification: ['2', '4', '23', '6', '8', '7'],
+            group: ['2', '4', '534', '6', '897', '7'],
         };
     },
     mounted() {
         this.axios.get('https://jsonplaceholder.typicode.com/todos')
         .then(res => {
             this.classification = res.data;
+            console.log(this.classification);
         });
         this.axios.get('https://jsonplaceholder.typicode.com/todos')
         .then(res => {
             this.group = res.data;
-            // console.log(res.data);
+            console.log(this.group);
         });
     },
-
+    validations() {
+        return {
+            product: {
+                selectedClassification: {},
+                selectedGroup: { required: helpers.withMessage('هذا الحقل مطلوب', required) },
+            }
+        }
+    },
+    methods: {
+        submitForm() {
+            this.v$.$validate();
+            if (!this.v$.$error) {
+                this.$router.replace({ name: 'add-product4' })
+            }
+            console.log(this.$store.state.product.selectedClassification);
+            console.log(this.$store.state.product.selectedGroup)
+        },
+    },
     components: {
-        NavBar,
-        SideBar,
     },
     computed: {
         product() {
@@ -145,6 +159,9 @@ export default {
 </script>
 
 <style lang="scss">
+.v-menu__content{
+    z-index: 1000 !important;
+}
 .icon-button-left {
     color: var(--second-color);
     font-size: 15px;
@@ -161,68 +178,26 @@ export default {
     margin-left: 6px;
 }
 
-.bootstrap-select .dropdown-toggle:focus {
-    outline: none !important
-}
-
-// *:focus,
-// *:focus-visible {
-//     outline: none !important;
-// }
-
-// .btn .dropdown-toggle:focus,
-// .btn .dropdown-toggle:focus-visible {
-//     outline: none !important;
-// }
-
-.bootstrap-select .dropdown-toggle {
-    outline: none !important;
-    background-color: white !important;
+.add-product3 .v-input__slot {
+    border: 1px solid #ced4da;
+    background: white !important;
     border-radius: 30px !important;
-    border: 1px solid #ced4da !important;
     height: 45px !important;
-    width: 100% !important;
+    box-shadow: none !important;
+    min-height: 45px !important;
 }
 
-// .bootstrap-select .dropdown-toggle:focus,
-// .bootstrap-select>select.mobile-device:focus+.dropdown-toggle {
-//     outline: none !important;
-// }
-
-.form-control {
-    border-radius: 30px !important;
+@media (max-width: 1263px) {
+    .add-product3 .mdi-exclamation {
+        margin-top: -1px !important;
+    }
 }
 
-.filter-option-inner-inner {
-    margin-top: 4px;
-    margin-left: 10px;
-    color: #495057;
-}
-
-.btn-light {
-    color: #495057 !important;
-}
-
-.dropdown-item.active,
-.dropdown-item:active {
-    color: #fff;
-    text-decoration: none;
-    background-color: var(--main-color) !important;
-}
-
-.dropdown-menu {
-    margin-top: 10px !important;
-}
-
-.dropdown-item {
-    height: 40px !important;
-}
-
-.dropdown-item .text {
-    margin-top: 5px !important;
-}
-
-.bootstrap-select .bs-ok-default:after {
-    margin-top: 5px !important;
+.add-product3 .mdi-exclamation {
+    position: static !important;
+    left: -29px;
+    margin-right: -33px;
+    z-index: 100;
+    margin-top: -10px;
 }
 </style>

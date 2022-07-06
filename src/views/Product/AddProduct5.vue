@@ -1,7 +1,5 @@
 <template>
-    <div class="body-page" id="body-page">
-        <nav-bar />
-        <side-bar />
+    <div class="body-page add-product add-product5" id="body-page">
         <div class="body">
             <div class="card">
                 <div class="card-header">
@@ -38,49 +36,84 @@
 
                     <div class="row align-items-center" style="margin-top:50px">
                         <div class="col-lg-7">
-                            <form class="form-input">
-                                <div class="form-row">
-                                    <label for="time" class="col-lg-5 label-input">الوقت المتوقع للتحضير</label>
-                                    <b-form-input v-model="product.time" class="col-lg-6 input-field" name="time">
-                                    </b-form-input>
-                                </div>
+                            <v-app>
+                                <form class="form-input">
+                                    <div class="form-row">
+                                        <div class="my-input col-lg-12 row">
+                                            <label for="time" class="col-lg-4 col-md-5 label-input">الوقت المتوقع
+                                                للتحضير</label>
+                                            <b-form-input v-model="product.time"
+                                                class="col-lg-7 col-md-11 col-sm-11 col-10 input-field" name="time">
+                                            </b-form-input>
+                                            <v-tooltip color="error" right v-if="v$.product.time.$error">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                                        mdi-exclamation
+                                                    </v-icon>
+                                                </template>
+                                                <span>{{ v$.product.time.$errors[0].$message }}</span>
+                                            </v-tooltip>
+                                        </div>
+                                    </div>
 
-                                <div class="form-row">
-                                    <label for="age" class="col-lg-5 label-input">العمر</label>
-                                    <select class="col-lg-6 input-field" v-model="product.age">
-                                        <option v-for="age in age" :key="age.value" :value="age.value">{{ age.text }}
-                                        </option>
-                                    </select>
-                                </div>
+                                    <div class="form-row">
+                                        <div class="my-input col-lg-12 row">
+                                            <label for="age" class="col-lg-4 col-md-5 label-input">العمر</label>
+                                            <v-select class="col-lg-7 col-md-11 col-sm-11 col-10 input-field"
+                                                :items="age" v-model="product.age" dense solo></v-select>
+                                            <v-tooltip color="error" right v-if="v$.product.age.$error">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                                        mdi-exclamation
+                                                    </v-icon>
+                                                </template>
+                                                <span>{{ v$.product.age.$errors[0].$message }}</span>
+                                            </v-tooltip>
+                                        </div>
+                                    </div>
 
-                                <div class="form-row">
-                                    <label for="party" class="col-lg-5 label-input">المناسبة</label>
-                                    <b-form-input  list="my-list-id" v-model="product.party" class="col-lg-6 input-field" name="party">
-                                    </b-form-input>
+                                    <div class="form-row">
+                                        <div class="my-input col-lg-12 row">
+                                            <label for="party" class="col-lg-4 col-md-5 label-input">المناسبة</label>
+                                            <b-form-input list="my-list-id" v-model="product.party"
+                                                class="col-lg-7 col-md-11 col-sm-11 col-10 input-field" name="party">
+                                            </b-form-input>
 
-                                    <datalist id="my-list-id">
-                                        <option v-for="party in party" :key="party.value">{{ party.text }}</option>
-                                    </datalist>
-                                </div>
+                                            <datalist id="my-list-id">
+                                                <option v-for="party in party" :key="party.value">{{ party.text }}
+                                                </option>
+                                            </datalist>
+                                            <v-tooltip color="error" right v-if="v$.product.party.$error">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                                        mdi-exclamation
+                                                    </v-icon>
+                                                </template>
+                                                <span>{{ v$.product.party.$errors[0].$message }}</span>
+                                            </v-tooltip>
+                                        </div>
+                                    </div>
 
-                                <div class="float-left row-bottom">
-                                    <router-link to="/add-product6">
+                                    <div class="float-left row-bottom">
+                                        <!-- <router-link to="/add-product6"> -->
                                         <b-button type="button" class="button-add" v-on:click="submitForm">
                                             <font-awesome-icon icon="fas fa-arrow-left" class="icon-button-left" />
                                             التالي
                                         </b-button>
-                                    </router-link>
-                                </div>
+                                        <!-- </router-link> -->
+                                    </div>
 
-                                <div class="float-left row-bottom">
-                                    <router-link to="/add-product4">
-                                        <b-button type="button" class="button-add">
-                                            <font-awesome-icon icon="fas fa-arrow-right" class="icon-button-right" />
-                                            السابق
-                                        </b-button>
-                                    </router-link>
-                                </div>
-                            </form>
+                                    <div class="float-left row-bottom">
+                                        <router-link to="/add-product4">
+                                            <b-button type="button" class="button-add">
+                                                <font-awesome-icon icon="fas fa-arrow-right"
+                                                    class="icon-button-right" />
+                                                السابق
+                                            </b-button>
+                                        </router-link>
+                                    </div>
+                                </form>
+                            </v-app>
                         </div>
                         <div class="col-lg-5 d-none d-xl-block d-lg-block">
                             <img src="../../assets/img/add_product6.png" class="img-thumbnail img" />
@@ -93,11 +126,14 @@
 </template>
 
 <script>
-import NavBar from "@/components/Main/Navbar.vue";
-import SideBar from "@/components/Main/Sidebar.vue";
+import useVuelidate from '@vuelidate/core'
+import { required, maxLength, helpers, minValue } from '@vuelidate/validators'
 
 export default {
     name: "AddProduct5",
+    setup() {
+        return { v$: useVuelidate() }
+    },
     data() {
         return {
             age: [
@@ -112,12 +148,26 @@ export default {
             ],
         };
     },
+    validations() {
+        return {
+            product: {
+                time: { maxLength: helpers.withMessage('اقصى طول مسموح به هو 20 حرف', maxLength(20)) },
+                age: {},
+                party: {maxLength: helpers.withMessage('اقصى طول مسموح به هو 30 حرف', maxLength(30))},
+            }
+        }
+    },
     components: {
-        NavBar,
-        SideBar,
     },
     methods: {
         submitForm() {
+            this.v$.$validate();
+            if (!this.v$.$error) {
+                this.sendData()
+                this.$router.replace({ name: 'add-product6' })
+            }
+        },
+        sendData() {
             const formData = new FormData();
             formData.append('name', this.$store.state.product.address);
             formData.append('discription', this.$store.state.product.discription);
@@ -148,5 +198,28 @@ export default {
 
 
 <style lang="scss">
+
+.add-product5 .v-input__slot {
+    border: 1px solid #ced4da;
+    background: white !important;
+    border-radius: 30px !important;
+    height: 45px !important;
+    box-shadow: none !important;
+    min-height: 45px !important;
+}
+
+@media (max-width: 1263px) {
+    .add-product5 .mdi-exclamation {
+        margin-top: -1px !important;
+    }
+}
+
+.add-product5 .mdi-exclamation {
+    position: static !important;
+    left: -29px;
+    margin-right: -33px;
+    z-index: 100;
+    margin-top: -10px;
+}
 </style>
 

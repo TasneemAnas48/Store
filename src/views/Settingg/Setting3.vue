@@ -1,7 +1,5 @@
 <template>
     <div class="body-page setting setting3" id="body-page">
-        <nav-bar />
-        <side-bar />
         <div class="body">
             <div class="card">
                 <div class="card-header">
@@ -31,22 +29,19 @@
                             <div class="col-lg-2"></div>
                             <div class="add-staff col-lg-8">
                                 <div class="staff " style="float:right;">
-                                    طاقم العمل ({{ adminNumbar }} من 1) <span class="note">يمكنك إضافة ما يصل إلى 1 من
+                                    طاقم العمل ({{ adminNumbar }} من 1)
+                                    <br>
+                                    <span class="note">يمكنك إضافة ما يصل إلى 1 من
                                         المستخدمين</span>
                                 </div>
-                                <!-- <div class="note " style="float:right;">
-                                    
-                                </div> -->
                             </div>
                         </div>
-                        <!-- <div class="col-lg-5 d-none d-xl-block d-lg-block" style="margin-top:50px">
-                            <img src="../../assets/img/setting3.png" class="img-thumbnail img" />
-                        </div> -->
                     </div>
-                    <div class="col-lg-9 row" style="margin-top:40px">
+
+                    <!-- <div class="col-lg-9 row" style="margin-top:40px">
                         <div class="col-lg-2"></div>
-                        <div class="col-lg-10 align-items-center">
-                            <!-- <table class="table table-employee">
+                        <div class="col-lg-10 align-items-center"> -->
+                    <!-- <table class="table table-employee">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -68,45 +63,79 @@
                                     </tr>
                                 </tbody>
                             </table> -->
-                        </div>
-                    </div>
-                    <div v-if="adminNumbar < 1">
-                        <div class="col-lg-9 row" style="margin-top:40px">
-                            <div class="col-lg-2"></div>
-                            <div class="add-employee col">
-                                إضافة موظف
-                            </div>
-                        </div>
-                        <form class="form-input">
-                            <div class="form-row ">
-                                <label for="name" class="col-lg-2 label-input ">الاسم</label>
-                                <b-form-input class="col-lg-3 input-field" v-model="name" name="name" required>
-                                </b-form-input>
-                            </div>
+                    <!-- </div>
+                    </div> -->
+                    <v-app>
+                        <div v-if="adminNumbar < 1">
+                            <form class="form-input">
+                                <v-dialog v-model="dialog" scrollable max-width="600px">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <div class="col-lg-9 row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-8" style="margin-top: 20px;">
+                                                <b-button class="button-add" v-bind="attrs" v-on="on"
+                                                    style="float: right;">إضافة موظف</b-button>
+                                            </div>
+                                        </div>
+                                    </template>
 
-                            <div class="form-row ">
-                                <label for="email" class="col-lg-2 label-input">البريد الالكتروني</label>
-                                <b-form-input class="col-lg-3 input-field" v-model="email" name="email" type="email"
-                                    required></b-form-input>
-                            </div>
-                            <div class="form-row ">
-                                <b-form-group label="الصلاحيات" for="options"
-                                    class="label-input  col-lg-2 label-input-custom">
-                                    <b-form-checkbox v-for="option in options" :key="option.value" :value="option.value"
-                                        name="options" v-model="checked">
-                                        {{ option.text }}
-                                    </b-form-checkbox>
-                                </b-form-group>
-                            </div>
-                            <div class="form-row col-lg-4" style="justify-content: end;">
-                                <div>
-                                    <b-button class="button-add-staf" v-on:click="submitForm">إضافة موظف</b-button>
-                                </div>
-                            </div>
-                        </form>
+                                    <v-card>
+                                        <v-card-title>
+                                            <span class="header">إضافة موظف</span>
+                                        </v-card-title>
+                                        <v-divider></v-divider>
+                                        <v-card-text>
+                                            <v-container>
+                                                <div class="form-row ">
+                                                    <label for="name" class="col-lg-3 label-input ">الاسم</label>
+                                                    <b-form-input class="col-lg-5 input-field" v-model="name"
+                                                        name="name" required>
+                                                    </b-form-input>
+                                                </div>
 
-                    </div>
-                    <div class="buttons form-row" style="margin-top:100px; float:center">
+                                                <div class="form-row ">
+                                                    <label for="email" class="col-lg-3 label-input">البريد
+                                                        الالكتروني</label>
+                                                    <b-form-input class="col-lg-5 input-field" v-model="email"
+                                                        name="email" type="email" required></b-form-input>
+                                                </div>
+                                                <div class="form-row permission">
+                                                    <label for="name" class="col-lg-3 label-input ">الصلاحيات</label>
+                                                </div>
+                                                <div class="check">
+                                                    <v-checkbox v-for="option in options" :key="option.value"
+                                                        :value="option.value" v-model="checked" color=var(--main-color)
+                                                        :label="option.text"></v-checkbox>
+                                                </div>
+                                            </v-container>
+                                        </v-card-text>
+                                        <v-divider></v-divider>
+                                        <v-card-actions>
+                                            <b-button type="button" @click="dialog = false" class="button-add">إلغاء
+                                            </b-button>
+                                            <b-button type="submit" @click="dialog = false" class="button-add"
+                                                v-on:click="submitForm">إضافة</b-button>
+
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+
+                            </form>
+                        </div>
+                        <div class="view row">
+                            <div class="col-lg-1"></div>
+                            <v-data-table class="col-lg-9 my-table " :headers="headers" :items="rows"
+                                :hide-default-footer="true">
+                                <template v-slot:items="props">
+                                    <td>{{ props.item.id }}</td>
+                                    <td>{{ props.item.name }}</td>
+                                    <td>{{ props.item.email }}</td>
+                                    <td>{{ props.item.perm }}</td>
+                                </template>
+                            </v-data-table>
+                        </div>
+                    </v-app>
+                    <div class="buttons form-row row-bottom" style="margin-top:100px; float:center">
                         <div class="float-left">
                             <router-link to="/setting2">
                                 <b-button type="button" class="button-add">
@@ -131,29 +160,26 @@
 </template>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script> -->
 <script>
 
-import NavBar from "@/components/Main/Navbar.vue";
-import SideBar from "@/components/Main/Sidebar.vue";
 
 export default {
     name: "Setting3",
     data() {
         return {
-            // employee:[{
-            //     id:'1',
-            //     name:'tasneem',
-            //     email:'tasneem@gmail.com',
-            //     perm:[
-            //         {
-            //             name:'group',
-            //         },
-            //         {
-            //             name:'product',
-            //         },
-            //     ],
-            // }],
+            headers: [
+                {
+                    text: 'رقم',
+                    align: 'start',
+                    value: 'id',
+                },
+                { text: 'اسم', value: 'name' },
+                { text: 'ايميل', value: 'email' },
+                { text: 'صلاحيات', value: 'perm' , sortable: false,},
+            ],
+            rows: [],
+            dialog: false,
             adminNumbar: 0,
             name: '',
             email: '',
@@ -168,14 +194,9 @@ export default {
         };
     },
     components: {
-        NavBar,
-        SideBar,
     },
     mounted() {
-        this.axios.get('https://jsonplaceholder.typicode.com/posts/1')
-        .then(res => {
-            this.options = res.data;
-        });
+        this.getData();
     },
     methods: {
         submitForm() {
@@ -187,6 +208,13 @@ export default {
                 })
                 .then((res) => console.log(res));
         },
+        getData(){
+            this.axios.get('https://jsonplaceholder.typicode.com/users')
+            .then(res => {
+                this.rows = res.data;
+                console.log(res.data);
+            });
+        }
     }
 
 };
@@ -195,20 +223,48 @@ export default {
 
 
 <style lang="scss">
-.button-add-staf {
-    border-radius: 20px !important;
-    background-color: white !important;
-    font-size: 17px !important;
-    border-color: var(--main-color) !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    margin-left: 10px !important;
-    color: var(--main-color) !important;
+.setting3 .header {
+    color: var(--main-color);
 }
 
-.button-add-staf:hover {
-    background-color: var(--main-color) !important;
-    color: white !important;
+.setting3 .label-input {
+    text-align: left;
+}
+
+.setting3 .v-card__actions {
+    justify-content: center;
+    padding: 25px !important;
+}
+
+.setting3 .v-dialog {
+    border-radius: 30px !important;
+}
+
+.setting3 .form-row {
+    margin-top: 30px !important
+}
+
+.setting3 .v-divider {
+    margin-top: 10px !important;
+    margin-bottom: 0px !important;
+}
+
+.setting3 .permission {
+    margin-bottom: 0px !important;
+}
+
+.setting3 .v-input--checkbox {
+    margin-top: 0px !important;
+}
+
+.setting3 .check {
+    margin-right: 40px;
+}
+
+.setting3 .v-label {
+    left: -12px !important;
+    top: 25px !important;
+    margin-top: -43px !important;
 }
 
 .setting3 .form-input {
@@ -219,6 +275,11 @@ export default {
     float: right
 }
 
+.setting3 .buttons {
+    display: flex;
+    justify-content: center;
+}
+
 .add-staff {
     float: right;
 }
@@ -226,6 +287,7 @@ export default {
 .staff {
     font-size: 20px;
     color: #464646;
+    text-align: justify;
 }
 
 .add-employee {
@@ -241,7 +303,9 @@ export default {
     margin-top: 20px;
 }
 
-.table-employee {
-    border-bottom: 2px solid #dee2e6;
+.setting3 .my-table {
+    margin-right: 20px;
+    margin-top: 30px;
 }
+
 </style>

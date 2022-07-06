@@ -1,7 +1,5 @@
 <template>
-    <div class="body-page" id="body-page">
-        <nav-bar />
-        <side-bar />
+    <div class="body-page view" id="body-page">
         <div class="body">
             <div class="card">
                 <div class="card-header">
@@ -11,29 +9,30 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="datatable" class="table dt-responsive">
-                        <thead>
+                    <v-app>
+                        <v-card-title class="search">
+                            <b-form-input v-model="search" class="col-lg-3 input-field" label="Search"
+                                placeholder="ابحث" append-icon="mdi-magnify" single-line hide-details>
+                            </b-form-input>
+                        </v-card-title>
+                        <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
+                            :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true">
+                            <template v-slot:items="props">
+                                <td>{{ props.item.id }}</td>
+                                <td>{{ props.item.title }}</td>
+                                <td>{{ props.item.userId }}</td>
+                                <td>{{ props.item.userId }}</td>
+                            </template>
 
-                            <tr>
-                                <th scope="col" v-for="(h, index) in header" :key="index"> {{ h }}</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(r, index) in row" :key="index">
-                                <td>{{ r.name }}</td>
-                                <td>{{ r.date }}</td>
-                                <td>{{ r.orders }}</td>
-                                <td>{{ r.money }}</td>
-                                <td>
-                                    <div class="row">
-                                        <font-awesome-icon icon="fa fa-comments" class="fa-comments" />
-
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            <template v-slot:[`item.chat`]="{ item }">
+                                <font-awesome-icon icon="fa fa-comments" class="fa-comments" @click="getId(item)"/>
+                            </template>
+                        </v-data-table>
+                        <div class="text-center">
+                            <v-pagination color=var(--main-color) v-model="page" :length="pageCount" circle>
+                            </v-pagination>
+                        </div>
+                    </v-app>
                 </div>
             </div>
         </div>
@@ -43,70 +42,64 @@
 
 </script>
 <script>
-import $ from "jquery";
-import NavBar from "@/components/Main/Navbar.vue";
-import SideBar from '@/components/Main/Sidebar.vue';
 export default {
     name: "ViewCustomer",
     data() {
         return {
-            header:[ 'الاسم', 'تاريخ الانضمام', 'عدد الطلبات', 'المبلغ', 'مراسلة' ],
-            row:[
+            page: 1,
+            pageCount: 0,
+            search: '',
+            headers: [
                 {
-                    name:'', 
-                    date:'',
-                    orders:'',
-                    money:'',
+                    text: 'الاسم',
+                    align: 'start',
+                    value: 'id',
                 },
+                { text: 'تاريخ الانضمام', value: 'title' },
+                { text: 'عدد الطلبات', value: 'userId' },
+                { text: 'المبلغ', value: 'userId' },
+                { text: 'مراسلة', value: 'chat' , sortable: false,},
             ],
-
+            rows: [],
         };
     },
     components: {
-        NavBar,
-        SideBar,
+    },
+    methods:{
+        getData(){
+            this.axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(res => {
+                this.rows = res.data;
+                console.log(res.data);
+            });
+        },
+        getId(item){
+            console.log(item.id)
+        }
     },
     mounted() {
-        this.axios.get('https://jsonplaceholder.typicode.com/posts/1')
-        .then(res => {
-            this.row[0].name = res.data.userId;
-            this.row[0].date = res.data.userId;
-            this.row[0].orders = res.data.userId;
-            this.row[0].money = res.data.userId;
-        });
-
-
-        $("#datatable").DataTable({
-            
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/ar.json"
-            },
-            lengthMenu: [
-                [5, 10, 25, 50, -1],
-                [5, 10, 25, 50, "All"],
-            ],
-            pageLength: 5,
-        });
-
+        this.getData()
     },
     
 };
 </script>
 
 <style lang="scss">
-.table .fa-comments {
+.my-table .fa-comments {
     color: var(--main-color);
-    background-color: white;
-    border-radius: 10px;
-    padding: 6px;
+    background-color: var(--second-color);
+    border-radius: 7px;
+    padding: 7px;
     font-size: 14px;
-    border: 1px solid var(--main-color);
     margin-top: 5px;
-    margin-left: 5px;
+    margin-left: 10px;
+    padding: 8px;
 }
 
-.table .fa-comments:hover {
+.my-table .fa-comments:hover {
     color: white;
     background-color: var(--main-color);
+    cursor: pointer;
 }
+
 </style>

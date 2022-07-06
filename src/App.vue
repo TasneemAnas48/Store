@@ -1,19 +1,23 @@
 <template>
     <div id="app">
-        
+        <nav-bar  v-if="!['create-store1', 'create-store2', 'create-store3'].includes($route.name)" />
+        <side-bar v-if="!['create-store1', 'create-store2', 'create-store3'].includes($route.name)" />
         <router-view />
     </div>
 </template>
 
 <script>
+import NavBar from "@/components/Main/Navbar.vue";
+import SideBar from '@/components/Main/Sidebar.vue';
 export default {
     name: "App",
     data() {
         return {
-            theme: ''
+            theme: '',
         }
     },
     components: {
+        NavBar, SideBar
         },
     mounted() {
         let htmlElement = document.documentElement;
@@ -40,14 +44,14 @@ export default {
     url(./fonts/Almarai-Regular.ttf) format("truetype");
 }
 
-
-
 body{
     background: var(--second-color) !important;
-    height: auto;
+    // height: auto;
     font-size: 15px;
 }
-
+.btn{
+    color: white !important;
+}
 *{
     box-sizing: border-box;
     margin: 0;

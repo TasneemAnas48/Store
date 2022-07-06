@@ -1,13 +1,44 @@
 <template>
-    <div class="body-page view" id="body-page">
+    <div class="body-page view view-dis" id="body-page">
         <div class="body">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center add">
-                        المجموعات
-                        <router-link to="/add-group">
-                            <b-button class="button-view">إنشاء مجموعة</b-button>
-                        </router-link>
+                        الخصومات
+                        <v-dialog v-model="dialogAdd" scrollable max-width="600px">
+                            <template v-slot:activator="{ on, attrs }">
+                                <b-button class="button-view" v-bind="attrs" v-on="on">إنشاء خصم</b-button>
+                            </template>
+                            <v-card>
+                                <v-card-title>
+                                    <span class="header">إنشاء خصم</span>
+                                </v-card-title>
+                                <v-divider></v-divider>
+                                <router-link to="/add-code" >
+                                    <v-card-text class="v-card-text">
+                                        <v-container>
+                                            <div class="option">
+                                                <v-card-title style="padding-bottom: 7px;">كود خصم</v-card-title>
+                                                <v-card-text style="text-align: right; padding-bottom: 25px">سيحصل الزبائن على الخصم عند إدخال الرمز</v-card-text>
+                                                <b-icon icon="chevron-left" class="h2 icon1" style="color:var(--main-color)"></b-icon>
+                                            </div>
+                                        </v-container>
+                                    </v-card-text>
+                                </router-link>
+                                <router-link to="/add-dinamic" style="margin-bottom:50px">
+                                    <v-card-text class="v-card-text">
+                                        <v-container>
+                                            <div class="option">
+                                                <v-card-title style="padding-bottom: 7px;">خصم اوتوماتيكي</v-card-title>
+                                                <v-card-text style="text-align: right; padding-bottom: 25px">سيحصل الزبائن على الخصم تلقائيا في سلة التسوق الخاصة بهم</v-card-text>
+                                                <b-icon icon="chevron-left" class="h2 icon2" style="color:var(--main-color)"></b-icon>
+                                            </div>
+                                        </v-container>
+                                    </v-card-text>
+                                </router-link>
+                            </v-card>
+                        </v-dialog>
+
                     </div>
                 </div>
                 <div class="card-body">
@@ -21,17 +52,17 @@
                             :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true">
                             <template v-slot:items="props">
                                 <td>{{ props.item.id }}</td>
-                                <td>{{ props.item.username }}</td>
-                                <td>{{ props.item.name }}</td>
+                                <td>{{ props.item.type }}</td>
+                                <td>{{ props.item.dis }}</td>
+                                <td>{{ props.item.num }}</td>
+                                <td>{{ props.item.status }}</td>
                             </template>
-
                             <template v-slot:top>
-
                                 <v-dialog v-model="dialogDelete" max-width="500px">
                                     <v-card>
                                         <v-spacer></v-spacer>
                                         <v-card-title class="justify-content-center" style="padding-top: 30px">هل انت
-                                            متأكد من انك تريد حذف المجموعة؟
+                                            متأكد من انك تريد حذف الخصم؟
                                         </v-card-title>
                                         <v-card-actions style="padding-bottom: 30px">
                                             <v-spacer></v-spacer>
@@ -44,7 +75,7 @@
                                     </v-card>
                                 </v-dialog>
                             </template>
-                            <template v-slot:[`item.mangement`]="{ item }">
+                            <template v-slot:[`item.management`]="{ item }">
                                 <font-awesome-icon icon="fa fa-trash" class="fa-trash" @click="deleteItem(item)" />
                                 <font-awesome-icon icon="fas fa-edit" class=" fa-edit" />
                             </template>
@@ -58,35 +89,40 @@
             </div>
         </div>
     </div>
-
 </template>
-
 <script>
 
+</script>
+<script>
 export default {
-    name: "ViewGroup",
+    name: "ViewDiscount",
     data() {
         return {
             page: 1,
             pageCount: 0,
             search: '',
+            dialogAdd: false,
             dialogDelete: false,
             headers: [
                 {
-                    text: 'عنوان',
+                    text: 'الخصم',
                     align: 'start',
                     value: 'id',
                 },
-                { text: 'شرح', value: 'username' },
-                { text: 'عدد المنتجات', value: 'name' },
-                { text: 'إدارة', value: 'mangement' , sortable: false,},
+                { text: 'النوع', value: 'type' },
+                { text: 'الوصف', value: 'dis' },
+                { text: 'عدد المستخدمين', value: 'num' },
+                { text: 'الحالة', value: 'status' },
+                { text: 'ادارة', value: 'management' , sortable: false,},
             ],
-            rows: [],
+            rows:[],
+            // rows: [ '1', 'كود', '10%', '23', 'active'],
             editedIndex: -1,
-            delete: ''
+            delete: '', 
         };
     },
-    
+    components: {
+    },
     watch: {
         dialogDelete (val) {
             val || this.closeDelete()
@@ -94,7 +130,9 @@ export default {
     },
 
     methods: {
+        
         deleteItem (item) {
+            console.log("Delete")
             this.editedIndex = this.rows.indexOf(item)
             this.delete = item
             this.dialogDelete = true
@@ -126,105 +164,45 @@ export default {
     mounted() {
         this.getData()
     },
-    components: {
-    },
+    
 };
 </script>
 
 <style lang="scss">
-.view .v-data-table-header th{
-    color: var(--main-color) !important;
-    font-size: 15px !important;
-}
-.view .v-btn {
-    letter-spacing: 0px !important;
+.v-input--switch__thumb {
+    margin-right: 25px !important
 }
 
-.view .v-select__slot {
-    border: 1px solid #707070;
-    border-radius: 22px;
-    width: 60px !important;
-    margin-right: 6px;
+.view-dis .header {
+    color: var(--main-color);
 }
 
-.view .theme--light.v-text-field>.v-input__control>.v-input__slot:before,
-.view .v-text-field.v-input--is-focused>.v-input__control>.v-input__slot:after {
-    display: none;
-}
 
-.view .v-data-footer__select .v-select__selections .v-select__selection--comma {
-    font-size: 13px;
-    margin-right: 11px;
-}
+.view-dis .option {
+    border-radius: 20px;
+    border: 1px solid #c6c6c6;
+    // display: flex;
 
-.view .v-data-footer {
-    font-size: 13px;
 }
-
-.view .v-pagination__navigation {
-    box-shadow: 0 4px 9px -2px rgb(0 0 0 / 24%), 0 -1px 3px 0 rgb(0 0 0 / 14%), 0 -2px 14px 0 rgb(0 0 0 / 12%) !important;
+.view-dis .v-card-text{
+    color: rgba(0,0,0,.6) !important;
+    padding-bottom: 0px !important;
 }
-
-.view .v-menu__content {
-    border-radius: 20px !important;
+.view-dis a:hover{
+    text-decoration: none !important;
+    color:  rgba(0,0,0,.6) !important;
 }
-
-.view .v-application--wrap {
-    height: 50% !important;
+.view-dis .option:hover{
+    box-shadow: 0px 2px 14px 3px rgb(59 59 59 / 12%) !important;
 }
-
-.view .search {
-    justify-content: flex-start;
+.view-dis .icon1{
+    position: absolute;
+    top: 157px;
+    left: 51px;
 }
-
-.view .v-data-table__wrapper {
-    border: 1px solid #e0e0e0;
-    border-radius: 30px !important;
-}
-
-.view .theme--light.v-data-table .v-data-footer {
-    border-top: none !important;
-}
-
-.view .my-table .fa-trash {
-    color: #dc3545;
-    background: #ff00003b;
-    border-radius: 7px;
-    padding: 7px;
-    font-size: 14px;
-    margin-top: 5px;
-    margin-left: 10px;
-}
-
-.view .my-table .fa-trash:hover {
-    color: white;
-    background-color: #dc3545;
-    cursor: pointer;
-}
-
-.view .my-table .fa-edit {
-    color: #1eb018;
-    background: rgb(64 201 59 / 21%);
-    border-radius: 7px;
-    padding: 7px;
-    font-size: 14px;
-    margin-top: 5px;
-    margin-left: 5px;
-}
-
-.view .my-table .fa-edit:hover {
-    color: white;
-    background-color: #1eb018;
-    cursor: pointer;
-}
-
-.view .my-table .table-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-}
-
-.view .my-table .v-input--switch{
-    margin-right: -15px !important;
+.view-dis .icon2{
+    position: absolute;
+    top: 300px;
+    left: 51px;
 }
 </style>

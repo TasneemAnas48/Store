@@ -5,7 +5,12 @@
             <div class="logo_name">
                 <!-- {{ StoreName }} -->
             </div>
-            <i class="bx" :class="isOpened ? 'bx-menu-alt-right' : 'bx-menu'" id="btn" @click="isOpened = !isOpened" />
+            <div v-if="isOpened">
+                <font-awesome-icon icon="fa fa-angle-double-right" id="btn" @click="isOpened = !isOpened" />
+            </div>
+            <div v-else>
+                <font-awesome-icon icon="fa fa-angle-double-left" id="btn" @click="isOpened = !isOpened" />
+            </div>
         </div>
 
         <div class="user">
@@ -13,7 +18,7 @@
                 <div class="user-img">
                     <img :src="profileImg" />
                 </div>
-                <div id="user-info">
+                <div id="user-info" class="user-info">
                     <p class="user-name">{{ profileName }}</p>
                     <p class="user-email">{{ profileEmail }}</p>
                 </div>
@@ -50,17 +55,15 @@
 </template>
 
 <script>
-import NavBar from "@/components/Main/Navbar.vue";
 export default {
     components: {
-        NavBar,
     },
     name: "side-bar",
     props: {
         //! Menu settings
         isMenuOpen: {
             type: Boolean,
-            default: true,
+            default: false,
         },
         menuLogo: {
             type: String,
@@ -116,35 +119,35 @@ export default {
             type: Array,
             default: () => [
                 {
-                    link: "#",
+                    link: "/dashboard",
                     name: "لوحة التحكم",
                     tooltip: "لوحة التحكم",
                     icon: "fa fa-home",
                     style: "home",
                 },
                 {
-                    link: "/add-group",
+                    link: "/view-group",
                     name: "مجموعات",
                     tooltip: "مجموعات",
                     icon: "fas fa-folder",
                     style: "folder",
                 },
                 {
-                    link: "/add-product1",
+                    link: "/view-product",
                     name: "منتجات",
                     tooltip: "منتجات",
                     icon: "fa fa-tag",
                     style: "tag",
                 },
                 {
-                    link: "#",
+                    link: "/view-discount",
                     name: "خصومات",
                     tooltip: "خصومات",
                     icon: "fa fa-percent",
                     style: "percent",
                 },
                 {
-                    link: "#",
+                    link: "/receive-order",
                     name: "طلبات",
                     tooltip: "طلبات",
                     icon: "fas fa-box",
@@ -286,6 +289,7 @@ export default {
 
 body {
     transition: all 0.5s ease;
+    padding-right: 100px;
 }
 
 .menu-logo {
@@ -329,7 +333,7 @@ body {
 
 .sidebar .logo-details .icon {
     opacity: 0;
-    transition: all 0.5s ease;
+    // transition: all 0.5s ease;
 }
 
 .sidebar .logo-details .logo_name {
@@ -337,7 +341,7 @@ body {
     font-size: 20px;
     font-weight: 600;
     opacity: 0;
-    transition: all 0.5s ease;
+    // transition: all 0.5s ease;
 }
 
 .sidebar.open .logo-details .icon,
@@ -346,12 +350,13 @@ body {
 }
 
 .sidebar .logo-details #btn {
+    color: var(--main-color);
     position: absolute;
-    top: 50%;
-    right: 0;
+    top: 43%;
+    right: 15px;
     transform: translateY(-50%);
-    font-size: 22px;
-    transition: all 0.4s ease;
+    font-size: 20px;
+    // transition: all 0.4s ease;
     font-size: 23px;
     text-align: center;
     cursor: pointer;
@@ -379,8 +384,10 @@ body {
 }
 
 .sidebar .user-info {
-    display: block;
-    transition: all 3s ease !important;
+    display: none;
+    position: fixed!important;
+    margin-right: 72px!important;
+    // transition: all 10s ease !important;
 }
 
 .sidebar i {
@@ -446,7 +453,7 @@ body {
     width: 50px;
     border: none;
     border-radius: 12px;
-    transition: all 0.5s ease;
+    // transition: all 0.5s ease;
     background: var(--secondary-color);
 }
 
@@ -462,8 +469,8 @@ body {
     border-radius: 12px;
     align-items: center;
     text-decoration: none;
-    transition: all 0.4s ease;
-    background: var(--main-color);
+    // transition: all 0.4s ease;
+    background: white;
 }
 
 .sidebar li a:hover {
@@ -482,7 +489,7 @@ body {
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
-    transition: 0.4s;
+    transition: 0.3s;
     padding-right: 25px;
 }
 .sidebar li a:hover .links_name {
@@ -497,7 +504,7 @@ body {
 
 .sidebar li a:hover .links_name,
 .sidebar li a:hover i {
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     color: var(--main-color);
 }
 
@@ -516,7 +523,7 @@ body {
     bottom: 0; */
     padding: 10px 14px;
     background: var(--secondary-color);
-    transition: all 0.5s ease;
+    // transition: all 0.5s ease;
     overflow: hidden;
 }
 
@@ -561,7 +568,7 @@ body {
     height: 60px;
     line-height: 60px;
     border-radius: 0px;
-    transition: all 0.5s ease;
+    // transition: all 0.5s ease;
 }
 
 .sidebar.open .profile #log_out {
@@ -590,7 +597,7 @@ body {
     top: 0;
     left: 78px;
     width: calc(100% - 78px);
-    transition: all 0.5s ease;
+    // transition: all 0.5s ease;
     z-index: 2;
 }
 

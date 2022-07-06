@@ -1,24 +1,42 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import AddGroup from "../views/Group/AddGroup.vue";
+import ViewGroup from "../views/Group/ViewGroup.vue";
+import EditGroup from "../views/Group/EditGroup.vue";
+
 import AddProduct from "../views/Product/AddProduct.vue";
 import AddProduct2 from "../views/Product/AddProduct2.vue";
 import AddProduct3 from "../views/Product/AddProduct3.vue";
 import AddProduct4 from "../views/Product/AddProduct4.vue";
 import AddProduct5 from "../views/Product/AddProduct5.vue";
 import AddProduct6 from "../views/Product/AddProduct6.vue";
+import ViewProduct from "../views/Product/ViewProduct.vue";
+
 import CreateStore1 from "../views/Create Store/CreateStore1.vue";
 import CreateStore2 from "../views/Create Store/CreateStore2.vue";
 import CreateStore3 from "../views/Create Store/CreateStore3.vue";
+
 import Setting1 from "../views/Settingg/Setting1.vue";
 import Setting2 from "../views/Settingg/Setting2.vue";
 import Setting3 from "../views/Settingg/Setting3.vue";
 import Setting4 from "../views/Settingg/Setting4.vue";
-import ViewGroup from "../views/Group/ViewGroup.vue";
-import EditGroup from "../views/Group/EditGroup.vue";
-import ViewProduct from "../views/Product/ViewProduct.vue";
+
 import ViewCustomer from "../views/Customer/ViewCustomer.vue";
 
+import ViewDiscount from "../views/Discount/ViewDiscount.vue";
+import AddCodeDiscount from "../views/Discount/Code/AddCodeDiscount.vue";
+import AddCodeDiscount2 from "../views/Discount/Code/AddCodeDiscount2.vue";
+import AddCodeDiscount3 from "../views/Discount/Code/AddCodeDiscount3.vue";
+import AddDinamicDiscount from "../views/Discount/Dinamic/AddDinamicDiscount.vue";
+import AddDinamicDiscount2 from "../views/Discount/Dinamic/AddDinamicDiscount2.vue";
+
+import AcceptOrder from "../views/Order/AcceptOrder.vue";
+import FinishOrder from "../views/Order/FinishOrder.vue";
+import ReceiveOrder from "../views/Order/ReceiveOrder.vue";
+import Invoice from "../views/Order/Invoice.vue";
+import PrintInvoice from "../views/Order/PrintInvoice.vue";
+
+import Dashboard from "../views/Dashboard.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -113,9 +131,67 @@ const routes = [
         name: "view-customer",
         component: ViewCustomer,
     },
-    
+    {
+        path: "/view-discount",
+        name: "view-discount",
+        component: ViewDiscount,
+    },
+    {
+        path: "/add-code",
+        name: "add-code",
+        component: AddCodeDiscount,
+    },
+    {
+        path: "/add-code2",
+        name: "add-code2",
+        component: AddCodeDiscount2,
+    },
+    {
+        path: "/add-code3",
+        name: "add-code3",
+        component: AddCodeDiscount3,
+    },
+    {
+        path: "/add-dinamic",
+        name: "add-dinamic",
+        component: AddDinamicDiscount,
+    },
+    {
+        path: "/add-dinamic2",
+        name: "add-dinamic2",
+        component: AddDinamicDiscount2,
+    },
+    {
+        path: "/accept-order",
+        name: "accept-order",
+        component: AcceptOrder,
+    },
+    {
+        path: "/finish-order",
+        name: "finish-order",
+        component: FinishOrder,
+    },
+    {
+        path: "/receive-order",
+        name: "receive-order",
+        component: ReceiveOrder,
+    },
+    {
+        path: "/invoice",
+        name: "invoice",
+        component: Invoice,
+    },
+    {
+        path: "/print-invoice",
+        name: "print-invoice",
+        component: PrintInvoice,
+    },
+    {
+        path: "/dashboard",
+        name: "dashboard",
+        component: Dashboard,
+    },
 ];
-
 const router = new VueRouter({
     mode: "history",
     base: process.env.BASE_URL,

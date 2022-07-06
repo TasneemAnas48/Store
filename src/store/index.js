@@ -21,7 +21,46 @@ export default new Vuex.Store({
                 party:'',
             }
         ],
-
+        code:[
+            {
+                type:'',
+                name:'',
+                value:'',
+                appliedTo:'',
+                product:[],
+                useNumber:'',
+                condition:'',
+                condition_value:'',
+                startDate:'',
+                endDate:'',
+            }
+        ],
+        dinamic:[
+            {
+                type:'',
+                name:'',
+                value:'',
+                appliedTo:'',
+                product:[],
+                startDate:'',
+                endDate:'',
+            }
+        ],
+        createStore: [
+            {
+                name: "",
+                place: "",
+                discription: "",
+                facebook: "",
+                logo: "",
+                cover: "",
+                username: '',
+                email: '',
+                password: "",
+                confrim: '',
+            }
+        ],
+        ip:'192.168.43.244:8012/',
     },
     getters: {},
     mutations: {},

@@ -1,7 +1,5 @@
 <template>
     <div class="body-page add-product4" id="body-page">
-        <nav-bar />
-        <side-bar />
         <div class="body">
             <div class="card">
                 <div class="card-header">
@@ -40,13 +38,14 @@
                             <form class="form-input">
                                 <div class="form-row">
                                     <label for="replace" class="col-lg-3 label-input">تبديل</label>
-                                    <b-form-radio v-model="product.replace" class="col-lg-3 label-input" id="replace-1" name="replace"
-                                        value="yes">
-                                        ممكن
-                                    </b-form-radio>
-                                    <b-form-radio v-model="product.replace" class="col-lg-3 label-input" id="replace-2" name="replace"
+                                    
+                                    <b-form-radio v-model="replace" class="col-lg-3 label-input" id="replace-2" name="replace"
                                         value="no">
                                         غير ممكن
+                                    </b-form-radio>
+                                    <b-form-radio v-model="replace" class="col-lg-3 label-input" id="replace-1" name="replace"
+                                        value="yes">
+                                        ممكن
                                     </b-form-radio>
 
                                 </div>
@@ -54,13 +53,14 @@
                                 <div class="form-row ">
                                     <label for="present" class="col-lg-3 label-input">تغليف كهدية</label>
 
-                                    <b-form-radio v-model="product.present" class="col-lg-3 label-input" id="present-1" name="present"
-                                        value="yes">
-                                        ممكن
-                                    </b-form-radio>
-                                    <b-form-radio v-model="product.present" class="col-lg-3 label-input" id="present-2" name="present"
+                                    
+                                    <b-form-radio v-model="present" class="col-lg-3 label-input" id="present-2" name="present"
                                         value="no">
                                         غير ممكن
+                                    </b-form-radio>
+                                    <b-form-radio v-model="present" class="col-lg-3 label-input" id="present-1" name="present"
+                                        value="yes">
+                                        ممكن
                                     </b-form-radio>
                                 </div>
 
@@ -94,30 +94,43 @@
 </template>
 
 <script>
-import NavBar from "@/components/Main/Navbar.vue";
-import SideBar from "@/components/Main/Sidebar.vue";
 
 export default {
     name: "AddProduct4",
     data() {
-        return {};
+        return {
+            replace:'no',
+            present:'no'
+        };
     },
     components: {
-        NavBar,
-        SideBar,
     },
     computed:{
         product(){
             return this.$store.state.product;
         }
     },
+    methods:{
+        submitForm() {
+            this.v$.$validate();
+            if (!this.v$.$error) {
+                this.$store.state.product.replace = this.replace
+                this.$store.state.product.present = this.present
+                this.$router.replace({ name: 'add-product5' })
+            }
+        },
+    }
 };
 </script>
 
 
 
 <style lang="scss">
-.add-product5 .custom-control-label::after {
+.add-product4 .custom-control-label::before {
+    height: 20px !important;
+    width: 20px !important;
+}
+.add-product4 .custom-control-label::after {
     top: 4px !important;
     left: -24px !important;
     width: 20px !important;

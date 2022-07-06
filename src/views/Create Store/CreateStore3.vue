@@ -1,13 +1,13 @@
 <template>
-    <div class="create-store">
-        <div class="side-left col-lg-3">
+    <div class="create-store create3">
+        <div class="side-left col-lg-3 d-none d-lg-block">
             <div class="image">
                 <img src="../../assets/img/create_store3.png" class="img-thumbnail img" />
             </div>
         </div>
         <div class="side-right col-lg-9 ">
             <div class="address">
-                <p>إنشاء متجر</p>
+                <p style="margin-bottom: 0px">إنشاء متجر</p>
             </div>
             <div class="line">
                 <div class="timeline">
@@ -23,58 +23,61 @@
 
                 </div>
             </div>
-            <form class="form-input">
+            <v-app>
+                <form class="form-input">
 
-                <div class="form-row ">
-                    <label for="lang" class="col-lg-2 label-input ">لغة الموقع</label>
-                    <select class="selectpicker col-lg-5 input-field" name="lang">
-                        <option>انكليزي</option>
-                        <option>عربي</option>
-                    </select>
-                </div>
+                    <div class="form-row ">
 
-                <div class="form-row " style="margin-top: 60px">
-                    <label for="color" class="col-lg-2 label-input">الوان الموقع</label>
-                    <b-form-radio class="col-lg-3" id="dark" name="color" value="dark" v-model="theme">
-                        Dark
-                    </b-form-radio>
-                    <b-form-radio class="col-lg-3" id="light" name="color" value="light" v-model="theme"
-                        style="padding-left: 50px;">
-                        Light
-                    </b-form-radio>
-                </div>
+                        <label for="lang" class="col-lg-2 label-input ">لغة الموقع</label>
 
+                        <v-select class="col-md-5 input-field" :items="items" color=var(--main-color) :label='selected'
+                            dense solo></v-select>
 
-                <div class="buttons form-row" style="margin-top:100px">
-
-                    <div class="float-left">
-                        <router-link to="/create-store2">
-                            <b-button type="submit" class="button-add">
-                                <font-awesome-icon icon="fas fa-arrow-right" class="icon-button-right" />السابق
-                            </b-button>
-                        </router-link>
                     </div>
-                    <div class="float-rigth">
-                        <router-link to="/create-store3">
-                            <b-button type="submit" class="button-add">إنشاء متجر
-                            </b-button>
-                        </router-link>
+
+
+                    <div class="form-row " style="margin-top: 40px">
+                        <label for="color" class="col-lg-2 label-input">الوان الموقع</label>
+                        <b-form-radio class="col-lg-3" id="dark" name="color" value="dark" v-model="theme">
+                            Dark
+                        </b-form-radio>
+                        <b-form-radio class="col-lg-3" id="light" name="color" value="light" v-model="theme">
+                            Light
+                        </b-form-radio>
                     </div>
-                </div>
-            </form>
+
+
+                    <div class="buttons form-row" style="margin-top:70px">
+
+                        <div class="float-left">
+                            <router-link to="/create-store2">
+                                <b-button type="submit" class="button-add">
+                                    <font-awesome-icon icon="fas fa-arrow-right" class="icon-button-right" />السابق
+                                </b-button>
+                            </router-link>
+                        </div>
+                        <div class="float-rigth">
+                            <router-link to="/create-store3">
+                                <b-button type="submit" class="button-add" v-on:click="submitForm">إنشاء متجر
+                                </b-button>
+                            </router-link>
+                        </div>
+                    </div>
+                </form>
+            </v-app>
         </div>
     </div>
 </template>
 
 
 <script>
-
 export default {
     name: "CreateStore3",
     data() {
         return {
-            theme: ''
-
+            selected: 'عربي',
+            theme: 'light',
+            items: ['عربي', 'انكليزي'],
         }
     },
     watch: {
@@ -87,14 +90,71 @@ export default {
                 localStorage.setItem("theme", 'light');
                 htmlElement.setAttribute('theme', 'light');
             }
+        },
+    },
+    computed: {
+        createStore() {
+            return this.$store.state.createStore;
+        }
+    },
+    methods:{
+        submitForm() {
+            const formData = new FormData();
+            formData.append('name', this.$store.state.createStore.name);
+            formData.append('delivery_area', this.$store.state.createStore.place);
+            formData.append('discription', this.$store.state.createStore.discription);
+            formData.append('facebook', this.$store.state.createStore.facebook);
+            formData.append('Brand', this.$store.state.createStore.logo);
+            formData.append('image', this.$store.state.createStore.cover);
+            formData.append('username', this.$store.state.createStore.username);
+            formData.append('email', this.$store.state.createStore.email);
+            formData.append('password', this.$store.state.createStore.password);
+            this.axios
+                .post("http://"+this.$store.state.ip+"api/store/create", formData)
+                .then((res) => console.log(res))
+            // this.axios
+            //     .post("https://jsonplaceholder.typicode.com/users", this.$store.state.createStore.password)
+            //     .then((res) => console.log(res))
+                
+
+            // console.log(this.$store.state.createStore.name)
+            // console.log(this.$store.state.createStore.place)
+            // console.log(this.$store.state.createStore.discription)
+            // console.log(this.$store.state.createStore.facebook)
+            // console.log(this.$store.state.createStore.logo)
+            // console.log(this.$store.state.createStore.cover)
+            // console.log(this.$store.state.createStore.username)
+            // console.log(this.$store.state.createStore.email)
+            // console.log(this.$store.state.createStore.password)
 
         },
     }
 };
 </script>
 
+
 <style lang="scss">
-.custom-control-label::before {
+
+.create-store .v-list--dense .v-list-item,
+.v-list-item--dense {
+    min-height: 50px;
+}
+
+.create-store .theme--light.v-application {
+    background: transparent !important;
+}
+
+.create-store .v-input__slot {
+    height: 45px !important;
+    box-shadow: none !important;
+    min-height: 45px !important;
+}
+
+.create-store .v-text-field.v-text-field--solo .v-label {
+    left: auto !important;
+}
+
+.create-store .custom-control-label::before {
     height: 20px !important;
     width: 20px !important;
 }
@@ -114,6 +174,11 @@ export default {
 .create-store .custom-control-label::before {
     background-color: white !important;
     border: var(--main-color) solid 1px !important;
+}
+
+.create-store .buttons {
+    display: flex;
+    justify-content: center;
 }
 </style>
 

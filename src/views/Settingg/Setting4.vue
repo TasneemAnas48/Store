@@ -1,7 +1,5 @@
 <template>
     <div class="body-page setting setting4" id="body-page">
-        <nav-bar />
-        <side-bar />
         <div class="body">
             <div class="card">
                 <div class="card-header">
@@ -27,28 +25,31 @@
                         </div>
                     </div>
                     <div class="row align-items-center">
-                        <form class="form-input col-lg-6">
-                            <div class="form-row ">
-                                <label for="lang" class="col-lg-3 label-input ">لغة الموقع</label>
-                                <select class="selectpicker col-lg-7 input-field" name="lang">
-                                    <option>انكليزي</option>
-                                    <option>عربي</option>
-                                </select>
-                            </div>
-                            <div class="form-row " style="margin-top: 60px">
-                                <label for="color" class="col-lg-3 label-input">الوان الموقع</label>
-                                <b-form-radio class="col-lg-4" id="dark" name="color" value="dark" v-model="theme">
-                                    Dark
-                                </b-form-radio>
-                                <b-form-radio class="col-lg-4" id="light" name="color" value="light" v-model="theme"
-                                    style="padding-left: 50px;">
-                                    Light
-                                </b-form-radio>
-                            </div>
+                        <v-app class="col-lg-6">
+                            <form class="form-input ">
+
+                                <div class="form-row ">
+                                    <label for="lang" class="col-lg-4 label-input ">لغة الموقع</label>
+                                    <v-select class="col-md-7 input-field" :items="items" color=var(--main-color)
+                                        label="اختر لغة" dense solo></v-select>
+                                </div>
+
+                                <div class="form-row " style="margin-top: 40px">
+                                    <label for="color" class="col-lg-4 label-input">الوان الموقع</label>
+                                    <b-form-radio class="col-lg-4" id="dark" name="color" value="dark" v-model="theme">
+                                        Dark
+                                    </b-form-radio>
+                                    <b-form-radio class="col-lg-3" id="light" name="color" value="light"
+                                        v-model="theme">
+                                        Light
+                                    </b-form-radio>
+                                </div>
+
+
                                 <div class="float-left row-bottom">
                                     <router-link to="">
                                         <b-button type="submit" class="button-add">
-                                            إنشاء متجر
+                                            حفظ
                                         </b-button>
                                     </router-link>
                                 </div>
@@ -60,7 +61,9 @@
                                         </b-button>
                                     </router-link>
                                 </div>
-                        </form>
+                            </form>
+                        </v-app>
+
                         <div class="col-lg-5 d-none d-xl-block d-lg-block">
                             <img src="../../assets/img/setting4.png" class="img-thumbnail img" />
                         </div>
@@ -73,23 +76,20 @@
 
 
 <script>
-import NavBar from "@/components/Main/Navbar.vue";
-import SideBar from "@/components/Main/Sidebar.vue";
 
 export default {
     name: "Setting4",
-    components: {
-        NavBar,
-        SideBar,
-    },
-    data(){
-        return{
-            theme:''
-            
+    data() {
+        return {
+            selected: null,
+            theme: '',
+            items: ['عربي', 'انكليزي'],
         }
     },
+    components: {
+    },
     watch: {
-        theme: function(val) {
+        theme: function (val) {
             let htmlElement = document.documentElement;
             if (val == 'dark') {
                 localStorage.setItem("theme", 'dark');
@@ -105,12 +105,27 @@ export default {
 </script>
 
 <style lang="scss">
-.setting .custom-control-label::after {
+.setting .custom-control-label::before {
+    height: 20px !important;
+    width: 20px !important;
+}
+.setting .card-body .custom-control-label::after {
     top: 4px !important;
     left: -24px !important;
     width: 20px !important;
     height: 20px !important;
 }
-
+.setting4 .v-select__slot .v-label{
+    left: auto !important;
+}
+.setting4 .v-input__slot {
+    border: 1px solid #ced4da;
+    background: white !important;
+    border-radius: 30px !important;
+    height: 45px !important;
+    box-shadow: none !important;
+    min-height: 45px !important;
+}
 </style>
+
 
