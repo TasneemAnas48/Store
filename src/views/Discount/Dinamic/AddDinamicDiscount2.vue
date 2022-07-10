@@ -223,71 +223,7 @@ export default {
 
 
 <style lang="scss">
-
-.add-dinamic2 .mdi-exclamation {
-    left: -20px;
-    margin-right: -33px;
-    z-index: 100;
-    margin-top: 10px;
-}
-
-.add-dinamic .v-label{
-    margin-right: 10px;
-}
-
-
-
-.add-dinamic .v-input--radio-group .v-input__slot {
-    border: none !important;
-}
-
-.add-dinamic .v-select .v-input__slot {
-    border: 1px solid #ced4da !important;
-}
-
-.add-dinamic .v-select .v-label {
-    left: auto !important;
-}
-
-
-.add-dinamic .input-field {
-    min-height: 45px !important;
-}
-
-.add-dinamic .v-input {
-    max-width: 270px !important;
-}
-
-.add-dinamic .v-input--radio-group__input{
-    height: 75px !important;
-}
-
-.add-dinamic2 .custom{
-    min-width: 260px !important;
-}
-
-.add-dinamic2 .optinal{
-    min-width: 270px !important
-}
-
-.add-dinamic2 .date-input{
-    min-width: 325px !important;
-    left: 45px;
-}
-
-.add-dinamic2 .mdi-calendar{
-    margin-top: 14px;
-    margin-left: -72px;
-    z-index: 10;
-}
-
-.add-dinamic2 .v-text-field__slot input{
-    margin-right: 45px;
-    color: #707070
-}
-
-.add-dinamic2 .v-btn__content{
-    letter-spacing: 0px !important;
-}
+@import '@/assets/css/Discount/AddDinamic.css';
+@import '@/assets/css/Discount/AddDinamic2.css';
 </style>
 

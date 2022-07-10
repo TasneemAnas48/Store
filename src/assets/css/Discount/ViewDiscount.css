@@ -1,0 +1,32 @@
+.v-input--switch__thumb {
+    margin-right: 25px !important
+}
+.view-dis .header {
+    color: var(--main-color);
+}
+.view-dis .option {
+    border-radius: 20px;
+    border: 1px solid #c6c6c6;
+
+}
+.view-dis .v-card-text{
+    color: rgba(0,0,0,.6) !important;
+    padding-bottom: 0px !important;
+}
+.view-dis a:hover{
+    text-decoration: none !important;
+    color:  rgba(0,0,0,.6) !important;
+}
+.view-dis .option:hover{
+    box-shadow: 0px 2px 14px 3px rgb(59 59 59 / 12%) !important;
+}
+.view-dis .icon1{
+    position: absolute;
+    top: 157px;
+    left: 51px;
+}
+.view-dis .icon2{
+    position: absolute;
+    top: 300px;
+    left: 51px;
+}

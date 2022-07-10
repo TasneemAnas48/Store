@@ -153,17 +153,7 @@ export default {
 
 <style lang="scss">
 
-@media (max-width: 1263px) {
-    .add-product2 .mdi-exclamation {
-        margin-top: -1px !important;
-    }
-}
+@import '@/assets/css/Product/AddProduct.css';
+@import '@/assets/css/Product/AddProduct2.css';
 
-.add-product2 .mdi-exclamation {
-    position: static !important;
-    left: -29px;
-    margin-right: -33px;
-    z-index: 100;
-    margin-top: -10px;
-}
 </style>

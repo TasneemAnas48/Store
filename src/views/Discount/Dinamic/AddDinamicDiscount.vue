@@ -125,46 +125,7 @@ export default {
 
 
 <style lang="scss">
-.add-dinamic .v-application--wrap {
-    min-height: 50% !important;
-}
-.add-dinamic .timeline:before {
-    width: 35%;
-    left: 31%;
-}
-@media (max-width: 959px) {
-    .add-dinamic1 .mdi-exclamation {
-        margin-top: -1px !important;
-    }
-}
-
-.add-dinamic1 .mdi-exclamation {
-    position: static !important;
-    left: -29px;
-    margin-right: -33px;
-    z-index: 100;
-    margin-top: -13px;
-}
-
-
-.add-dinamic .v-input__slot {
-    border: 1px solid #ced4da;
-    background: white !important;
-    border-radius: 30px !important;
-    height: 45px !important;
-    box-shadow: none !important;
-    min-height: 45px !important;
-}
-
-.add-dinamic .custom-control-label::before {
-    height: 20px !important;
-    width: 20px !important;
-}
-.add-dinamic .custom-control-label::after {
-    top: 4px !important;
-    left: -24px !important;
-    width: 20px !important;
-    height: 20px !important;
-}
+@import '@/assets/css/Discount/AddDinamic.css';
+@import '@/assets/css/Discount/AddDinamic1.css';
 </style>
 

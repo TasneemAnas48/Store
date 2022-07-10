@@ -205,70 +205,7 @@ export default {
 
 
 <style lang="scss">
-.add-code2 .mdi-exclamation {
-    left: -20px;
-    margin-right: -33px;
-    z-index: 100;
-    margin-top: 10px;
-}
-
-
-
-.add-code .v-label{
-    margin-right: 10px;
-}
-.add-code .v-input__slot {
-    border: 1px solid #ced4da;
-    background: white !important;
-    border-radius: 30px !important;
-    height: 45px !important;
-    box-shadow: none !important;
-    min-height: 45px !important;
-}
-
-.add-code .custom-control-label::before {
-    height: 20px !important;
-    width: 20px !important;
-}
-
-.add-code .custom-control-label::after {
-    top: 4px !important;
-    left: -24px !important;
-    width: 20px !important;
-    height: 20px !important;
-}
-
-.add-code .v-input--radio-group .v-input__slot {
-    border: none !important;
-}
-
-.add-code .v-select .v-input__slot {
-    border: 1px solid #ced4da !important;
-}
-
-.add-code .v-select .v-label {
-    left: auto !important;
-}
-
-
-.add-code .input-field {
-    min-height: 45px !important;
-}
-
-.add-code .v-input {
-    max-width: 270px !important;
-}
-
-.add-code .v-input--radio-group__input{
-    height: 75px !important;
-}
-
-
-.add-code2 .custom{
-    min-width: 260px !important;
-}
-.add-code2 .optinal{
-    min-width: 270px !important
-}
+@import '@/assets/css/Discount/AddCode.css';
+@import '@/assets/css/Discount/AddCode2.css';
 </style>
 

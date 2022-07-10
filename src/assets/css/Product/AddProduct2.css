@@ -1,0 +1,13 @@
+@media (max-width: 1263px) {
+    .add-product2 .mdi-exclamation {
+        margin-top: -1px !important;
+    }
+}
+
+.add-product2 .mdi-exclamation {
+    position: static !important;
+    left: -29px;
+    margin-right: -33px;
+    z-index: 100;
+    margin-top: -10px;
+}

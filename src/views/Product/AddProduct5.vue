@@ -209,28 +209,8 @@ export default {
 
 
 <style lang="scss">
+@import '@/assets/css/Product/AddProduct.css';
+@import '@/assets/css/Product/AddProduct5.css';
 
-.add-product5 .v-input__slot {
-    border: 1px solid #ced4da;
-    background: white !important;
-    border-radius: 30px !important;
-    height: 45px !important;
-    box-shadow: none !important;
-    min-height: 45px !important;
-}
-
-@media (max-width: 1263px) {
-    .add-product5 .mdi-exclamation {
-        margin-top: -1px !important;
-    }
-}
-
-.add-product5 .mdi-exclamation {
-    position: static !important;
-    left: -29px;
-    margin-right: -33px;
-    z-index: 100;
-    margin-top: -10px;
-}
 </style>
 

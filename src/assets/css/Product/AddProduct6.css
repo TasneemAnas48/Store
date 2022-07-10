@@ -1,0 +1,82 @@
+.line-option {
+    height: 1px;
+    border-bottom: 1px solid #ced4da;
+}
+
+.optinal {
+    font-size: 20px;
+    color: var(--main-color);
+    float: right;
+    text-align: right;
+}
+
+select {
+    border-color: #ced4da !important;
+}
+
+.add-product6 .form-row {
+    margin-top: 10px !important;
+    margin-bottom: 25px;
+}
+
+.add-product6 .label-input {
+    text-align: right !important;
+}
+
+.button-plus {
+    background-color: white !important;
+    color: var(--gray-medium) !important;
+    padding: 0px;
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    border-color: var(--gray-medium) !important;
+}
+
+.button-option {
+    background-color: white !important;
+    color: var(--main-color) !important;
+    padding: 0px;
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    margin-right: 20px;
+}
+
+.add-product6 .v-input__slot {
+    border: 1px solid #ced4da;
+    background: white !important;
+    border-radius: 30px !important;
+    height: 45px !important;
+    box-shadow: none !important;
+    min-height: 45px !important;
+}
+
+@media (max-width: 1263px) {
+    .add-product6 .mdi-exclamation {
+        margin-top: -1px !important;
+    }
+}
+
+.add-product6 .mdi-exclamation {
+    position: static !important;
+    left: -29px;
+    margin-right: -33px;
+    z-index: 100;
+    margin-top: -10px;
+}
+
+.add-product6 .form-row{
+    margin-bottom: 20px !important;
+    margin-top: 0px !important;
+}
+
+.add-product6 .label-row{
+    margin-bottom: 0px !important;
+}
+
+.add-product6 .value-input{
+    padding: 0px !important;
+}
+.add-product6 .plus-value{
+    padding-bottom: 0px !important;
+    padding-top: 6px !important;
+}

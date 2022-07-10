@@ -191,9 +191,6 @@ export default {
 
 
 <style lang="scss">
-@media (max-width: 1262px) {
-    .setting2 .label-input {
-        text-align: right !important;
-    }
-}
+@import '@/assets/css/Settingg/Setting.css';
+@import '@/assets/css/Settingg/Setting2.css';
 </style>

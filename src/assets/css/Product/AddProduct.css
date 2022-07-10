@@ -1,0 +1,27 @@
+.add-product .v-application--wrap {
+    min-height: 50% !important;
+}
+
+
+@media (max-width: 1263px) {
+    .add-product .mdi-exclamation {
+        margin-top: -1px !important;
+    }
+}
+
+.add-product .mdi-exclamation {
+    position: static !important;
+    left: -29px;
+    margin-right: -33px;
+    z-index: 100;
+    margin-top: -10px;
+}
+
+.add-product .v-input__slot {
+    border: 1px solid #ced4da;
+    background: white !important;
+    border-radius: 30px !important;
+    height: 45px !important;
+    box-shadow: none !important;
+    min-height: 45px !important;
+}

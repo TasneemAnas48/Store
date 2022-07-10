@@ -235,46 +235,9 @@ export default {
 </script>
 
 <style lang="scss">
-.setting .custom-control-label::before {
-    height: 20px !important;
-    width: 20px !important;
-}
 
-.setting .card-body .custom-control-label::after {
-    top: 4px !important;
-    left: -24px !important;
-    width: 20px !important;
-    height: 20px !important;
-}
-
-.setting4 .v-select__slot .v-label {
-    left: auto !important;
-}
-
-.setting4 .v-input__slot {
-    border: 1px solid #ced4da;
-    background: white !important;
-    border-radius: 30px !important;
-    height: 45px !important;
-    box-shadow: none !important;
-    min-height: 45px !important;
-}
-
-.setting4 .v-application--wrap{
-    flex-direction: unset;
-    justify-content: flex-start;
-    // margin-right: 100px;
-}
-.setting4 .v-application{
-    margin-right: 70px;
-}
-.setting4 .mdi-exclamation {
-    position: relative !important;
-    left: -194px;
-    margin-right: -33px;
-    z-index: 100;
-    margin-top: -47px;
-}
+@import '@/assets/css/Settingg/Setting.css';
+@import '@/assets/css/Settingg/Setting4.css';
 </style>
 
 

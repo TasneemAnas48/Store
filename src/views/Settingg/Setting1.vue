@@ -207,63 +207,6 @@ export default {
 </script>
 
 <style lang="scss">
-.setting .v-application--wrap {
-    min-height: 50% !important;
-}
-.setting .form-input {
-    margin-top: 20px !important;
-}
-
-.setting .detail {
-    position: absolute;
-    white-space: nowrap;
-    font-size: 12px;
-    color: var(--gray-medium);
-}
-
-.setting .event-active .detail {
-    line-height: 12em;
-    left: -5%;
-}
-
-.setting .event .detail {
-    line-height: 128px !important;
-    left: -25px !important;
-}
-
-.setting .timeline:before {
-    width: 59%;
-    left: 20%;
-}
-
-.setting .label-input{
-    text-align: left;
-}
-
-.setting1 .v-input__slot {
-    border: 1px solid #ced4da;
-    background: white !important;
-    border-radius: 30px !important;
-    height: 45px !important;
-    box-shadow: none !important;
-    min-height: 45px !important;
-}
-.setting .mdi-exclamation {
-    position: static !important;
-    left: -29px;
-    margin-right: -33px;
-    z-index: 100;
-    margin-top: -10px;
-}
-@media (max-width: 1263px) {
-    .setting .mdi-exclamation {
-        margin-top: -1px !important;
-    }
-}
-
-@media (max-width: 992px) {
-    .setting .my-input{
-        margin-bottom:20px;
-    }
-}
+@import '@/assets/css/Settingg/Setting.css';
+@import '@/assets/css/Settingg/Setting1.css';
 </style>

@@ -1,0 +1,14 @@
+
+@media (max-width: 959px) {
+    .add-code1 .mdi-exclamation {
+        margin-top: -1px !important;
+    }
+}
+
+.add-code1 .mdi-exclamation {
+    position: static !important;
+    left: -29px;
+    margin-right: -33px;
+    z-index: 100;
+    margin-top: -13px;
+}

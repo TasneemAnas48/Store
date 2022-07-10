@@ -1,0 +1,28 @@
+
+.setting4 .v-select__slot .v-label {
+    left: auto !important;
+}
+
+.setting4 .v-input__slot {
+    border: 1px solid #ced4da;
+    background: white !important;
+    border-radius: 30px !important;
+    height: 45px !important;
+    box-shadow: none !important;
+    min-height: 45px !important;
+}
+
+.setting4 .v-application--wrap{
+    flex-direction: unset;
+    justify-content: flex-start;
+}
+.setting4 .v-application{
+    margin-right: 70px;
+}
+.setting4 .mdi-exclamation {
+    position: relative !important;
+    left: -194px;
+    margin-right: -33px;
+    z-index: 100;
+    margin-top: -47px;
+}

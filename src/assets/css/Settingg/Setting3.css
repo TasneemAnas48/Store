@@ -1,0 +1,85 @@
+.setting3 .header {
+    color: var(--main-color);
+}
+
+.setting3 .label-input {
+    text-align: left;
+}
+
+.setting3 .v-card__actions {
+    justify-content: center;
+    padding: 25px !important;
+}
+
+.setting3 .v-dialog {
+    border-radius: 30px !important;
+}
+
+.setting3 .form-row {
+    margin-top: 30px !important
+}
+
+.setting3 .v-divider {
+    margin-top: 10px !important;
+    margin-bottom: 0px !important;
+}
+
+.setting3 .permission {
+    margin-bottom: 0px !important;
+}
+
+.setting3 .v-input--checkbox {
+    margin-top: 0px !important;
+}
+
+.setting3 .check {
+    margin-right: 40px;
+}
+
+.setting3 .v-label {
+    left: -12px !important;
+    top: 25px !important;
+    margin-top: -43px !important;
+}
+
+.setting3 .form-input {
+    margin-top: 0px !important
+}
+
+.setting3 .label-input-custom {
+    float: right
+}
+
+.setting3 .buttons {
+    display: flex;
+    justify-content: center;
+}
+
+
+.setting3 .add-staff {
+    float: right;
+}
+
+.setting3 .staff {
+    font-size: 20px;
+    color: #464646;
+    text-align: justify;
+}
+
+.setting3 .add-employee {
+    font-size: 20px;
+    color: #464646;
+    float: right;
+    text-align: right;
+}
+
+.setting3 .note {
+    font-size: 15px;
+    color: var(--gray-medium);
+    margin-top: 20px;
+}
+
+.setting3 .my-table {
+    margin-right: 20px;
+    margin-top: 30px;
+}

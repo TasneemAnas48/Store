@@ -1,0 +1,14 @@
+.add-code2 .mdi-exclamation {
+    left: -20px;
+    margin-right: -33px;
+    z-index: 100;
+    margin-top: 10px;
+}
+
+
+.add-code2 .custom{
+    min-width: 260px !important;
+}
+.add-code2 .optinal{
+    min-width: 270px !important
+}

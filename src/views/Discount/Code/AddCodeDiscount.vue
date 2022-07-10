@@ -130,46 +130,7 @@ export default {
 
 
 <style lang="scss">
-.add-code .v-application--wrap {
-    min-height: 50% !important;
-}
-
-.add-code .timeline:before {
-    width: 42%;
-    left: 28%;
-}
-@media (max-width: 959px) {
-    .add-code1 .mdi-exclamation {
-        margin-top: -1px !important;
-    }
-}
-
-.add-code1 .mdi-exclamation {
-    position: static !important;
-    left: -29px;
-    margin-right: -33px;
-    z-index: 100;
-    margin-top: -13px;
-}
-
-.add-code .v-input__slot {
-    border: 1px solid #ced4da;
-    background: white !important;
-    border-radius: 30px !important;
-    height: 45px !important;
-    box-shadow: none !important;
-    min-height: 45px !important;
-}
-
-.add-code .custom-control-label::before {
-    height: 20px !important;
-    width: 20px !important;
-}
-.add-code .custom-control-label::after {
-    top: 4px !important;
-    left: -24px !important;
-    width: 20px !important;
-    height: 20px !important;
-}
+@import '@/assets/css/Discount/AddCode.css';
+@import '@/assets/css/Discount/AddCode1.css';
 </style>
 

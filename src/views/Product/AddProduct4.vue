@@ -126,18 +126,7 @@ export default {
 
 
 <style lang="scss">
-.add-product4 .custom-control-label::before {
-    height: 20px !important;
-    width: 20px !important;
-}
-.add-product4 .custom-control-label::after {
-    top: 4px !important;
-    left: -24px !important;
-    width: 20px !important;
-    height: 20px !important;
-}
-.img{
-    max-width: 70% !important;
-}
+@import '@/assets/css/Product/AddProduct.css';
+@import '@/assets/css/Product/AddProduct4.css';
 
 </style>

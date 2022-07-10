@@ -159,45 +159,6 @@ export default {
 </script>
 
 <style lang="scss">
-.v-menu__content{
-    z-index: 1000 !important;
-}
-.icon-button-left {
-    color: var(--second-color);
-    font-size: 15px;
-    float: left;
-    margin-top: 6px;
-    margin-right: 6px;
-}
-
-.icon-button-right {
-    color: var(--second-color);
-    font-size: 15px;
-    float: right;
-    margin-top: 6px;
-    margin-left: 6px;
-}
-
-.add-product3 .v-input__slot {
-    border: 1px solid #ced4da;
-    background: white !important;
-    border-radius: 30px !important;
-    height: 45px !important;
-    box-shadow: none !important;
-    min-height: 45px !important;
-}
-
-@media (max-width: 1263px) {
-    .add-product3 .mdi-exclamation {
-        margin-top: -1px !important;
-    }
-}
-
-.add-product3 .mdi-exclamation {
-    position: static !important;
-    left: -29px;
-    margin-right: -33px;
-    z-index: 100;
-    margin-top: -10px;
-}
+@import '@/assets/css/Product/AddProduct.css';
+@import '@/assets/css/Product/AddProduct3.css';
 </style>

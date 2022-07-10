@@ -134,21 +134,5 @@ export default {
 </script>
 
 <style lang="scss">
-.view .fa-file-text{
-    color: #747CEC;
-    background: rgba(172, 174, 221, 0.233);
-    border-radius: 7px;
-    padding: 7px;
-    font-size: 14px;
-    margin-top: 5px;
-    margin-left: 10px;
-    padding-left: 8px;
-    padding-right: 9px;
-}
-
-.view .my-table .fa-file-text:hover {
-    color: white;
-    background-color: #747CEC;
-    cursor: pointer;
-}
+@import '@/assets/css/Order/FinishOrder.css';
 </style>

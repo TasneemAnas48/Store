@@ -85,21 +85,5 @@ export default {
 </script>
 
 <style lang="scss">
-.my-table .fa-comments {
-    color: var(--main-color);
-    background-color: var(--second-color);
-    border-radius: 7px;
-    padding: 7px;
-    font-size: 14px;
-    margin-top: 5px;
-    margin-left: 10px;
-    padding: 8px;
-}
-
-.my-table .fa-comments:hover {
-    color: white;
-    background-color: var(--main-color);
-    cursor: pointer;
-}
-
+@import '@/assets/css/Customer/ViewCustomer.css';
 </style>

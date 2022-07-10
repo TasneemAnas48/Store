@@ -204,43 +204,7 @@ export default {
 
 
 <style lang="scss">
-// @media (max-width: 1263px) {
-//     .add-code3 .mdi-exclamation {
-//         margin-top: -1px !important;
-//     }
-// }
-.add-code3 .mdi-exclamation {
-    left: -20px;
-    margin-right: -33px;
-    z-index: 100;
-    margin-top: 10px;
-}
-
-
-.add-code3 .input-field {
-    min-height: 45px !important;
-    min-width: 270px !important;
-}
-
-.add-code3 .v-input {
-    min-width: 270px !important;
-}
-
-.add-code3 .date-input{
-    min-width: 325px !important;
-    left: 45px;
-}
-.add-code3 .mdi-calendar{
-    margin-top: 14px;
-    margin-left: -72px;
-    z-index: 10;
-}
-.add-code3 .v-text-field__slot input{
-    margin-right: 45px;
-    color: #707070
-}
-.add-code3 .v-btn__content{
-    letter-spacing: 0px !important;
-}
+@import '@/assets/css/Discount/AddCode.css';
+@import '@/assets/css/Discount/AddCode3.css';
 </style>
 
