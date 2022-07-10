@@ -96,9 +96,11 @@ export default {
         createStore() {
             return this.$store.state.createStore;
         }
+        
     },
     methods:{
         submitForm() {
+            console.log(this.$store.state.createStore)
             const formData = new FormData();
             formData.append('name', this.$store.state.createStore.name);
             formData.append('delivery_area', this.$store.state.createStore.place);
@@ -111,23 +113,19 @@ export default {
             formData.append('password', this.$store.state.createStore.password);
             this.axios
                 .post("http://"+this.$store.state.ip+"api/store/create", formData)
-                .then((res) => console.log(res))
-            // this.axios
-            //     .post("https://jsonplaceholder.typicode.com/users", this.$store.state.createStore.password)
-            //     .then((res) => console.log(res))
-                
-
-            // console.log(this.$store.state.createStore.name)
-            // console.log(this.$store.state.createStore.place)
-            // console.log(this.$store.state.createStore.discription)
-            // console.log(this.$store.state.createStore.facebook)
-            // console.log(this.$store.state.createStore.logo)
-            // console.log(this.$store.state.createStore.cover)
-            // console.log(this.$store.state.createStore.username)
-            // console.log(this.$store.state.createStore.email)
-            // console.log(this.$store.state.createStore.password)
-
+                .then((res) => {
+                    console.log(res.data)
+                    this.$store.state.id_store = res.data.data.shop_id
+                    this.$store.state.id_manager = res.data.data.manager_id
+                    this.addlocalStorage(this.$store.state.id_store, this.$store.state.id_manager)
+                    console.log(this.$store.state.id_store)
+                    console.log(this.$store.state.id_manager)
+                })
         },
+        addlocalStorage(store, manager){
+            localStorage.setItem("id_store", store);
+            localStorage.setItem("id_manager", manager);
+        }
     }
 };
 </script>

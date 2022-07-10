@@ -29,8 +29,15 @@ export default {
             htmlElement.setAttribute('theme', 'light');
             this.theme = 'light'
         }
+        this.$store.state.id_store = localStorage.getItem("id_store")
+        this.$store.state.id_manager = localStorage.getItem("id_manager")
     },
-    
+
+    computed: {
+        createStore() {
+            return this.$store.state.createStore;
+        }
+    },
 };
 
 </script>

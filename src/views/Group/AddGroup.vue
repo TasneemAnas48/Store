@@ -90,7 +90,9 @@ export default {
         return {
             address: '',
             discription: '',
-            image: ''
+            image: '',
+            edit: false,
+            id: '',
         };
     },
     validations() {
@@ -104,39 +106,59 @@ export default {
             image: "",
         }
     },
-    components: {
+    mounted(){
+        if (this.$route.name == "edit-group"){
+            this.id = this.$route.params.id
+            this.edit = true
+            this.axios.get("http://"+this.$store.state.ip+"api/collection/show/" + this.id)
+            .then(res => {
+                this.address = res.data.title
+                this.discription = res.data.discription
+            })
+        }
     },
     methods: {
         onFileSelected(files) {
-            this.image = files;
-            console.log(this.image)
+            this.image = files
         },
         submitForm() {
-            this.v$.$validate();
+            this.v$.$validate()
             if (!this.v$.$error)
-                this.sendData();
+                this.sendData()
         },
         sendData() {
-            const formData = new FormData();
-            formData.append('name', this.address);
-            formData.append('discription', this.discription);
-            formData.append('image', this.image);
-            this.axios
-                .post("https://jsonplaceholder.typicode.com/posts", formData)
-                .then((res) => console.log(res));
+            const formData = new FormData()
+            formData.append('title', this.address)
+            formData.append('discription', this.discription)
+            formData.append('image', this.image)
+            formData.append('store_id', this.$store.state.id_store)
+            if (this.edit == true){
+                this.editData(formData)
+            }
+            else{
+                this.addData(formData)
+            }
+            for (var pair of formData.entries()) {
+                console.log(pair)
+            }
         },
-        // onChange(image) {
-        //     console.log("New picture selected!");
-        //     if (image) {
-        //         console.log("Picture loaded.");
-        //         this.image = image;
-        //         console.log(this.image);
-        //     } else {
-        //         console.log(
-        //             "FileReader API not supported: use the <form>, Luke!"
-        //         );
-        //     }
-        // },
+        editData(formData){
+            formData.append('id', this.id)
+            this.axios.post("http://"+this.$store.state.ip+"api/collection/update", formData)
+            .then((res) => {
+                console.log(res)
+                if (res.data.status == "success")
+                    this.$router.replace({ name: 'view-group' })
+                })
+        },
+        addData(formData){
+            this.axios.post("http://"+this.$store.state.ip+"api/collection/create", formData)
+                .then((res) => {
+                console.log(res)
+                if (res.data.status == "success")
+                    this.$router.replace({ name: 'view-group' })
+                })
+        }
     },
 };
 </script>
@@ -181,7 +203,7 @@ export default {
     border-color: var(--main-color) !important;
     padding-left: 20px !important;
     padding-right: 20px !important;
-    margin-left: 35px !important;
+    margin-left: 35px;
 }
 .btn:focus{
     box-shadow: 0px 0px 3px 4px var(--second-color) !important;

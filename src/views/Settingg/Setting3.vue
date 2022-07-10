@@ -16,6 +16,9 @@
                             <div class="event">
                                 <div class="detail">معلومات شخصية</div>
                             </div>
+                            <div class="event">
+                                <div class="detail">تغيير كلمة السر</div>
+                            </div>
                             <div class="event-active">
                                 <div class="detail">ادوار الصفحة</div>
                             </div>
@@ -29,9 +32,9 @@
                             <div class="col-lg-2"></div>
                             <div class="add-staff col-lg-8">
                                 <div class="staff " style="float:right;">
-                                    طاقم العمل ({{ adminNumbar }} من 1)
+                                    طاقم العمل ({{ adminNumbar }} من 2)
                                     <br>
-                                    <span class="note">يمكنك إضافة ما يصل إلى 1 من
+                                    <span class="note">يمكنك إضافة ما يصل إلى 2 من
                                         المستخدمين</span>
                                 </div>
                             </div>
@@ -66,15 +69,15 @@
                     <!-- </div>
                     </div> -->
                     <v-app>
-                        <div v-if="adminNumbar < 1">
+                        <div v-if="adminNumbar < 2">
                             <form class="form-input">
-                                <v-dialog v-model="dialog" scrollable max-width="600px">
+                                <v-dialog v-model="dialog" max-width="600px">
                                     <template v-slot:activator="{ on, attrs }">
                                         <div class="col-lg-9 row">
                                             <div class="col-lg-1"></div>
-                                            <div class="col-lg-8" style="margin-top: 20px;">
+                                            <div class="col-lg-8" style="margin-top: 20px; ">
                                                 <b-button class="button-add" v-bind="attrs" v-on="on"
-                                                    style="float: right;">إضافة موظف</b-button>
+                                                    style="float: right; margin-right: 20px">إضافة موظف</b-button>
                                             </div>
                                         </div>
                                     </template>
@@ -91,6 +94,14 @@
                                                     <b-form-input class="col-lg-5 input-field" v-model="name"
                                                         name="name" required>
                                                     </b-form-input>
+                                                    <v-tooltip color="error" right v-if="v$.name.$error">
+                                                        <template v-slot:activator="{ on, attrs }">
+                                                            <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                                                mdi-exclamation
+                                                            </v-icon>
+                                                        </template>
+                                                        <span>{{ v$.name.$errors[0].$message }}</span>
+                                                    </v-tooltip>
                                                 </div>
 
                                                 <div class="form-row ">
@@ -98,6 +109,14 @@
                                                         الالكتروني</label>
                                                     <b-form-input class="col-lg-5 input-field" v-model="email"
                                                         name="email" type="email" required></b-form-input>
+                                                    <v-tooltip color="error" right v-if="v$.email.$error">
+                                                        <template v-slot:activator="{ on, attrs }">
+                                                            <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                                                mdi-exclamation
+                                                            </v-icon>
+                                                        </template>
+                                                        <span>{{ v$.email.$errors[0].$message }}</span>
+                                                    </v-tooltip>
                                                 </div>
                                                 <div class="form-row permission">
                                                     <label for="name" class="col-lg-3 label-input ">الصلاحيات</label>
@@ -113,31 +132,29 @@
                                         <v-card-actions>
                                             <b-button type="button" @click="dialog = false" class="button-add">إلغاء
                                             </b-button>
-                                            <b-button type="submit" @click="dialog = false" class="button-add"
+                                            <b-button type="submit" class="button-add"
                                                 v-on:click="submitForm">إضافة</b-button>
 
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
-
                             </form>
                         </div>
                         <div class="view row">
                             <div class="col-lg-1"></div>
                             <v-data-table class="col-lg-9 my-table " :headers="headers" :items="rows"
-                                :hide-default-footer="true">
+                                :hide-default-footer="true" style="margin-right: 35px">
                                 <template v-slot:items="props">
-                                    <td>{{ props.item.id }}</td>
                                     <td>{{ props.item.name }}</td>
                                     <td>{{ props.item.email }}</td>
-                                    <td>{{ props.item.perm }}</td>
+                                    <td>{{ props.item.privillage }}</td>
                                 </template>
                             </v-data-table>
                         </div>
                     </v-app>
                     <div class="buttons form-row row-bottom" style="margin-top:100px; float:center">
                         <div class="float-left">
-                            <router-link to="/setting2">
+                            <router-link to="/setting5">
                                 <b-button type="button" class="button-add">
                                     <font-awesome-icon icon="fas fa-arrow-right" class="icon-button-right" />
                                     السابق
@@ -162,21 +179,20 @@
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script> -->
 <script>
-
+import useVuelidate from '@vuelidate/core'
+import { required, email, helpers } from '@vuelidate/validators'
 
 export default {
     name: "Setting3",
+    setup() {
+        return { v$: useVuelidate() }
+    },
     data() {
         return {
             headers: [
-                {
-                    text: 'رقم',
-                    align: 'start',
-                    value: 'id',
-                },
-                { text: 'اسم', value: 'name' },
-                { text: 'ايميل', value: 'email' },
-                { text: 'صلاحيات', value: 'perm' , sortable: false,},
+                { text: 'اسم', value: 'name', align: 'center' },
+                { text: 'ايميل', value: 'email', align: 'center' },
+                { text: 'صلاحيات', value: 'privillage' , sortable: false, align: 'center'},
             ],
             rows: [],
             dialog: false,
@@ -184,36 +200,59 @@ export default {
             name: '',
             email: '',
             options: [
-                { text: 'المنتجات', value: 'products' },
-                { text: 'المجموعات', value: 'groups' },
-                { text: 'الزبائن', value: 'customers' },
-                { text: 'الطلبات', value: 'orders' }
+                { text: 'المنتجات', value: '1' },
+                { text: 'المجموعات', value: '2' },
+                { text: 'الزبائن', value: '3' },
+                { text: 'الطلبات', value: '4' }
             ],
             checked: [],
             // getEmplotee: [],
         };
     },
-    components: {
+    validations() {
+        return {
+            name: { required: helpers.withMessage('هذا الحقل مطلوب', required) },
+            email: {
+                    required: helpers.withMessage('هذا الحقل مطلوب', required),
+                    email: helpers.withMessage('يجب ادخال عنوان بريد الكتروني صحيح', email)
+            },
+        }
+    },
+    computed: {
+        setting() {
+            return this.$store.state.setting;
+        }
     },
     mounted() {
         this.getData();
     },
     methods: {
+        initData(){
+            this.$store.state.setting.helper_name =  this.name
+            this.$store.state.setting.helper_email = this.email
+            this.$store.state.setting.perm = this.checked
+            console.log(this.$store.state.setting.helper_name)
+            console.log(this.$store.state.setting.helper_email)
+            console.log(this.$store.state.setting.perm)
+        },
         submitForm() {
-            this.axios
-                .post("https://jsonplaceholder.typicode.com/posts", {
-                    name: this.name,
-                    email: this.email,
-                    checked: this.checked,
-                })
-                .then((res) => console.log(res));
+            this.v$.$validate();
+            if (!this.v$.$error){
+                this.initData()
+                this.closeDialog()
+            }
+        },
+        closeDialog(){
+            this.dialog = false
         },
         getData(){
-            this.axios.get('https://jsonplaceholder.typicode.com/users')
+            this.axios.get("http://"+this.$store.state.ip+"api/PrivilladgeHelperController/my_helper/" + this.$store.state.id_manager)
             .then(res => {
-                this.rows = res.data;
-                console.log(res.data);
+                this.rows = res.data.data
+                this.adminNumbar = res.data.data.length
+                console.log(res.data.data)
             });
+            
         }
     }
 

@@ -17,6 +17,9 @@
                                 <div class="detail">معلومات شخصية</div>
                             </div>
                             <div class="event">
+                                <div class="detail">تغيير كلمة السر</div>
+                            </div>
+                            <div class="event">
                                 <div class="detail">ادوار الصفحة</div>
                             </div>
                             <div class="event">
@@ -29,28 +32,28 @@
                             <div class="form-row ">
                                 <div class="my-input col-lg-6 row">
                                     <label for="name" class="col-lg-4 col-md-3 label-input">اسم المتجر</label>
-                                    <b-form-input class="col-lg-6 col-md-6 col-sm-11 col-11 input-field" v-model="storeInfo.name" name="name">
+                                    <b-form-input class="col-lg-6 col-md-6 col-sm-11 col-11 input-field" v-model="name" name="name">
                                     </b-form-input>
-                                    <v-tooltip color="error" right v-if="v$.storeInfo.name.$error">
+                                    <v-tooltip color="error" right v-if="v$.name.$error">
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-icon color="red" dark v-bind="attrs" v-on="on">
                                                 mdi-exclamation
                                             </v-icon>
                                         </template>
-                                        <span>{{ v$.storeInfo.name.$errors[0].$message }}</span>
+                                        <span>{{ v$.name.$errors[0].$message }}</span>
                                     </v-tooltip>
                                 </div>
                                 <div class=" col-lg-6  row" style="margin-top: -12px">
                                     <label for="place" class="col-lg-4 col-md-3  label-input">أماكن التوصيل</label>
-                                    <b-form-input class="col-lg-6 col-md-6 col-sm-11 col-11 input-field" v-model="storeInfo.place" name="place">
+                                    <b-form-input class="col-lg-6 col-md-6 col-sm-11 col-11 input-field" v-model="place" name="place">
                                     </b-form-input>
-                                    <v-tooltip color="error" right v-if="v$.storeInfo.place.$error">
+                                    <v-tooltip color="error" right v-if="v$.place.$error">
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-icon color="red" dark v-bind="attrs" v-on="on">
                                                 mdi-exclamation
                                             </v-icon>
                                         </template>
-                                        <span>{{ v$.storeInfo.place.$errors[0].$message }}</span>
+                                        <span>{{ v$.place.$errors[0].$message }}</span>
                                     </v-tooltip>
                                 </div>
                             </div>
@@ -59,15 +62,15 @@
                                 <div class="my-input col-lg-6 row" style="margin-top: -12px">
                                     <label for="discription" class="col-lg-4 col-md-3  label-input">وصف المتجر</label>
                                     <b-form-textarea class="col-lg-6 col-md-6 col-sm-11 col-11 input-field discription"
-                                        v-model="storeInfo.discription" name="discription">
+                                        v-model="discription" name="discription">
                                     </b-form-textarea>
-                                    <v-tooltip color="error" right v-if="v$.storeInfo.discription.$error">
+                                    <v-tooltip color="error" right v-if="v$.discription.$error">
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-icon color="red" dark v-bind="attrs" v-on="on">
                                                 mdi-exclamation
                                             </v-icon>
                                         </template>
-                                        <span>{{ v$.storeInfo.discription.$errors[0].$message }}</span>
+                                        <span>{{ v$.discription.$errors[0].$message }}</span>
                                     </v-tooltip>
                                 </div>
 
@@ -75,15 +78,15 @@
                                 <div class="col-lg-6 row" style="margin-top: -12px">
                                     <label for="facebook" class="col-lg-4  col-md-3 label-input">حساب Facebook</label>
                                     <b-form-textarea class="col-lg-6 col-md-6 col-sm-11 col-11 input-field discription"
-                                        v-model="storeInfo.facebook" name="facebook">
+                                        v-model="facebook" name="facebook">
                                     </b-form-textarea>
-                                    <v-tooltip color="error" right v-if="v$.storeInfo.facebook.$error">
+                                    <v-tooltip color="error" right v-if="v$.facebook.$error">
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-icon color="red" dark v-bind="attrs" v-on="on">
                                                 mdi-exclamation
                                             </v-icon>
                                         </template>
-                                        <span>{{ v$.storeInfo.facebook.$errors[0].$message }}</span>
+                                        <span>{{ v$.facebook.$errors[0].$message }}</span>
                                     </v-tooltip>
                                 </div>
                             </div>
@@ -123,7 +126,7 @@
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
+import { required, minLength, maxLength, helpers, url } from '@vuelidate/validators'
 
 export default {
     name: "Setting",
@@ -132,72 +135,74 @@ export default {
     },
     data() {
         return {
-            storeInfo: {
-                name: "",
-                place: "",
-                discription: "",
-                facebook: "",
-                logo: "",
-                cover: "",
-            },
+            name: '',
+            place: '',
+            discription: '',
+            facebook: '',
+            logo: '',
+            cover: '',
         };
     },
     validations() {
         return {
-            storeInfo: {
-                name: { required: helpers.withMessage('هذا الحقل مطلوب', required) },
-                place: { required: helpers.withMessage('هذا الحقل مطلوب', required) },
-                discription: {
-                    required: helpers.withMessage('هذا الحقل مطلوب', required),
-                    minLength: helpers.withMessage('يجب أن يتكون هذا الحقل من 10 أحرف على الأقل', minLength(10)),
-                    maxLength: helpers.withMessage('أقصى طول مسموح به هو 50', maxLength(50))
-                },
-                facebook: "",
-                logo: "",
-                cover: "",
-            },
+            name: { required: helpers.withMessage('هذا الحقل مطلوب', required)}, 
+            place: { required: helpers.withMessage('هذا الحقل مطلوب', required)}, 
+            discription: { required: helpers.withMessage('هذا الحقل مطلوب', required),
+                                minLength: helpers.withMessage('يجب أن يتكون هذا الحقل من 10 أحرف على الأقل', minLength(10)),
+                                maxLength: helpers.withMessage('أقصى طول مسموح به هو 50', maxLength(50)) },
+            facebook: { url: helpers.withMessage('يجب ادخال رابط صالح', url)},
+            logo: "",
+            cover: "",
         }
     },
-    components: {
-    },
-    mounted() { //this.$store.state.ipv+'store/show/22'
-        this.axios.get("https://jsonplaceholder.typicode.com/photos/1")
-            .then(res => {
-                this.storeInfo.name = res.data.title;
-                this.storeInfo.place = res.data.title;
-                this.storeInfo.discription = res.data.title;
-            });
+    computed: {
+        setting() {
+            return this.$store.state.setting;
+        }
     },
 
     methods: {
+        initData(){
+            this.$store.state.setting.id_store =  this.$store.state.id_store
+            this.$store.state.setting.id_manager = this.$store.state.id_manager
+            this.$store.state.setting.name = this.name
+            this.$store.state.setting.place = this.place
+            this.$store.state.setting.discription = this.discription
+            this.$store.state.setting.facebook = this.facebook
+            this.$store.state.setting.logo = this.logo
+            this.$store.state.setting.cover = this.cover
+        },
         submitForm() {
             this.v$.$validate();
             if (!this.v$.$error){
-                this.sendData();
                 this.$router.replace({ name: 'setting2' })
+                this.initData()
             }
         },
-
         onFileSelected(files) {
-            this.storeInfo.logo = files;
+            this.logo = files;
         },
         onFileSelected2(files) {
-            this.storeInfo.cover = files;
-        },
-        sendData() {
-            const formData = new FormData();
-            formData.append('name', this.storeInfo.name);
-            formData.append('delivery_area', this.storeInfo.delivery_area);
-            formData.append('discription', this.storeInfo.discription);
-            formData.append('facebook', this.storeInfo.facebook);
-            formData.append('Brand', this.storeInfo.logo);
-            formData.append('image', this.storeInfo.cover);
-            formData.append('store', this.$store.state.id);
-            this.axios
-                .post(this.$store.state.ipv + "store/update", formData)
-                .then((res) => console.log(res));
+            this.cover = files;
         },
     },
+    mounted() {
+        console.log(this.$store.state.id_store)
+        this.axios.get("http://"+this.$store.state.ip+"api/store/show/"+this.$store.state.id_store)
+            .then(res => {
+                // console.log(res.data)
+                this.name = res.data.data[0].name
+                this.place = res.data.data[0].delivery_area;
+                this.discription = res.data.data[0].discription;
+                if (res.data.data[0].facebook == "undefined" || res.data.data[0].facebook == "null")
+                    this.facebook = ''
+                else
+                    this.facebook = res.data.data[0].facebook;
+                this.logo = res.data.data[0].Brand;
+                this.cover = res.data.data[0].image;
+            });
+    },
+
 };
 </script>
 
@@ -229,6 +234,10 @@ export default {
 .setting .timeline:before {
     width: 59%;
     left: 20%;
+}
+
+.setting .label-input{
+    text-align: left;
 }
 
 .setting1 .v-input__slot {

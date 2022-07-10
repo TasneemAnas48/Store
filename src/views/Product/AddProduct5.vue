@@ -42,9 +42,19 @@
                                         <div class="my-input col-lg-12 row">
                                             <label for="time" class="col-lg-4 col-md-5 label-input">الوقت المتوقع
                                                 للتحضير</label>
-                                            <b-form-input v-model="product.time"
+                                            <v-tooltip bottom color=var(--gray-medium)>
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <b-form-input v-model="product.time" type="number"
+                                                        v-bind="attrs" v-on="on"
+                                                        class="col-lg-7 col-md-11 col-sm-11 col-10 input-field"
+                                                        name="time">
+                                                    </b-form-input>
+                                                </template>
+                                                <span>الرجاء ادخال عدد الايام</span>
+                                            </v-tooltip>
+                                            <!-- <b-form-input v-model="product.time" type="number"
                                                 class="col-lg-7 col-md-11 col-sm-11 col-10 input-field" name="time">
-                                            </b-form-input>
+                                            </b-form-input> -->
                                             <v-tooltip color="error" right v-if="v$.product.time.$error">
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <v-icon color="red" dark v-bind="attrs" v-on="on">
@@ -151,7 +161,8 @@ export default {
     validations() {
         return {
             product: {
-                time: { maxLength: helpers.withMessage('اقصى طول مسموح به هو 20 حرف', maxLength(20)) },
+                time: { minValue: helpers.withMessage('يجب ادخال رقم موجب', minValue(0)),
+                        required: helpers.withMessage('هذا الحقل مطلوب', required),  },
                 age: {},
                 party: {maxLength: helpers.withMessage('اقصى طول مسموح به هو 30 حرف', maxLength(30))},
             }

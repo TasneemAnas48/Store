@@ -66,7 +66,7 @@
                                                 </template>
                                                 <span>لن يرى الزبائن هذا</span>
                                             </v-tooltip>
-                                            <p class="parag-customer"></p>
+                                            <!-- <p class="parag-customer"></p> -->
                                             <v-tooltip color="error" right v-if="v$.product.cost.$error">
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <v-icon color="red" dark v-bind="attrs" v-on="on">

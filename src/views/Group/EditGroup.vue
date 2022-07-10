@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center add">
-                        إنشاء مجموعة
+                        تعديل مجموعة
                         <router-link to="/view-group">
                             <b-button class="button-view">عرض المجموعات</b-button>
                         </router-link>

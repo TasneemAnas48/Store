@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import AddGroup from "../views/Group/AddGroup.vue";
 import ViewGroup from "../views/Group/ViewGroup.vue";
-import EditGroup from "../views/Group/EditGroup.vue";
+import EditGroup from "../views/Group/AddGroup.vue";
 
 import AddProduct from "../views/Product/AddProduct.vue";
 import AddProduct2 from "../views/Product/AddProduct2.vue";
@@ -20,6 +20,7 @@ import Setting1 from "../views/Settingg/Setting1.vue";
 import Setting2 from "../views/Settingg/Setting2.vue";
 import Setting3 from "../views/Settingg/Setting3.vue";
 import Setting4 from "../views/Settingg/Setting4.vue";
+import Setting5 from "../views/Settingg/Setting5.vue";
 
 import ViewCustomer from "../views/Customer/ViewCustomer.vue";
 
@@ -112,12 +113,17 @@ const routes = [
         component: Setting4,
     },
     {
+        path: "/setting5",
+        name: "setting5",
+        component: Setting5,
+    },
+    {
         path: "/view-group",
         name: "view-group",
         component: ViewGroup,
     },
     {
-        path: "/edit-group",
+        path: "/edit-group/:id",
         name: "edit-group",
         component: EditGroup,
     },

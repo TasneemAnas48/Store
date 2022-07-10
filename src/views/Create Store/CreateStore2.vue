@@ -47,7 +47,7 @@
                         <div class="my-input col-lg-6 row" style="margin-top: -12px">
                             <label for="email" class="col-lg-4 label-input">البريد الالكتروني</label>
                             <b-form-input class="col-lg-6 input-field" v-model.trim="createStore.email"
-                                name="email" type="email"></b-form-input>
+                                name="email" type="email" style="padding-left: 30px;"></b-form-input>
                             <v-tooltip color="error" right v-if="v$.createStore.email.$error">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-icon color="red" dark v-bind="attrs" v-on="on">
@@ -55,6 +55,14 @@
                                     </v-icon>
                                 </template>
                                 <span>{{v$.createStore.email.$errors[0].$message}}</span>
+                            </v-tooltip>
+                            <v-tooltip color="error" right v-if="!email">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                        mdi-exclamation
+                                    </v-icon>
+                                </template>
+                                <span>هذا الايميل موجود مسبقا</span>
                             </v-tooltip>
                             
                         </div>
@@ -104,7 +112,7 @@
                         </div>
                         <div class="float-rigth">
                             <!-- <router-link to="/create-store3"> -->
-                            <b-button type="button" class="button-add" v-on:click="submitForm">
+                            <b-button type="button" class="button-add" v-on:click="validateEmail">
                                 <font-awesome-icon icon="fas fa-arrow-left" class="icon-button-left" />التالي
                             </b-button>
                             <!-- </router-link> -->
@@ -128,6 +136,7 @@ export default {
     },
     data() {
         return {
+            email: true,
         };
     },
     validations () {
@@ -150,12 +159,24 @@ export default {
     },
 
     methods: {
-        submitForm() {
+        validateEmail() {
             this.v$.$validate();
+            this.axios.post("http://"+this.$store.state.ip+"api/person/unique", {email : this.$store.state.createStore.email})
+            .then((res) =>{
+                if (res.data.data == "error")
+                    this.email = false
+                else 
+                    {
+                        this.email = true
+                        this.submitForm()
+                    }
+            })
+        },
+        submitForm(){
             if (!this.v$.$error){
                 this.$router.replace({ name: 'create-store3' })
             }
-        },
+        }
     },
 };
 </script>

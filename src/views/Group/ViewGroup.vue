@@ -21,8 +21,10 @@
                             :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true">
                             <template v-slot:items="props">
                                 <td>{{ props.item.id }}</td>
-                                <td>{{ props.item.username }}</td>
-                                <td>{{ props.item.name }}</td>
+                                <td>{{ props.item.title }}</td>
+                                <td>{{ props.item.discription }}</td>
+                                <!-- <td><img src={{ props.item.image }}/></td> -->
+                                <td>{{ props.item.number }}</td>
                             </template>
 
                             <template v-slot:top>
@@ -46,7 +48,7 @@
                             </template>
                             <template v-slot:[`item.mangement`]="{ item }">
                                 <font-awesome-icon icon="fa fa-trash" class="fa-trash" @click="deleteItem(item)" />
-                                <font-awesome-icon icon="fas fa-edit" class=" fa-edit" />
+                                <font-awesome-icon icon="fas fa-edit" class=" fa-edit" @click="editItem(item)" />
                             </template>
                         </v-data-table>
                         <div class="text-center">
@@ -73,12 +75,14 @@ export default {
             dialogDelete: false,
             headers: [
                 {
-                    text: 'عنوان',
-                    align: 'start',
+                    text: 'رقم',
+                    align: 'center',
                     value: 'id',
                 },
-                { text: 'شرح', value: 'username' },
-                { text: 'عدد المنتجات', value: 'name' },
+                { text: 'عنوان', value: 'title', align: 'center', },
+                { text: 'شرح', value: 'discription', align: 'center', },
+                // { text: 'صورة', value: 'image' },
+                { text: 'عدد المنتجات', value: 'number', align: 'center', },
                 { text: 'إدارة', value: 'mangement' , sortable: false,},
             ],
             rows: [],
@@ -94,6 +98,9 @@ export default {
     },
 
     methods: {
+        editItem(item){
+            this.$router.replace({ name: 'edit-group', params: {id: item.id} })
+        },
         deleteItem (item) {
             this.editedIndex = this.rows.indexOf(item)
             this.delete = item
@@ -109,17 +116,17 @@ export default {
         },
         sendIdDeleted() {
             this.axios
-                .post("https://jsonplaceholder.typicode.com/posts",this.delete.id)
+                .post("http://"+this.$store.state.ip+"api/collection/delete",{id: this.delete.id})
                 .then((res) => {
-                    console.log(res.data);
-                    console.log(this.delete.id);
-                });
+                    // console.log(res.data)
+                    console.log(this.delete.id)
+                })
         },
         getData(){
-            this.axios.get('https://jsonplaceholder.typicode.com/users')
+            this.axios.get("http://"+this.$store.state.ip+"api/collection/collectionNane/"+ this.$store.state.id_store)
             .then(res => {
-                this.rows = res.data;
-                console.log(res.data);
+                this.rows = res.data
+                console.log(res.data)
             });
         }
     },

@@ -49,6 +49,26 @@
                     </v-menu>
                 </v-app> -->
 
+                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLbl" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Animated Dropdown Menu
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right w-auto show shadow p-0" id="navbarDropdown" aria-labelledby="navbarDropdownLbl">
+                        <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </li>
+            </ul>
+        </div> -->
+
                 <a class="navbar-brand">
                     <font-awesome-icon icon="fas fa-user" />
                 </a>
@@ -110,6 +130,17 @@ export default {
 // .navbar .v-application--wrap {
 //     min-height: 10vh;
 // }
+.show > .dropdown-menu {
+  max-height: 800px;
+  display: block;
+}
+  
+.dropdown-menu {
+  max-height: 0;
+  display: none;
+  transition: all 0.4s ease-in-out;
+//   overflow: hidden;
+}
 
 .navbar .fa-bell {
     color: var(--main-color);
