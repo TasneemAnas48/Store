@@ -133,50 +133,5 @@ export default {
 
 <style lang="scss">
 
-.create-store .v-list--dense .v-list-item,
-.v-list-item--dense {
-    min-height: 50px;
-}
-
-.create-store .theme--light.v-application {
-    background: transparent !important;
-}
-
-.create-store .v-input__slot {
-    height: 45px !important;
-    box-shadow: none !important;
-    min-height: 45px !important;
-}
-
-.create-store .v-text-field.v-text-field--solo .v-label {
-    left: auto !important;
-}
-
-.create-store .custom-control-label::before {
-    height: 20px !important;
-    width: 20px !important;
-}
-
-.create-store .custom-control-label::after {
-    top: 2px !important;
-    left: -29px !important;
-    width: 20px !important;
-    height: 20px !important;
-}
-
-.create-store .custom-radio .custom-control-label::before {
-    top: 2px !important;
-    margin-left: -5px !important;
-}
-
-.create-store .custom-control-label::before {
-    background-color: white !important;
-    border: var(--main-color) solid 1px !important;
-}
-
-.create-store .buttons {
-    display: flex;
-    justify-content: center;
-}
 </style>
 

@@ -182,44 +182,7 @@ export default {
 </script>
 
 <style lang="scss">
-@media (max-width: 1294px) {
-    .create-store2 .v-icon {
-        top: -19px !important;
-    }
-}
-
-@media (max-width: 992px) {
-    .create-store2 .v-icon {
-        position: absolute !important;
-        top: 82px !important;
-        left: 14px !important;
-    }
-}
-
-.create-store2 .v-icon {
-    top: -7px;
-    left: 36px;
-    color: red;
-}
-
-.create-store2 .label-input {
-    font-size: 17px;
-    color: var(--gray-medium);
-    text-align: left;
-}
-
-.create-store2 .form-row {
-    margin-top: 40px;
-    margin-bottom: 40px;
-}
-
-.create-store2 .buttons {
-    display: flex;
-    justify-content: center;
-}
-
-.create-store2 form {
-    margin-top: 0px
-}
+@import '@/assets/css/Create Store/CreateStore.css';
+@import '@/assets/css/Create Store/CreateStore2.css';
 </style>
 

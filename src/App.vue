@@ -43,6 +43,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/assets/css/App.css';
+
 *:focus, *:focus-visible { outline: none !important; }
 
 @font-face {

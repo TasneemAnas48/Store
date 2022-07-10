@@ -1,0 +1,31 @@
+
+@media (max-width: 992px) {
+    .label-input {
+        text-align: right !important;
+    }
+}
+
+
+.theme--light.v-text-field>.v-input__control>.v-input__slot:before,
+.v-text-field>.v-input__control>.v-input__slot:after {
+    display: none !important;
+}
+
+.v-input__slot:active,
+.v-input__slot:focus-within {
+    border-color: var(--main-color) !important;
+}
+
+.mdi-camera::before {
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.v-input__prepend-outer {
+    display: none;
+}
+
+.image {
+    position: absolute;
+    top: 25%;
+}
