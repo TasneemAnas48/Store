@@ -1,0 +1,26 @@
+@media (max-width: 992px) {
+    .create-store3 {
+        height: 800px !important;
+        /* padding-left: 50px; */
+    }
+}
+@media (min-width: 992px) {
+    .create-store3 {
+        height: 700px !important;
+    }
+}
+.create-store3 .form-input{
+    margin-right: 80px;
+}
+.create-store3 .side-left .img {
+    max-width: 150% !important;
+}
+.create-store3 .line{
+    margin-right: 100px;
+}
+.create-store3 .timeline:before{
+    width: 60%;
+}
+.create-store3 .top-button {
+    margin-right: 90px;
+}

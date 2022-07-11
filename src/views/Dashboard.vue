@@ -323,5 +323,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/css/Dashboard.css';
+@import '@/assets/css/Main/Dashboard.css';
 </style>

@@ -203,10 +203,13 @@ export default {
                 formData.append('helper_email', "")
             else
                 formData.append('helper_email', this.$store.state.setting.helper_email)
-
+            // console.log(this.$store.state.setting.perm)
             const myPer = JSON.stringify(this.$store.state.setting.perm)
 
             formData.append('privilladge', myPer)
+            // console.log(["المنتجات","المجموعات"])
+            // console.log(myPer)
+            // console.log(JSON.stringify(myPer))
             
             for (var pair of formData.entries()) {
                 console.log(pair)
@@ -235,7 +238,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 @import '@/assets/css/Settingg/Setting.css';
 @import '@/assets/css/Settingg/Setting4.css';
 </style>

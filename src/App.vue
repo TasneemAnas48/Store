@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <nav-bar  v-if="!['create-store1', 'create-store2', 'create-store3', 'print-invoice'].includes($route.name)" />
-        <side-bar v-if="!['create-store1', 'create-store2', 'create-store3','print-invoice'].includes($route.name)" />
+        <nav-bar  v-if="!['create-store1', 'create-store2', 'create-store3', 'print-invoice', 'login', 'report-sales'].includes($route.name)" />
+        <side-bar v-if="!['create-store1', 'create-store2', 'create-store3','print-invoice', 'login', 'report-sales'].includes($route.name)" />
         <router-view />
     </div>
 </template>
@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/css/App.css';
+@import '@/assets/css/Main/App.css';
 
 *:focus, *:focus-visible { outline: none !important; }
 

@@ -1,13 +1,18 @@
 <template>
-    <div class="create-store create3">
-        <div class="side-left col-lg-3 d-none d-lg-block">
-            <div class="image">
+    <div class="create-store create-store3">
+        <div class="side-left col-lg-5 d-none d-lg-block">
+            <div class="image" style="    margin-left: 130px; top: 60%">
                 <img src="../../assets/img/create_store3.png" class="img-thumbnail img" />
             </div>
         </div>
-        <div class="side-right col-lg-9 ">
-            <div class="address">
-                <p style="margin-bottom: 0px">إنشاء متجر</p>
+        <div class="side-right col-lg-7">
+            <div class="top-button">
+                <router-link to="/create-store1">
+                    <b-button type="button" class="button-add  button-login" style="margin-left: -15px;">إنشاء متجر</b-button>
+                </router-link>
+                <router-link to="/login">
+                    <b-button type="button" class="button-add create button-login">تسجيل الدخول</b-button>
+                </router-link>
             </div>
             <div class="line">
                 <div class="timeline">
@@ -24,31 +29,24 @@
                 </div>
             </div>
             <v-app>
-                <form class="form-input">
-
+                <form class="form-input col-lg-12">
                     <div class="form-row ">
-
-                        <label for="lang" class="col-lg-2 label-input ">لغة الموقع</label>
-
+                        <label for="lang" class="col-lg-3 label-input ">لغة الموقع</label>
                         <v-select class="col-md-5 input-field" :items="items" color=var(--main-color) :label='selected'
                             dense solo></v-select>
-
                     </div>
 
-
                     <div class="form-row " style="margin-top: 40px">
-                        <label for="color" class="col-lg-2 label-input">الوان الموقع</label>
+                        <label for="color" class="col-lg-3 label-input">الوان الموقع</label>
                         <b-form-radio class="col-lg-3" id="dark" name="color" value="dark" v-model="theme">
                             Dark
                         </b-form-radio>
-                        <b-form-radio class="col-lg-3" id="light" name="color" value="light" v-model="theme">
+                        <b-form-radio class="col-lg-2" id="light" name="color" value="light" v-model="theme">
                             Light
                         </b-form-radio>
                     </div>
 
-
                     <div class="buttons form-row" style="margin-top:70px">
-
                         <div class="float-left">
                             <router-link to="/create-store2">
                                 <b-button type="submit" class="button-add">
@@ -132,6 +130,7 @@ export default {
 
 
 <style lang="scss">
-
+@import '@/assets/css/Create Store/CreateStore.css';
+@import '@/assets/css/Create Store/CreateStore3.css';
 </style>
 

@@ -1,13 +1,14 @@
 <template>
     <div class="create-store create-store1 ">
-        <div class="side-left col-lg-3 d-none d-lg-block">
-            <div class="image">
-                <img src="../../assets/img/create_store1.png" class="img-thumbnail img" />
-            </div>
-        </div>
-        <div class="side-right col-lg-9">
-            <div class="address">
-                <p style="margin-bottom: 0px">إنشاء متجر</p>
+        <div class="side-right col-lg-12">
+            <div class="top-button">
+                <router-link to="/create-store1">
+                    <b-button type="button" class="button-add  button-login" style="margin-left: -15px;">إنشاء متجر</b-button>
+                </router-link>
+                <router-link to="/login">
+                    <b-button type="button" class="button-add create button-login">تسجيل الدخول</b-button>
+                </router-link>
+                
             </div>
             <div class="line">
                 <div class="timeline">
@@ -23,7 +24,7 @@
                 </div>
             </div>
             <v-app>
-                <form class="form-input">
+                <form class="form-input col-lg-12">
                     <div class="form-row">
                         <div class="my-input col-lg-6 row">
                             <label for="name" class="col-lg-4 label-input">اسم المتجر</label>
@@ -90,19 +91,19 @@
                         <div class="my-input col-lg-6 row" style="margin-top: -12px">
                             <label for="logo" class="col-lg-4 label-input" style="margin-left: -12px">العلامة التجارية</label>
                             <v-file-input type="file" prepend-icon="mdi-camera" placeholder="اختيار صورة"
-                                @change="onFileSelected" class="col-lg-7 col-md-7 input-field " filled color=var(--main-color)></v-file-input>
+                                @change="onFileSelected" class="col-lg-7  input-field " filled color=var(--main-color)></v-file-input>
                         </div>
 
                         <div class="my-input col-lg-6 row" style="margin-top: -12px">
                             <label for="cover" class="col-lg-4 label-input" style="margin-left: -12px">صورة الغلاف</label>
                             <v-file-input type="file" placeholder="اختيار صورة" @change="onFileSelected2"
-                                class="col-lg-7 col-md-7 input-field " filled prepend-icon="mdi-camera" color=var(--main-color)></v-file-input>
+                                class="col-lg-7  input-field " filled prepend-icon="mdi-camera" color=var(--main-color)></v-file-input>
                         </div>
                     </div>
 
                     <div class="float-center" style="margin-top: 20px">
                         <!-- <router-link to="/create-store2"> -->
-                        <b-button type="button" class="button-add" v-on:click="submitForm">
+                        <b-button type="button" class="button-add" v-on:click="submitForm" style="margin-top: 30px;margin-right: 30px;">
                             <font-awesome-icon icon="fas fa-arrow-left" class="icon-button" />التالي
                         </b-button>
                         <!-- </router-link> -->

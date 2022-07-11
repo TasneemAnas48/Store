@@ -1,0 +1,24 @@
+
+@media (max-width: 1160px) {
+    .login .v-icon {
+        top: -19px !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .login .v-icon {
+        top: 1px !important;
+        left: 33px !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .login {
+        height: 650px !important;
+    }
+}
+@media (min-width: 992px) {
+    .login {
+        height: 550px !important;
+    }
+}

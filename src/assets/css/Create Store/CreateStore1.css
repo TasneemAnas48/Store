@@ -18,3 +18,18 @@
     left: 36px;
     color: red;
 }
+@media (max-width: 992px) {
+    .create-store1 {
+        height: 1300px !important;
+        padding-left: 50px;
+    }
+}
+@media (min-width: 992px) {
+    .create-store1 {
+        height: 800px !important;
+    }
+}
+
+.create-store1 .v-application--wrap{
+    margin-left: 40px;
+}

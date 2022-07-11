@@ -1,13 +1,14 @@
 <template>
     <div class="create-store create-store2">
-        <div class="side-left col-lg-3 d-none d-lg-block">
-            <div class="image">
-                <img src="../../assets/img/create_store2.png" class="img-thumbnail img" />
-            </div>
-        </div>
-        <div class="side-right col-lg-9 ">
-            <div class="address">
-                <p style="margin-bottom: 0px">إنشاء متجر</p>
+
+        <div class="side-right col-lg-12 ">
+            <div class="top-button">
+                <router-link to="/create-store1">
+                    <b-button type="button" class="button-add  button-login" style="margin-left: -15px;">إنشاء متجر</b-button>
+                </router-link>
+                <router-link to="/login">
+                    <b-button type="button" class="button-add create button-login">تسجيل الدخول</b-button>
+                </router-link>
             </div>
             <div class="line">
                 <div class="timeline">
@@ -29,7 +30,7 @@
             <v-app>
                 <form class="form-input">
 
-                    <div class="form-row ">
+                    <div class="form-row col-lg-12">
                         <div class="my-input col-lg-6 row">
                             <label for="name" class="col-lg-4 label-input">الاسم</label>
                             <b-form-input class="col-lg-6 input-field" name="name"
@@ -84,7 +85,7 @@
                             </v-tooltip>
                         </div>
 
-                        <div class="my-input col-lg-6 row" style="margin-top: -12px">
+                        <div class="my-input col-lg-6 row" style="margin-top: -12px;padding-left: 30px;">
                             <label for="confrim-password" class="col-lg-4 label-input">تأكيد كلمة السر</label>
                             <b-form-input class="col-lg-6 input-field" v-model="createStore.confrim"
                                 name="confrim-password" type="password"></b-form-input>

@@ -16,6 +16,8 @@ import CreateStore1 from "../views/Create Store/CreateStore1.vue";
 import CreateStore2 from "../views/Create Store/CreateStore2.vue";
 import CreateStore3 from "../views/Create Store/CreateStore3.vue";
 
+import Login from "../views/Create Store/Login.vue";
+
 import Setting1 from "../views/Settingg/Setting1.vue";
 import Setting2 from "../views/Settingg/Setting2.vue";
 import Setting3 from "../views/Settingg/Setting3.vue";
@@ -38,6 +40,10 @@ import Invoice from "../views/Order/Invoice.vue";
 import PrintInvoice from "../views/Order/PrintInvoice.vue";
 
 import Dashboard from "../views/Dashboard.vue";
+
+
+import Report from "../views/Report/Report.vue";
+import ReportSales from "../views/Report/ReportSales.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -56,6 +62,11 @@ const routes = [
         path: "/create-store3",
         name: "create-store3",
         component: CreateStore3,
+    },
+    {
+        path: "/login",
+        name: "login",
+        component: Login,
     },
     {
         path: "/add-group",
@@ -196,6 +207,16 @@ const routes = [
         path: "/dashboard",
         name: "dashboard",
         component: Dashboard,
+    },
+    {
+        path: "/report",
+        name: "report",
+        component: Report,
+    },
+    {
+        path: "/report-sales",
+        name: "report-sales",
+        component: ReportSales,
     },
 ];
 const router = new VueRouter({

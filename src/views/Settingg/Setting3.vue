@@ -123,7 +123,7 @@
                                                 </div>
                                                 <div class="check">
                                                     <v-checkbox v-for="option in options" :key="option.value"
-                                                        :value="option.value" v-model="checked" color=var(--main-color)
+                                                        :value="option.text" v-model="checked" color=var(--main-color)
                                                         :label="option.text"></v-checkbox>
                                                 </div>
                                             </v-container>

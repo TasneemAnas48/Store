@@ -2,9 +2,17 @@
     <div class="body-page add-group" id="body-page">
         <div class="body">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" v-if="this.route == 'add-group'">
                     <div class="d-flex justify-content-between align-items-center add">
                         إنشاء مجموعة
+                        <router-link to="/view-group">
+                            <b-button class="button-view">عرض المجموعات</b-button>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="card-header" v-else-if="this.route == 'edit-group'">
+                    <div class="d-flex justify-content-between align-items-center add">
+                        تعديل مجموعة
                         <router-link to="/view-group">
                             <b-button class="button-view">عرض المجموعات</b-button>
                         </router-link>
@@ -60,8 +68,12 @@
                                         </div>
 
                                     </div>
-                                    <div class="form-row float-left">
+                                    <div class="form-row float-left" v-if="this.route == 'add-group'">
                                         <b-button type="button" class=" button-add" v-on:click="submitForm">إنشاء
+                                        </b-button>
+                                    </div>
+                                    <div class="form-row float-left" v-else-if="this.route == 'edit-group'">
+                                        <b-button type="button" class=" button-add" v-on:click="submitForm">حفظ
                                         </b-button>
                                     </div>
                                 </form>
@@ -93,6 +105,7 @@ export default {
             image: '',
             edit: false,
             id: '',
+            route:''
         };
     },
     validations() {
@@ -107,6 +120,7 @@ export default {
         }
     },
     mounted(){
+        this.route = this.$route.name
         if (this.$route.name == "edit-group"){
             this.id = this.$route.params.id
             this.edit = true
