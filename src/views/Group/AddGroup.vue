@@ -128,6 +128,7 @@ export default {
             .then(res => {
                 this.address = res.data.title
                 this.discription = res.data.discription
+                this.image = res.data.image
             })
         }
     },

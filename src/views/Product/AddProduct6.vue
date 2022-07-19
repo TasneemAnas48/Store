@@ -3,9 +3,17 @@
     <div class="body-page add-product6" id="body-page">
         <div class="body">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" v-if="this.route == 'add-product6'">
                     <div class="d-flex justify-content-between align-items-center add">
                         إضافة منتج
+                        <router-link to="/view-product">
+                            <b-button class="button-view">عرض المنتجات</b-button>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="card-header" v-if="this.route == 'edit-product6'">
+                    <div class="d-flex justify-content-between align-items-center add">
+                        تعديل منتج
                         <router-link to="/view-product">
                             <b-button class="button-view">عرض المنتجات</b-button>
                         </router-link>
@@ -78,13 +86,26 @@
                                         <div class="form-row line-option">
                                         </div>
                                     </div>
-                                    <div class="float-left row-bottom">
+                                    <div class="float-left row-bottom" v-if="this.route == 'add-product6'">
                                         <b-button type="button" class="button-add" v-on:click="submitForm">
                                             إنشاء
                                         </b-button>
                                     </div>
+                                    <div class="float-left row-bottom" v-else-if="this.route == 'edit-product6'">
+                                        <b-button type="button" class="button-add" v-on:click="submitForm">
+                                            تعديل
+                                        </b-button>
+                                    </div>
                                     <div class="float-left row-bottom">
-                                        <router-link to="/add-product5">
+                                        <router-link to="/add-product5" v-if="this.route == 'add-product6'">
+                                            <b-button type="submit" class="button-add">
+                                                <font-awesome-icon icon="fas fa-arrow-right"
+                                                    class="icon-button-right" />
+                                                السابق
+                                            </b-button>
+                                        </router-link>
+                                        <router-link :to="{ name: 'edit-product5', params: { id: id } }"
+                                            v-else-if="this.route == 'edit-product6'">
                                             <b-button type="submit" class="button-add">
                                                 <font-awesome-icon icon="fas fa-arrow-right"
                                                     class="icon-button-right" />
@@ -132,7 +153,10 @@ export default {
                 OptionValue: [{
                     name: ''
                 }]
-            }]
+            }],
+            id: '',
+            route: '',
+            product_id:'',
         };
     },
     methods: {
@@ -140,27 +164,84 @@ export default {
             this.OptionSelected[i].OptionValue.push({
                 name: ''
             });
-            // console.log(this.OptionSelected[i].OptionValue);
         },
         add_option() {
             this.OptionSelected.push({
                 value: '',
                 OptionValue: [{}],
             });
-            // console.log(this.OptionSelected);
         },
         submitForm() {
             this.sendData()
-            
+        },
+        addData(formData){
+            this.axios
+                .post("http://" + this.$store.state.ip + "api/product/create", formData)
+                .then((res) => {
+                    console.log(res)
+                    if (res.statusText == "OK")
+                            this.$router.replace({ name: 'view-product' })
+                })
+        },
+        editData(formData){
+            this.axios
+                .post("http://" + this.$store.state.ip + "api/product/update", formData)
+                .then((res) => {
+                    console.log(res)
+                    if (res.statusText == "OK")
+                            this.$router.replace({ name: 'view-product' })
+                })
         },
         sendData() {
-            this.axios.post("https://jsonplaceholder.typicode.com/posts", {
-                OptionSelected: this.OptionSelected,
-            }).then((res) => console.log(res));
+            this.$store.state.product.id_store = localStorage.getItem("id_store")
+            console.log(this.$store.state.product)
+            const formData = new FormData()
+            
+            formData.append('name', this.$store.state.product.address)
+            formData.append('discription', this.$store.state.product.discription)
+            formData.append('image', this.$store.state.product.image)
+            formData.append('selling_price', this.$store.state.product.sell)
+            formData.append('cost_price', this.$store.state.product.cost)
+            formData.append('return_or_replace', this.$store.state.product.replace)
+            formData.append('classification', JSON.stringify(this.$store.state.product.selectedClassification))
+            formData.append('collection_id', this.$store.state.product.selectedGroup)
+            formData.append('gift', this.$store.state.product.present)
+            formData.append('prepration_time', this.$store.state.product.time)
+            formData.append('age', this.$store.state.product.age)
+            formData.append('party', this.$store.state.product.party)
+
+            
+            if (this.route == "edit-product6"){
+                console.log(this.product_id)
+                formData.append('id',this.product_id)
+                this.editData(formData)
+            }
+            else if (this.route == "add-product6"){
+                formData.append('store_id', this.$store.state.product.id_store)
+                this.addData(formData)
+            }
+            
+            for (var pair of formData.entries()) {
+                console.log(pair)
+            }
+
+            console.log(this.OptionSelected)
         },
     },
     components: {
         InputOption,
+    },
+    mounted() {
+        this.route = this.$route.name
+        if (this.$route.name == "edit-product6") {
+            this.id = this.$route.params.id
+            this.axios.get("http://" + this.$store.state.ip + "api/product/show/" + this.id)
+                .then(res => {
+                    // console.log(res.data.product_id)
+                    this.product_id = res.data.product_id
+                    console.log(this.product_id)
+                })
+        }
     },
 };
 

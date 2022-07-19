@@ -170,7 +170,7 @@ export default {
             if (!this.v$.$error) {
                 if (this.old_password != '') {
                     console.log(this.old_password)
-                    this.axios.post("http://" + this.$store.state.ip + "api/storeManager/true_password", { old_password: this.old_password, persone_id: this.$store.state.id_persone })
+                    this.axios.post("http://" + this.$store.state.ip + "api/settings/storeManager/true_password", { old_password: this.old_password, persone_id: this.$store.state.id_persone })
                     .then((res) => {
                         console.log(res.data)
                         if (res.data.data == "erorr")

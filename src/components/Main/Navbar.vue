@@ -32,7 +32,7 @@
                                     <div class="row" style=" justify-content: center;margin-top:30px">
                                         <h5 style="color: var(--main-color)">{{ name }}</h5>
                                     </div>
-                                    <div class="row" style=" justify-content: center;margin-top:20px">
+                                    <div class="row" style=" justify-content: center;margin-top:10px">
                                         <h6>{{ email }}</h6>
                                     </div>
                                 </b-card-text>
@@ -46,13 +46,13 @@
                                     </router-link>
                                 </b-card-text>
                                 <b-dd-divider></b-dd-divider>
-                                <b-card-text class="item" style="margin:0px">
-                                    <router-link to="/setting1">
+                                <b-card-text class="item" style="margin:0px" @click="log_out">
+                                    <!-- <router-link to="/setting1"> -->
                                         <div class="row" style="color:var(--gray-medium);align-items: center;font-size:17px;">
                                             <font-awesome-icon icon="fa fa-sign-out" style="margin:20px"/>
                                             <div>تسجيل خروج</div>
                                         </div>
-                                    </router-link>
+                                    <!-- </router-link> -->
                                 </b-card-text>
                             </div>
                         </div>
@@ -74,8 +74,9 @@ export default {
     },
     data() {
         return {
-            name: 'تسنيم انس',
-            email: 'tasneemanas@gmail.com',
+            email:'',
+            name:'',
+            image:'',
 
             messages: 0,
 
@@ -95,7 +96,32 @@ export default {
 
             ],
         }
-    }
+    },
+    mounted() {
+        this.isOpened = this.isMenuOpen;
+        this.$store.state.id_manager = localStorage.getItem("id_manager")
+        this.axios.get("http://"+this.$store.state.ip+"api/settings/storeManager/my_Store_manager/"+ this.$store.state.id_manager)
+        .then(res => {
+            // console.log(res.data)
+            this.email = res.data.person.email
+            this.name = res.data.person.name
+            this.image = res.data.image
+            this.store_name = res.data.name_store
+            // console.log(this.email)
+
+        });
+    },
+    methods:{
+        log_out(){
+            console.log("Log out")
+            localStorage.setItem("id_store", '')
+            localStorage.setItem("id_manager", '')
+            localStorage.setItem("id_persone", '')
+            localStorage.setItem("auth", false)
+            this.$router.replace({ name: 'login'})
+        },
+
+    },
 };
 </script>
 

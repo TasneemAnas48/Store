@@ -10,13 +10,21 @@ import AddProduct3 from "../views/Product/AddProduct3.vue";
 import AddProduct4 from "../views/Product/AddProduct4.vue";
 import AddProduct5 from "../views/Product/AddProduct5.vue";
 import AddProduct6 from "../views/Product/AddProduct6.vue";
+
 import ViewProduct from "../views/Product/ViewProduct.vue";
+
+import EditProduct1 from "../views/Product/AddProduct.vue";
+import EditProduct2 from "../views/Product/AddProduct2.vue";
+import EditProduct3 from "../views/Product/AddProduct3.vue";
+import EditProduct4 from "../views/Product/AddProduct4.vue";
+import EditProduct5 from "../views/Product/AddProduct5.vue";
+import EditProduct6 from "../views/Product/AddProduct6.vue";
 
 import CreateStore1 from "../views/Create Store/CreateStore1.vue";
 import CreateStore2 from "../views/Create Store/CreateStore2.vue";
 import CreateStore3 from "../views/Create Store/CreateStore3.vue";
 
-import Login from "../views/Create Store/Login.vue";
+import LoginComponent from "../views/Create Store/Login.vue";
 
 import Setting1 from "../views/Settingg/Setting1.vue";
 import Setting2 from "../views/Settingg/Setting2.vue";
@@ -33,6 +41,10 @@ import AddCodeDiscount3 from "../views/Discount/Code/AddCodeDiscount3.vue";
 import AddDinamicDiscount from "../views/Discount/Dinamic/AddDinamicDiscount.vue";
 import AddDinamicDiscount2 from "../views/Discount/Dinamic/AddDinamicDiscount2.vue";
 
+import EditCodeDiscount from "../views/Discount/Code/AddCodeDiscount.vue";
+import EditDinamicDiscount from "../views/Discount/Dinamic/AddDinamicDiscount.vue";
+
+
 import AcceptOrder from "../views/Order/AcceptOrder.vue";
 import FinishOrder from "../views/Order/FinishOrder.vue";
 import ReceiveOrder from "../views/Order/ReceiveOrder.vue";
@@ -44,6 +56,9 @@ import Dashboard from "../views/Dashboard.vue";
 
 import Report from "../views/Report/Report.vue";
 import ReportSales from "../views/Report/ReportSales.vue";
+import ReportOrder from "../views/Report/ReportOrder.vue";
+import ReportRateStore from "../views/Report/ReportRateStore.vue";
+import ReportRateProduct from "../views/Report/ReportRateProduct.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -66,7 +81,7 @@ const routes = [
     {
         path: "/login",
         name: "login",
-        component: Login,
+        component: LoginComponent,
     },
     {
         path: "/add-group",
@@ -103,6 +118,37 @@ const routes = [
         name: "add-product6",
         component: AddProduct6,
     },
+    {
+        path: "/edit-product1/:id",
+        name: "edit-product1",
+        component: EditProduct1,
+    },
+    {
+        path: "/edit-product2/:id",
+        name: "edit-product2",
+        component: EditProduct2,
+    },
+    {
+        path: "/edit-product3/:id",
+        name: "edit-product3",
+        component: EditProduct3,
+    },
+    {
+        path: "/edit-product4/:id",
+        name: "edit-product4",
+        component: EditProduct4,
+    },
+    {
+        path: "/edit-product5/:id",
+        name: "edit-product5",
+        component: EditProduct5,
+    },
+    {
+        path: "/edit-product6/:id",
+        name: "edit-product6",
+        component: EditProduct6,
+    },
+
     {
         path: "/setting1",
         name: "setting1",
@@ -169,6 +215,11 @@ const routes = [
         component: AddCodeDiscount3,
     },
     {
+        path: "/edit-code/:id",
+        name: "edit-code",
+        component: EditCodeDiscount,
+    },
+    {
         path: "/add-dinamic",
         name: "add-dinamic",
         component: AddDinamicDiscount,
@@ -177,6 +228,11 @@ const routes = [
         path: "/add-dinamic2",
         name: "add-dinamic2",
         component: AddDinamicDiscount2,
+    },
+    {
+        path: "/edit-dinamic/:id",
+        name: "edit-dinamic",
+        component: EditDinamicDiscount,
     },
     {
         path: "/accept-order",
@@ -194,12 +250,12 @@ const routes = [
         component: ReceiveOrder,
     },
     {
-        path: "/invoice",
+        path: "/invoice/:id",
         name: "invoice",
         component: Invoice,
     },
     {
-        path: "/print-invoice",
+        path: "/print-invoice/:id",
         name: "print-invoice",
         component: PrintInvoice,
     },
@@ -218,7 +274,25 @@ const routes = [
         name: "report-sales",
         component: ReportSales,
     },
+    {
+        path: "/report-order",
+        name: "report-order",
+        component: ReportOrder,
+    },
+    {
+        path: "/report-rate-store",
+        name: "report-rate-store",
+        component: ReportRateStore,
+    },
+    {
+        path: "/report-rate-product",
+        name: "report-rate-product",
+        component: ReportRateProduct,
+    },
+    
 ];
+const auth = localStorage.getItem("auth")
+
 const router = new VueRouter({
     mode: "history",
     base: process.env.BASE_URL,
@@ -226,4 +300,13 @@ const router = new VueRouter({
 });
 
 export default router;
+
+// router.beforeEach((to, from, next) => {
+    
+//     // console.log(auth)
+//     // if (auth == false) 
+//         // next({ name: 'login' })
+//     // else 
+//         next()
+//     })
 

@@ -1,9 +1,13 @@
 
 .add-dinamic2 .mdi-exclamation {
     left: -20px;
-    margin-right: -33px;
+    margin-right: 0px;
     z-index: 100;
-    margin-top: 10px;
+    margin-top: -10px;
+}
+.add-dinamic2 .v-input--radio-group__input .mdi-exclamation{
+    margin-top: 10px !important;
+    margin-left: -65px !important;
 }
 
 
@@ -15,14 +19,13 @@
     min-width: 270px !important
 }
 
-.add-dinamic2 .date-input{
-    min-width: 325px !important;
+.add-dinamic2 .date-input .v-input__slot{
+    min-width: 310px !important;
     left: 45px;
 }
-
 .add-dinamic2 .mdi-calendar{
     margin-top: 14px;
-    margin-left: -72px;
+    margin-left: 10px;
     z-index: 10;
 }
 

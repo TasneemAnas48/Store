@@ -1,12 +1,12 @@
 <template>
-    <div class="body-page view" id="body-page">
+    <div class="body-page view view-pro" id="body-page">
         <div class="body">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center add">
-                    المنتجات
+                        المنتجات
                         <router-link to="/add-product1">
-                            <b-button class="button-view">إنشاء منتج</b-button>
+                            <b-button class="button-view">إضافة منتج</b-button>
                         </router-link>
                     </div>
                 </div>
@@ -17,15 +17,42 @@
                                 placeholder="ابحث" append-icon="mdi-magnify" single-line hide-details>
                             </b-form-input>
                         </v-card-title>
-                        <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search" :fixed-header="true"
-                            :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true">
-                            <template v-slot:items="props">
-                                <td>{{ props.item.id }}</td>
-                                <td>{{ props.item.title }}</td>
-                                <td>{{ props.item.userId }}</td>
-                                <td>{{ props.item.userId }}</td>
-                                <td>{{ props.item.userId }}</td>
+                        <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
+                            :fixed-header="true" :page.sync="page" @page-count="pageCount = $event"
+                            :hide-default-footer="true">
+
+                            <template v-slot:[`item.image`]="{ item }">
+                                <img :src="getImage(item)">
                             </template>
+
+                            <template v-slot:[`item.return_or_replace`]="{ item }">
+                                <td v-if="item.return_or_replace ==  '1'">ممكن</td>
+                                <td v-else-if="item.return_or_replace == '0'">غير ممكن</td>
+                            </template>
+                            <template v-slot:[`item.gift`]="{ item }">
+                                <td v-if="item.gift ==  '1'">ممكن</td>
+                                <td v-else-if="item.gift == '0'">غير ممكن</td>
+                            </template>
+
+                            <template v-slot:[`item.review`]="{ item }">
+                                <td v-if="item.review ==  0">
+                                    <v-icon color="red" >mdi-emoticon-sad-outline</v-icon>
+                                </td>
+                                <td v-else-if="item.review == 1">
+                                    <v-icon color="yellow" >mdi-emoticon-neutral-outline</v-icon>
+                                </td>
+                                <td v-else-if="item.review == 2">
+                                    <v-icon color="green" >mdi-emoticon-excited-outline</v-icon>
+                                </td>
+                                <td v-else-if="item.review == 3">لايوجد</td>
+                            </template>
+
+                            <!-- <template v-slot:[`item.image`]="{ item }">
+                                <div class="p-2"> -->
+                                    <!-- <img :src="http://"+this.$store.state.ip+"+uploads/books/"+item.image /> -->
+                                    <!-- <v-img :src="item.image" height="100px"></v-img> -->
+                                <!-- </div>
+                            </template> -->
 
                             <template v-slot:top>
 
@@ -48,7 +75,7 @@
                             </template>
                             <template v-slot:[`item.mangement`]="{ item }">
                                 <font-awesome-icon icon="fa fa-trash" class="fa-trash" @click="deleteItem(item)" />
-                                <font-awesome-icon icon="fas fa-edit" class=" fa-edit" />
+                                <font-awesome-icon icon="fas fa-edit" class=" fa-edit"  @click="editItem(item)"/>
                             </template>
                         </v-data-table>
                         <div class="text-center">
@@ -61,9 +88,7 @@
         </div>
     </div>
 </template>
-<script>
 
-</script>
 <script>
 export default {
     name: "ViewProduct",
@@ -74,16 +99,22 @@ export default {
             search: '',
             dialogDelete: false,
             headers: [
-                {
-                    text: 'عنوان',
-                    align: 'start',
-                    value: 'id',
-                },
-                { text: 'شرح', value: 'title', sortable: false, width: '270px', },
-                { text: 'سعر المبيع', value: 'userId' },
-                { text: 'سعر التكلفة', value: 'userId' },
-                { text: 'المجموعة', value: 'userId' },
-                { text: 'إدارة', value: 'mangement' , sortable: false,},
+                { text: 'رقم', value: 'product_id', align: 'center', width:'120'},
+                { text: 'اسم المنتج', value: 'product_name', align: 'center', width:'120' },
+                { text: 'صورة', value: 'image', align: 'center', width:'120' },
+                { text: 'شرح', value: 'discription', align: 'center', width:'120'  },
+                { text: 'سعر المبيع', value: 'selling_price', align: 'center' , width:'120' },
+                { text: 'سعر التكلفة', value: 'cost_price', align: 'center' , width:'140' },
+                { text: 'المجموعة', value: 'collection', align: 'center', width:'120' },
+                { text: 'التصنيف', value: 'classification', align: 'center', width:'120' },
+                { text: 'تبديل', value: 'return_or_replace', align: 'center', width:'120' },
+                { text: 'تغليف كهدية', value: 'gift', align: 'center' , width:'140'},
+                { text: 'المناسبة', value: 'party', align: 'center', width:'120' },
+                { text: 'الوقت المتوقع للتحضير', value: 'prepration_time', align: 'center', width:'190' },
+                { text: 'العمر', value: 'age', align: 'center', width:'120' },
+                { text: 'عدد مرات البيع', value: 'num_cell', align: 'center', width:'150' },
+                { text: 'التقييم', value: 'review', align: 'center', width:'150' },
+                { text: 'إدارة', value: 'mangement' , sortable: false, align: 'center', width:'120'},
             ],
             rows: [],
             editedIndex: -1,
@@ -98,6 +129,12 @@ export default {
         },
     },
     methods: {
+        getImage(item){
+            return "http://"+this.$store.state.ip+"uploads/books/"+item.image
+        },
+        editItem(item){
+            this.$router.replace({ name: 'edit-product1', params: {id: item.product_id} })
+        },
         deleteItem (item) {
             this.editedIndex = this.rows.indexOf(item)
             this.delete = item
@@ -113,27 +150,41 @@ export default {
         },
         sendIdDeleted() {
             this.axios
-                .post("https://jsonplaceholder.typicode.com/posts",this.delete.id)
+                .post("http://"+this.$store.state.ip+"api/product/delete",{id: this.delete.product_id})
                 .then((res) => {
-                    console.log(res.data);
-                    console.log(this.delete.id);
-                });
+                    // console.log(res.data)
+                    // console.log(this.delete.product_id)
+                })
         },
         getData(){
-            this.axios.get('https://jsonplaceholder.typicode.com/posts')
+            this.$store.state.id_store = localStorage.getItem("id_store")
+            this.axios.get("http://"+this.$store.state.ip+"api/product/index/"+ this.$store.state.id_store)
             .then(res => {
-                this.rows = res.data;
-                console.log(res.data);
+                this.rows = res.data
+                // console.log(res.data)
             });
         }
     },
-    mounted() {
+    mounted(){
         this.getData()
+        this.route = this.$route.name
+        if (this.$route.name == "edit-group"){
+            this.id = this.$route.params.id
+            this.edit = true
+            this.axios.get("http://"+this.$store.state.ip+"api/collection/show/" + this.id)
+            .then(res => {
+                this.address = res.data.title
+                this.discription = res.data.discription
+            })
+        }
     },
     
 };
 </script>
 
 <style lang="scss">
-
+.view-pro img{
+    width: 70px;
+    height: 70px;
+}
 </style>

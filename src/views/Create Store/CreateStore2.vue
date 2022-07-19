@@ -162,7 +162,7 @@ export default {
     methods: {
         validateEmail() {
             this.v$.$validate();
-            this.axios.post("http://"+this.$store.state.ip+"api/person/unique", {email : this.$store.state.createStore.email})
+            this.axios.post("http://"+this.$store.state.ip+"api/settings/person/unique", {email : this.$store.state.createStore.email})
             .then((res) =>{
                 if (res.data.data == "error")
                     this.email = false

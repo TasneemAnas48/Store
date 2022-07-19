@@ -5,11 +5,11 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center add">
                         <div class="p-2 bd-highlight">
-                            الطلبات المنفذة
+                            الطلبات المسلمة
                         </div>
                         <div class="p-2 bd-highlight">
                             <router-link to="/receive-order" style="margin-left: 20px">
-                                <b-button class="button-view">الطلبات المستلمة</b-button>
+                                <b-button class="button-view">الطلبات المعلقة</b-button>
                             </router-link>
 
                             <router-link to="/accept-order">
@@ -30,9 +30,9 @@
                             :hide-default-footer="true">
                             <template v-slot:items="props">
                                 <td>{{ props.item.id }}</td>
-                                <td>{{ props.item.name }}</td>
-                                <td>{{ props.item.username }}</td>
-                                <td>{{ props.item.email }}</td>
+                                <td>{{ props.item.customer_name }}</td>
+                                <td>{{ props.item.created_at }}</td>
+                                <td>{{ props.item.delivery_time }}</td>
                             </template>
 
                             <template v-slot:top>
@@ -62,10 +62,8 @@
                                     @click="showDetailItem(item)" />
                             </template>
                             <template v-slot:[`item.invoice`]="{ item }">
-                                <router-link to="/invoice">
-                                    <font-awesome-icon icon="fa fa-file-text" class="fa-file-text"
+                                <font-awesome-icon icon="fa fa-file-text" class="fa-file-text"
                                         @click="showInvoice(item)" />
-                                </router-link>
                             </template>
                         </v-data-table>
                         <div class="text-center">
@@ -91,17 +89,12 @@ export default {
             search: '',
             dialogShow: false,
             headers: [
-                {
-                    text: 'رقم الزبون',
-                    align: 'start',
-                    value: 'id',
-                },
-                { text: 'اسم الزبون', value: 'name' },
-                { text: 'تاريخ الطلب', value: 'order-date' },
-                { text: 'تاريخ التسليم', value: 'delivery-date'},
+                { text: 'رقم الطلب', value: 'id', align: 'center'},
+                { text: 'اسم الزبون', value: 'customer_name', align: 'center' },
+                { text: 'تاريخ الطلب', value: 'created_at', align: 'center' },
+                { text: 'تاريخ التسليم', value: 'delivery_time', align: 'center'},
                 { text: 'تفاصيل الطلب', value: 'details', sortable: false, align: 'center'},
                 { text: 'الفاتورة', value: 'invoice', sortable: false, align: 'center'},
-
             ],
             rows: [],
             show: '',
@@ -111,19 +104,24 @@ export default {
     },
     methods: {
         getData(){
-            this.axios.get('https://jsonplaceholder.typicode.com/users')
+            this.$store.state.id_store = localStorage.getItem("id_store")
+            this.axios.get("http://"+this.$store.state.ip+"api/myorder/all_my_order/"+ this.$store.state.id_store+"/3")
             .then(res => {
-                this.rows = res.data;
-                // console.log(res.data);
+                this.rows = res.data
+                console.log(res.data)
             });
         },
         showDetailItem(item){
             this.dialogShow = true;
             this.show = item
-            console.log(this.show.id)
+            this.axios.get("http://"+this.$store.state.ip+"api/myorder/order_product/"+ this.show.id)
+            .then(res => {
+                console.log(res)
+            });
         },
         showInvoice(item){
             console.log(item.id)
+            this.$router.replace({ name: 'invoice', params: {id: item.id} })
         }
     },
     mounted() {

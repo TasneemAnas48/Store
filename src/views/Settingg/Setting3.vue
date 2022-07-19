@@ -246,7 +246,7 @@ export default {
             this.dialog = false
         },
         getData(){
-            this.axios.get("http://"+this.$store.state.ip+"api/PrivilladgeHelperController/my_helper/" + this.$store.state.id_manager)
+            this.axios.get("http://"+this.$store.state.ip+"api/settings/PrivilladgeHelperController/my_helper/" + this.$store.state.id_manager)
             .then(res => {
                 this.rows = res.data.data
                 this.adminNumbar = res.data.data.length

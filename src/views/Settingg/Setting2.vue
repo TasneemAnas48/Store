@@ -133,7 +133,7 @@ export default {
         }
     },
     mounted() {
-        this.axios.get("http://" + this.$store.state.ip + "api/storeManager/index/" + this.$store.state.id_manager)
+        this.axios.get("http://" + this.$store.state.ip + "api/settings/storeManager/index/" + this.$store.state.id_manager)
             .then(res => {
                 // console.log(res.data)
                 this.username = res.data.data.name
@@ -149,7 +149,7 @@ export default {
             this.v$.$validate()
             if (!this.v$.$error)
                 if (this.current_email != this.email){
-                    this.axios.post("http://" + this.$store.state.ip + "api/person/unique", { email: this.email })
+                    this.axios.post("http://" + this.$store.state.ip + "api/settings/person/unique", { email: this.email })
                         .then((res) => {
                             console.log(res.data)
                             if (res.data.data == "error")

@@ -96,15 +96,17 @@ body {
     opacity: 0;
 }
 
-.sidebar .logo-details .logo_name {
+.sidebar  .logo_name {
     color: var(--main-color);
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-right: 15px;
+    // font-weight: 600;
     opacity: 0;
 }
 
-.sidebar.open .logo-details .icon,
-.sidebar.open .logo-details .logo_name {
+.sidebar.open .icon,
+.sidebar.open  .logo_name {
     opacity: 1;
 }
 

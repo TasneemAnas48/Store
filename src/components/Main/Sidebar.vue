@@ -3,7 +3,7 @@
         <div class="logo-details" style="margin: 6px 14px 0 14px">
             <img v-if="menuLogo" :src="menuLogo" alt="menu-logo" class="menu-logo icon" />
             <div class="logo_name">
-                <!-- {{ StoreName }} -->
+                
             </div>
             <div v-if="isOpened">
                 <font-awesome-icon icon="fa fa-angle-double-right" id="btn" @click="isOpened = !isOpened" />
@@ -19,8 +19,8 @@
                     <img :src="profileImg" />
                 </div>
                 <div id="user-info" class="user-info">
-                    <p class="user-name">{{ profileName }}</p>
-                    <p class="user-email">{{ profileEmail }}</p>
+                    <p class="logo_name">{{ store_name }}</p>
+                    <!-- <p class="user-email">{{ email }}</p> -->
                 </div>
             </div>
         </div>
@@ -210,10 +210,26 @@ export default {
     data() {
         return {
             isOpened: false,
+            email:'',
+            name:'',
+            store_name:'',
+            image:'',
+
         };
     },
     mounted() {
         this.isOpened = this.isMenuOpen;
+        this.$store.state.id_manager = localStorage.getItem("id_manager")
+        this.axios.get("http://"+this.$store.state.ip+"api/settings/storeManager/my_Store_manager/"+ this.$store.state.id_manager)
+        .then(res => {
+            // console.log(res.data)
+            this.email = res.data.person.email
+            this.name = res.data.person.name
+            this.image = res.data.image
+            this.store_name = res.data.name_store
+            // console.log(this.email)
+
+        });
     },
     watch: {
         isOpened() {
@@ -226,7 +242,6 @@ export default {
                     ? this.menuOpenUserDisplayBlock
                     : this.menuClosedUserDisplayNone;
         },
-
     },
 };
 </script>

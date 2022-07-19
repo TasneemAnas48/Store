@@ -188,7 +188,7 @@ export default {
     },
     mounted() {
         console.log(this.$store.state.id_store)
-        this.axios.get("http://"+this.$store.state.ip+"api/store/show/"+this.$store.state.id_store)
+        this.axios.get("http://"+this.$store.state.ip+"api/settings/store/show/"+this.$store.state.id_store)
             .then(res => {
                 // console.log(res.data)
                 this.name = res.data.data[0].name

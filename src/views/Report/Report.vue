@@ -89,10 +89,11 @@
                                 <v-data-table ref="myTable" class="col-lg-12 my-table" :headers="headersSales"
                                     :items="rowsSales" :hide-default-footer="true">
                                     <template v-slot:items="props">
-                                        <td>{{ props.item.id }}</td>
-                                        <td>{{ props.item.username }}</td>
                                         <td>{{ props.item.name }}</td>
-                                        <td>{{ props.item.email }}</td>
+                                        <td>{{ props.item.selling_price }}</td>
+                                        <td>{{ props.item.cost_price }}</td>
+                                        <td>{{ props.item.selling_count }}</td>
+                                        <td>{{ props.item.Profit }}</td>
                                     </template>
                                 </v-data-table>
                             </v-app>
@@ -110,7 +111,7 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center add">
                                 الطلبات
-                            <router-link to="/report-sales">
+                            <router-link to="/report-order">
                                 <b-button class="button-view" style="margin-left:30px">طباعة التقرير</b-button>
                             </router-link>
                             </div>
@@ -119,13 +120,13 @@
                             <v-app>
                                 
                                 <v-data-table ref="myTable" class="col-lg-12 my-table" :headers="headersOrder"
-                                    :items="rowsSales" :hide-default-footer="true">
+                                    :items="rowsOrder" :hide-default-footer="true">
                                     <template v-slot:items="props">
-                                        <td>{{ props.item.id }}</td>
-                                        <td>{{ props.item.username }}</td>
                                         <td>{{ props.item.name }}</td>
-                                        <td>{{ props.item.name }}</td>
-                                        <td>{{ props.item.email }}</td>
+                                        <td>{{ props.item.$product }}</td>
+                                        <td>{{ props.item.delivery_price }}</td>
+                                        <td>{{ props.item.delivery_time }}</td>
+                                        <td>{{ props.item.created_at }}</td>
                                     </template>
                                 </v-data-table>
                             </v-app>
@@ -143,21 +144,47 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center add">
                                 تقييمات المتجر
-                            <router-link to="/report-sales">
+                            <router-link to="/report-rate-store">
                                 <b-button class="button-view" style="margin-left:30px">طباعة التقرير</b-button>
                             </router-link>
                             </div>
                         </div>
                         <div class="card-body" style="padding: 0px">
                             <v-app>
-                                
                                 <v-data-table ref="myTable" class="col-lg-12 my-table" :headers="headersRateStore"
-                                    :items="rowsSales" :hide-default-footer="true">
+                                    :items="rowsRateStore" :hide-default-footer="true">
                                     <template v-slot:items="props">
-                                        <td>{{ props.item.id }}</td>
-                                        <td>{{ props.item.username }}</td>
-                                        <td>{{ props.item.username }}</td>
                                         <td>{{ props.item.name }}</td>
+                                        <td>{{ props.item.notes }}</td>
+                                        <td>{{ props.item.value }}</td>
+                                        <td>{{ props.item.created_at }}</td>
+                                    </template>
+                                    <template v-slot:[`item.value`]="{ item }">
+                                        <td v-if="item.value ==  1">
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                        </td>
+                                        <td v-else-if="item.value == 2">
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                        </td>
+                                        <td v-else-if="item.value == 3">
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                        </td>
+                                        <td v-else-if="item.value == 4">
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                        </td>
+                                        <td v-else-if="item.value == 5">
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                        </td>
                                     </template>
                                 </v-data-table>
                             </v-app>
@@ -175,7 +202,7 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center add">
                                 تقييمات المنتجات
-                            <router-link to="/report-sales">
+                            <router-link to="/report-rate-product">
                                 <b-button class="button-view" style="margin-left:30px">طباعة التقرير</b-button>
                             </router-link>
                             </div>
@@ -184,12 +211,23 @@
                             <v-app>
                                 
                                 <v-data-table ref="myTable" class="col-lg-12 my-table" :headers="headersRateProduct"
-                                    :items="rowsSales" :hide-default-footer="true">
+                                    :items="rowsRateProduct" :hide-default-footer="true">
                                     <template v-slot:items="props">
-                                        <td>{{ props.item.id }}</td>
-                                        <td>{{ props.item.username }}</td>
                                         <td>{{ props.item.name }}</td>
-                                        <td>{{ props.item.name }}</td>
+                                        <td>{{ props.item.notes }}</td>
+                                        <td>{{ props.item.created_at }}</td>
+                                    </template>
+                                    <template v-slot:[`item.value`]="{ item }">
+                                        <td v-if="item.value ==  0">
+                                            <v-icon color="red" >mdi-emoticon-sad-outline</v-icon>
+                                        </td>
+                                        <td v-else-if="item.value == 1">
+                                            <v-icon color="yellow" >mdi-emoticon-neutral-outline</v-icon>
+                                        </td>
+                                        <td v-else-if="item.value == 2">
+                                            <v-icon color="green" >mdi-emoticon-excited-outline</v-icon>
+                                        </td>
+                                        <td v-else-if="item.value == 3">لايوجد</td>
                                     </template>
                                 </v-data-table>
                             </v-app>
@@ -211,38 +249,39 @@ export default {
 
             //sales-table
             headersSales: [
-                {text: 'رقم المنتج', value: 'id', align: 'center' },
-                { text: 'اسم المنتج', value: 'username', align: 'center' },
-                { text: 'سعر المنتج', value: 'username', align: 'center' },
-                { text: 'عدد مرات البيع', value: 'name', align: 'center' },
+                { text: 'اسم المنتج', value: 'name', align: 'center' },
+                { text: 'سعر المبيع', value: 'selling_price', align: 'center' },
+                { text: 'سعر التكلفة', value: 'cost_price', align: 'center' },
+                { text: 'عدد مرات البيع', value: 'selling_count', align: 'center' },
+                {text: 'الربح الكلي ', value: 'Profit', align: 'center' },
             ],
             rowsSales: [],
 
             //order-table
             headersOrder: [
-                { text: 'رقم الزبون', value: 'id', align: 'center'},
-                { text: 'اسم الزبون', value: 'username', align: 'center' },
-                { text: 'قيمة الطلب', value: 'username', align: 'center' },
-                { text: 'تاريخ الطلب', value: 'username', align: 'center' },
-                { text: 'تاريخ التسليم', value: 'name', align: 'center' },
+                { text: 'اسم الزبون', value: 'name', align: 'center' },
+                { text: 'قيمة الطلب', value: 'delivery_price', align: 'center' },
+                { text: 'تاريخ الطلب', value: 'created_at', align: 'center' },
+                { text: 'تاريخ التسليم', value: 'delivery_time', align: 'center' },
             ],
             rowsOrder: [],
 
             //rate-store-table
             headersRateStore: [
-                { text: 'اسم الزبون', value: 'id', align: 'center'},
-                { text: 'التقييم', value: 'username', align: 'center' },
-                { text: 'ملاحظات', value: 'username', align: 'center' },
-                { text: 'التاريخ', value: 'username', align: 'center' },
+                { text: 'اسم الزبون', value: 'name', align: 'center'},
+                { text: 'التقييم', value: 'value', align: 'center' },
+                { text: 'ملاحظات', value: 'notes', align: 'center' },
+                { text: 'التاريخ', value: 'created_at', align: 'center' },
             ],
             rowsRateStore: [],
 
             //rate-product-table
             headersRateProduct: [
-                { text: 'اسم الزبون', value: 'id', align: 'center'},
-                { text: 'المنتج', value: 'id', align: 'center'},
-                { text: 'التقييم', value: 'username', align: 'center' },
-                { text: 'التاريخ', value: 'username', align: 'center' },
+                { text: 'اسم الزبون', value: 'name', align: 'center'},
+                { text: 'المنتج', value: '$product', align: 'center'},
+                { text: 'التقييم', value: 'value', align: 'center' },
+                { text: 'ملاحظات', value: 'notes', align: 'center' },
+                { text: 'التاريخ', value: 'created_at', align: 'center' },
             ],
             rowsRateProduct: [],
         };
@@ -250,60 +289,69 @@ export default {
     methods: {
         sales(){
             this.report = 'sales'
-            console.log(this.report)
+            // console.log(this.report)
         },
         order(){
             this.report = 'order'
-            console.log(this.report)
+            // console.log(this.report)
         },
         rateStore(){
             this.report = 'rate-store'
-            console.log(this.report)
+            // console.log(this.report)
         },
         rateProduct(){
             this.report = 'rate-product'
-            console.log(this.report)
+            // console.log(this.report)
         },
         getSales(){
-            this.axios.get('https://jsonplaceholder.typicode.com/users')
+            this.$store.state.id_store = localStorage.getItem("id_store")
+            this.axios.get("http://"+this.$store.state.ip+"api/report/selles/"+ this.$store.state.id_store)
             .then(res => {
-                this.rowsSales = res.data;
-                console.log(res.data);
+                this.rowsSales = res.data.data
+                console.log(res.data)
             });
         },
         getOrder(){
-            this.axios.get('https://jsonplaceholder.typicode.com/users')
+            this.$store.state.id_store = localStorage.getItem("id_store")
+            this.axios.get("http://"+this.$store.state.ip+"api/report/orders/"+ this.$store.state.id_store)
             .then(res => {
-                this.rowsOrder = res.data;
-                console.log(res.data);
+                this.rowsOrder = res.data.data
+                console.log(res.data.data)
             });
         },
         getRateStore(){
-            this.axios.get('https://jsonplaceholder.typicode.com/users')
+            this.$store.state.id_store = localStorage.getItem("id_store")
+            this.axios.get("http://"+this.$store.state.ip+"api/report/rate_store/"+ this.$store.state.id_store)
             .then(res => {
-                this.rowsRateStore = res.data;
-                console.log(res.data);
+                this.rowsRateStore = res.data.data
+                console.log(res.data.data)
             });
         },
         getRateProduct(){
-            this.axios.get('https://jsonplaceholder.typicode.com/users')
+            this.$store.state.id_store = localStorage.getItem("id_store")
+            this.axios.get("http://"+this.$store.state.ip+"api/report/rate_product/"+ this.$store.state.id_store)
             .then(res => {
-                this.rowsRateProduct = res.data;
-                console.log(res.data);
+                this.rowsRateProduct = res.data.data
+                console.log(res.data.data)
             });
         },
         
     },
-    mounted() {
-        if (this.report == 'sales')
-            this.getSales()
-        if (this.report == 'order')
-            this.getOrder()
-        if (this.report == 'rate-store')
-            this.getRateStore()
-        if (this.report == 'rate-product')
-            this.getRateProduct()
+    watch: {
+        report(){
+            if (this.report == 'sales')
+                this.getSales()
+            if (this.report == 'order')
+                this.getOrder()
+            if (this.report == 'rate-store')
+                this.getRateStore()
+            if (this.report == 'rate-product')
+                this.getRateProduct()
+        }
     },
+    mounted(){
+        this.getSales()
+    }
 };
 </script>
 

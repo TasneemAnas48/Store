@@ -215,3 +215,32 @@
     margin-top: 6px;
     margin-left: 6px;
 }
+
+
+
+.custom-control-input:checked~.custom-control-label::before {
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color) !important;
+}
+
+.custom-control-input:not(:disabled):active~.custom-control-label::before {
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color) !important;
+}
+
+.custom-control-input:focus~.custom-control-label::before {
+    box-shadow: none !important;
+}
+
+.custom-control-label::before {
+    height: 1.3rem !important;
+}
+
+
+.custom-control {
+    top: -2px;
+}
+
+.custom-control-label {
+    cursor: pointer;
+}

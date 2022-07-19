@@ -62,3 +62,11 @@
 .view .v-dialog {
     border-radius: 20px !important;
 }
+.view .details{
+    margin-top: 10px;
+    margin-right: 10px;
+    font-size: 15px;
+}
+.view .t{
+    margin-left: 10px;
+}

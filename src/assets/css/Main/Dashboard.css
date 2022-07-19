@@ -94,3 +94,10 @@
 .dashboard .add {
     margin-right: 30px;
 }
+.dashboard .card-img-top{
+    width: 230px;
+    height: 230px;
+}
+.dashboard .v-application{
+    border-radius: 30px;
+}

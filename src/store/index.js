@@ -7,6 +7,7 @@ export default new Vuex.Store({
     state: {
         product:[
             {
+                id_store:'',
                 address:'',
                 discription:'',
                 image:'',
@@ -19,31 +20,7 @@ export default new Vuex.Store({
                 time:'', 
                 age:'',
                 party:'',
-            }
-        ],
-        code:[
-            {
-                type:'',
-                name:'',
-                value:'',
-                appliedTo:'',
-                product:[],
-                useNumber:'',
-                condition:'',
-                condition_value:'',
-                startDate:'',
-                endDate:'',
-            }
-        ],
-        dinamic:[
-            {
-                type:'',
-                name:'',
-                value:'',
-                appliedTo:'',
-                product:[],
-                startDate:'',
-                endDate:'',
+                
             }
         ],
         createStore: [

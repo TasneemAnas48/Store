@@ -37,6 +37,8 @@ import vuetify from './plugins/vuetify'
 import '@babel/polyfill'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
+// import { mdiEmoticonExcitedOutline } from '@mdi/js';
+
 //import composition-api
 import VueCompositionAPI from '@vue/composition-api'
 Vue.use(VueCompositionAPI)

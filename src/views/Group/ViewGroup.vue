@@ -19,12 +19,9 @@
                         </v-card-title>
                         <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
                             :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true">
-                            <template v-slot:items="props">
-                                <td>{{ props.item.id }}</td>
-                                <td>{{ props.item.title }}</td>
-                                <td>{{ props.item.discription }}</td>
-                                <!-- <td><img src={{ props.item.image }}/></td> -->
-                                <td>{{ props.item.number }}</td>
+
+                            <template v-slot:[`item.image`]="{ item }">
+                                <img :src="getImage(item)">
                             </template>
 
                             <template v-slot:top>
@@ -74,14 +71,9 @@ export default {
             search: '',
             dialogDelete: false,
             headers: [
-                {
-                    text: 'رقم',
-                    align: 'center',
-                    value: 'id',
-                },
                 { text: 'عنوان', value: 'title', align: 'center', },
                 { text: 'شرح', value: 'discription', align: 'center', },
-                // { text: 'صورة', value: 'image' },
+                { text: 'صورة', value: 'image' , align: 'center',},
                 { text: 'عدد المنتجات', value: 'number', align: 'center', },
                 { text: 'إدارة', value: 'mangement' , sortable: false,},
             ],
@@ -98,6 +90,9 @@ export default {
     },
 
     methods: {
+        getImage(item){
+            return "http://"+this.$store.state.ip+"uploads/books/"+item.image
+        },
         editItem(item){
             this.$router.replace({ name: 'edit-group', params: {id: item.id} })
         },
@@ -123,6 +118,7 @@ export default {
                 })
         },
         getData(){
+            this.$store.state.id_store = localStorage.getItem("id_store")
             this.axios.get("http://"+this.$store.state.ip+"api/collection/collectionNane/"+ this.$store.state.id_store)
             .then(res => {
                 this.rows = res.data

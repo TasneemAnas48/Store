@@ -110,20 +110,33 @@ export default {
             formData.append('email', this.$store.state.createStore.email);
             formData.append('password', this.$store.state.createStore.password);
             this.axios
-                .post("http://"+this.$store.state.ip+"api/store/create", formData)
+                .post("http://"+this.$store.state.ip+"api/settings/store/create", formData)
                 .then((res) => {
                     console.log(res.data)
                     this.$store.state.id_store = res.data.data.shop_id
                     this.$store.state.id_manager = res.data.data.manager_id
-                    this.addlocalStorage(this.$store.state.id_store, this.$store.state.id_manager)
-                    console.log(this.$store.state.id_store)
-                    console.log(this.$store.state.id_manager)
+                    // this.addlocalStorage(this.$store.state.id_store, this.$store.state.id_manager)
+                    // console.log(this.$store.state.id_store)
+                    // console.log(this.$store.state.id_manager)
+                    if (res.statusText == "OK")
+                        this.createGroup()
                 })
         },
-        addlocalStorage(store, manager){
-            localStorage.setItem("id_store", store);
-            localStorage.setItem("id_manager", manager);
-        }
+
+        createGroup(){
+            const formData = new FormData()
+            formData.append('title', "مجموعة اساسية")
+            formData.append('discription', "مجموعة اساسية يتم انشاؤها تلقائيا")
+            formData.append('image', "")
+            formData.append('store_id', this.$store.state.id_store)
+            this.axios.post("http://"+this.$store.state.ip+"api/collection/create", formData)
+                .then((res) => {
+                console.log(res)
+                // if (res.data.status == "success")
+                //     this.$router.replace({ name: 'view-group' })
+                })
+        },
+        
     }
 };
 </script>

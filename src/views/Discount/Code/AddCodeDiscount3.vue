@@ -34,7 +34,7 @@
                                                 الشروط
                                             </label>
                                             <v-radio-group v-model="condition" column>
-                                                <v-radio label="الحد الادنى لمبلغ الشراء" value="amount"></v-radio>
+                                                <v-radio label="الحد الادنى لمبلغ الشراء" value="amount"></v-radio> //2
                                                 <div v-if="condition == 'amount'">
                                                     <b-form-input type="number" v-model="amount"
                                                         class="col-lg-9 col-md-9 col-sm-11 col-11 input-field optinal"
@@ -51,7 +51,7 @@
                                                 </div>
 
                                                 <v-radio label="الحد الادنى لعدد العناصر" value="count"
-                                                    style="margin-top:15px"></v-radio>
+                                                    style="margin-top:15px"></v-radio> //1
                                                 <div v-if="condition == 'count'">
                                                     <b-form-input type="number" v-model="count"
                                                         class="col-lg-9 col-md-9 col-sm-11 col-11 input-field optinal"
@@ -70,7 +70,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-row"></div>
 
                                     <div class="form-row">
                                         <div class="my-input col-lg-12 row" style="margin-top: -12px">
@@ -160,7 +159,7 @@ export default {
         submitForm() {
             this.v$.$validate();
             if (!this.v$.$error) {
-                this.$store.state.code.type = 0;
+                this.$store.state.code.type = 2;
                 this.$store.state.code.condition = this.condition;
                 if (this.$store.state.code.condition == 'amount')
                     this.$store.state.code.condition_value = this.amount

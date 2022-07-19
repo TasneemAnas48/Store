@@ -136,25 +136,24 @@ export default {
     name: "ProntInvoice",
     data() {
         return {
-            
+            id:''
         };
     },
     methods: {
-        print(){
-            window.print();
-            console.log("Print")
-        },
-        
         getData(){
-            this.axios.get('https://jsonplaceholder.typicode.com/users')
+            this.$store.state.id_store = localStorage.getItem("id_store")
+            this.axios.get("http://"+this.$store.state.ip+"api/myorder/bill/" + this.id)
             .then(res => {
-                this.rows = res.data;
-                // console.log(res.data);
-            });
+                // this.rows = res.data
+                console.log(res.data.data)
+            }).finally(() => {
+                window.print()
+            })
         },
     },
     mounted() {
-        this.print()
+        this.id = this.$route.params.id
+        console.log(this.id)
         this.getData()
     },
     

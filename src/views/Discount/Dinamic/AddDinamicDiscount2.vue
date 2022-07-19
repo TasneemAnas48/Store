@@ -68,7 +68,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-row"></div>
 
                                     <div class="form-row" style="margin-top:70px">
                                         <div class="my-input col-lg-12 row" >

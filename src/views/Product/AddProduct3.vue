@@ -2,9 +2,17 @@
     <div class="body-page add-product add-product3" id="add-product3">
         <div class="body">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header"  v-if="this.route == 'add-product3'">
                     <div class="d-flex justify-content-between align-items-center add">
                         إضافة منتج
+                        <router-link to="/view-product">
+                            <b-button class="button-view">عرض المنتجات</b-button>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="card-header"  v-if="this.route == 'edit-product3'">
+                    <div class="d-flex justify-content-between align-items-center add">
+                        تعديل منتج
                         <router-link to="/view-product">
                             <b-button class="button-view">عرض المنتجات</b-button>
                         </router-link>
@@ -41,16 +49,28 @@
                                         <div class="my-input col-lg-12 row">
                                             <label for="classification"
                                                 class="col-lg-4 col-md-5 label-input">التصنيف</label>
-                                            <v-select class="col-lg-7 col-md-11 col-sm-11 col-10 input-field" multiple
-                                                :items="classification" v-model="product.selectedClassification" dense
-                                                solo></v-select>
-                                            <v-tooltip color="error" right v-if="v$.product.selectedClassification.$error">
+                                            <v-select class="col-lg-7 col-md-11 col-sm-11 col-10 input-field" multiple chips dense solo
+                                                :items="classification" item-text="title" item-value="id" v-model="selectedClassification" >
+                                                <template v-slot:selection="{ item, index }">
+                                                    <v-chip v-if="index === 0">
+                                                    <span>{{ item.title }}</span>
+                                                    </v-chip>
+                                                    <span
+                                                    v-if="index === 1"
+                                                    class="grey--text text-caption"
+                                                    >
+                                                    (+{{ selectedClassification.length - 1 }} others)
+                                                    </span>
+                                                </template>
+                                                
+                                                </v-select>
+                                            <v-tooltip color="error" right v-if="v$.selectedClassification.$error">
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <v-icon color="red" dark v-bind="attrs" v-on="on">
                                                         mdi-exclamation
                                                     </v-icon>
                                                 </template>
-                                                <span>{{ v$.product.selectedClassification.$errors[0].$message }}</span>
+                                                <span>{{ v$.selectedClassification.$errors[0].$message }}</span>
                                             </v-tooltip>
                                         </div>
                                     </div>
@@ -58,15 +78,15 @@
                                     <div class="form-row">
                                         <div class="my-input col-lg-12 row">
                                             <label for="group" class="col-lg-4 col-md-5 label-input">المجموعة</label>
-                                            <v-select class="col-lg-7 col-md-11 col-sm-11 col-10 input-field"
-                                                :items="group" v-model="product.selectedGroup" dense solo></v-select>
-                                            <v-tooltip color="error" right v-if="v$.product.selectedGroup.$error">
+                                            <v-select class="col-lg-7 col-md-11 col-sm-11 col-10 input-field" :label="selectedGroup" 
+                                                :items="group" item-text="title" item-value="id" v-model="selectedGroup" dense solo></v-select>
+                                            <v-tooltip color="error" right v-if="v$.selectedGroup.$error">
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <v-icon color="red" dark v-bind="attrs" v-on="on">
                                                         mdi-exclamation
                                                     </v-icon>
                                                 </template>
-                                                <span>{{ v$.product.selectedGroup.$errors[0].$message }}</span>
+                                                <span>{{ v$.selectedGroup.$errors[0].$message }}</span>
                                             </v-tooltip>
                                         </div>
                                     </div>
@@ -81,7 +101,14 @@
                                     </div>
 
                                     <div class="float-left row-bottom">
-                                        <router-link to="/add-product2">
+                                        <router-link to="/add-product2" v-if="this.route == 'add-product3'">
+                                            <b-button type="submit" class="button-add">
+                                                <font-awesome-icon icon="fas fa-arrow-right"
+                                                    class="icon-button-right" />
+                                                السابق
+                                            </b-button>
+                                        </router-link>
+                                        <router-link :to="{ name: 'edit-product2', params: {id: id} }" v-else-if="this.route == 'edit-product3'">
                                             <b-button type="submit" class="button-add">
                                                 <font-awesome-icon icon="fas fa-arrow-right"
                                                     class="icon-button-right" />
@@ -114,42 +141,68 @@ export default {
     },
     data() {
         return {
-            classification: ['2', '4', '23', '6', '8', '7'],
-            group: ['2', '4', '534', '6', '897', '7'],
+            selectedClassification:[],
+            selectedGroup:'',
+            classification: [],
+            group: [],
+            id: '',
+            route:'',
         };
-    },
-    mounted() {
-        this.axios.get('https://jsonplaceholder.typicode.com/todos')
-        .then(res => {
-            this.classification = res.data;
-            console.log(this.classification);
-        });
-        this.axios.get('https://jsonplaceholder.typicode.com/todos')
-        .then(res => {
-            this.group = res.data;
-            console.log(this.group);
-        });
     },
     validations() {
         return {
-            product: {
                 selectedClassification: {},
                 selectedGroup: { required: helpers.withMessage('هذا الحقل مطلوب', required) },
-            }
         }
     },
     methods: {
+        getGroup(){
+            this.$store.state.id_store = localStorage.getItem("id_store")
+            this.axios.get("http://"+this.$store.state.ip+"api/collection/collectionNane/"+ this.$store.state.id_store)
+            .then(res => {
+                this.group = res.data
+                // console.log(res.data)
+            });
+        },
+        getClassification(){
+            this.axios.get("http://"+this.$store.state.ip+"api/SecondrayClassification/list_seconderay")
+            .then(res => {
+                this.classification = res.data
+                // console.log(res.data)
+            });
+        },
         submitForm() {
-            this.v$.$validate();
+            console.log(this.selectedGroup)
+            this.v$.$validate()
             if (!this.v$.$error) {
-                this.$router.replace({ name: 'add-product4' })
+                this.$store.state.product.selectedClassification = this.selectedClassification
+                this.$store.state.product.selectedGroup = this.selectedGroup
+                if (this.$route.name == "edit-product3")
+                    this.$router.replace({ name: 'edit-product4' })
+                else
+                    this.$router.replace({ name: 'add-product4' })
             }
-            console.log(this.$store.state.product.selectedClassification);
-            console.log(this.$store.state.product.selectedGroup)
         },
     },
     components: {
     },
+    mounted(){
+        this.getGroup()
+        this.getClassification()
+        this.route = this.$route.name
+        if (this.$route.name == "edit-product3"){
+            this.id = this.$route.params.id
+            this.axios.get("http://"+this.$store.state.ip+"api/product/show/" + this.id)
+            .then(res => {
+                // console.log(res.data)
+                this.selectedClassification = res.data.classification
+                this.selectedGroup = res.data.collection
+                console.log(this.selectedGroup)
+                // console.log(this.selectedGroup)
+            })
+        }
+    },
+
     computed: {
         product() {
             return this.$store.state.product;
@@ -161,4 +214,5 @@ export default {
 <style lang="scss">
 @import '@/assets/css/Product/AddProduct.css';
 @import '@/assets/css/Product/AddProduct3.css';
+
 </style>

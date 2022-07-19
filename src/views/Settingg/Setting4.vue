@@ -162,7 +162,7 @@ export default {
             console.log(this.password)
             this.v$.$validate();
             if (!this.v$.$error)
-                this.axios.post("http://"+this.$store.state.ip+"api/storeManager/true_password", {old_password : this.password, persone_id: this.$store.state.setting.id_persone})
+                this.axios.post("http://"+this.$store.state.ip+"api/settings/storeManager/true_password", {old_password : this.password, persone_id: this.$store.state.setting.id_persone})
                 .then((res) =>{
                     console.log(res.data)
                     if (res.data.data == "erorr")
@@ -203,20 +203,15 @@ export default {
                 formData.append('helper_email', "")
             else
                 formData.append('helper_email', this.$store.state.setting.helper_email)
-            // console.log(this.$store.state.setting.perm)
-            const myPer = JSON.stringify(this.$store.state.setting.perm)
 
-            formData.append('privilladge', myPer)
-            // console.log(["المنتجات","المجموعات"])
-            // console.log(myPer)
-            // console.log(JSON.stringify(myPer))
-            
+            formData.append('privilladge', JSON.stringify(this.$store.state.setting.perm))
+
             for (var pair of formData.entries()) {
                 console.log(pair)
             }
 
             this.axios
-                .post("http://" + this.$store.state.ip + "api/store/update", formData)
+                .post("http://" + this.$store.state.ip + "api/settings/store/update", formData)
                 .then((res) => {
                     console.log(res.data)
                 })

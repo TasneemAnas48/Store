@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center add">
                         <div class="p-2 bd-highlight">
-                            الطلبات المستلمة 
+                            الطلبات المعلقة 
                         </div>
                         <div class="p-2 bd-highlight">
                             <router-link to="/accept-order" style="margin-left: 20px">
@@ -13,7 +13,7 @@
                             </router-link>
 
                             <router-link to="/finish-order">
-                                <b-button class="button-view">الطلبات المنفذة</b-button>
+                                <b-button class="button-view">الطلبات المسلمة</b-button>
                             </router-link>
                         </div>
                     </div>
@@ -30,8 +30,9 @@
                             :hide-default-footer="true">
                             <template v-slot:items="props">
                                 <td>{{ props.item.id }}</td>
-                                <td>{{ props.item.title }}</td>
-                                <td>{{ props.item.userId }}</td>
+                                <td>{{ props.item.customer_name }}</td>
+                                <td>{{ props.item.delivery_time }}</td>
+                                <td>{{ props.item.delivery_price }}</td>
                             </template>
 
                             <template v-slot:top>
@@ -72,11 +73,21 @@
                                         <v-spacer></v-spacer>
                                         <v-card-title style="color: var(--main-color)">تفاصيل الطلب</v-card-title>
                                         <v-divider style="margin-top:10px"></v-divider>
-                                        <v-card-actions style="padding-bottom: 30px">
-                                            <div class="row">
-                                                <div class="col-lg-6" style="margin-right:15px">
-                                                    <div class="product-name">حقيبة كروشيه</div>
-                                                    <div class="details"></div>
+                                        <v-card-actions style="padding-bottom: 30px"  v-for="(d, i) in detail" :key="i">
+                                            <div class="row" style="justify-content: center;align-items: center;">
+                                                <div class="col-lg-6" style="margin-right:30px">
+                                                    <div class="product-name">{{d.product}}</div>
+                                                    <div class="details">
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="t"> تغليف كهدية</p>
+                                                            <p v-if="d.gift == '0'" >غير مطلوب</p>
+                                                            <p v-else-if="d.gift == '1'" >مطلوب</p>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px" v-for="(o, index) in d.option" :key="index">
+                                                            <p class="t">{{o[1]}}</p>
+                                                            <p>{{o[0]}}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-5">
                                                     <img src="../../assets/img/product.jpg"
@@ -122,13 +133,11 @@ export default {
             dialogAccept: false,
             dialogShow: false,
             headers: [
-                {
-                    text: 'رقم الزبون',
-                    align: 'start',
-                    value: 'id',
-                },
-                { text: 'اسم الزبون', value: 'name' },
-                { text: 'تاريخ الطلب', value: 'date' },
+                { text: 'رقم الطلب', value: 'id', align: 'center' },
+                { text: 'اسم الزبون', value: 'customer_name', align: 'center' },
+                { text: 'تاريخ الطلب', value: 'created_at', align: 'center' },
+                { text: 'الحد الاقصى للتسليم', value: 'delivery_time', align: 'center' },
+                { text: ' المبلغ', value: 'delivery_price', align: 'center' },
                 { text: 'تفاصيل الطلب', value: 'details', sortable: false, align: 'center'},
                 { text: 'معالجة الطلب', value: 'managment', sortable: false, align: 'center'},
             ],
@@ -137,6 +146,7 @@ export default {
             delete: '',
             accept: '',
             show: '',
+            detail:'',
         };
     },
     components: {
@@ -164,11 +174,10 @@ export default {
             this.dialogDelete = false
         },
         sendIdDeleted() {
-            this.axios
-                .post("https://jsonplaceholder.typicode.com/posts",this.delete.id)
+            this.axios.post("http://"+this.$store.state.ip+"api/myorder/delete_order/"+  this.delete.id)
                 .then((res) => {
-                    console.log(res.data);
-                    console.log(this.delete.id);
+                    console.log(res)
+                    console.log(this.delete.id)
                 });
         },
         acceptItem (item) {
@@ -185,24 +194,28 @@ export default {
             this.dialogAccept = false
         },
         sendIdAccept() {
-            this.axios
-                .post("https://jsonplaceholder.typicode.com/posts",this.accept.id)
+            this.axios.post("http://"+this.$store.state.ip+"api/myorder/accept_order/"+ this.accept.id)
                 .then((res) => {
-                    console.log(res.data);
-                    console.log(this.accept.id);
+                    console.log(res)
+                    console.log(this.accept.id)
                 });
         },
         getData(){
-            this.axios.get('https://jsonplaceholder.typicode.com/posts')
+            this.$store.state.id_store = localStorage.getItem("id_store")
+            this.axios.get("http://"+this.$store.state.ip+"api/myorder/all_my_order/"+ this.$store.state.id_store+"/1")
             .then(res => {
-                this.rows = res.data;
-                // console.log(res.data);
+                this.rows = res.data
+                console.log(res.data)
             });
         },
         showDetailItem(item){
             this.dialogShow = true;
             this.show = item
-            console.log(this.show.id)
+            this.axios.get("http://"+this.$store.state.ip+"api/myorder/order_product/"+ this.show.id)
+            .then(res => {
+                this.detail = res.data.data
+                console.log(res.data.data)
+            });
         }
     },
     mounted() {

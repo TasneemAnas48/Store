@@ -2,9 +2,17 @@
     <div class="body-page add-product add-product5" id="body-page">
         <div class="body">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" v-if="this.route == 'add-product5'">
                     <div class="d-flex justify-content-between align-items-center add">
                         إضافة منتج
+                        <router-link to="/view-product">
+                            <b-button class="button-view">عرض المنتجات</b-button>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="card-header" v-if="this.route == 'edit-product5'">
+                    <div class="d-flex justify-content-between align-items-center add">
+                        تعديل منتج
                         <router-link to="/view-product">
                             <b-button class="button-view">عرض المنتجات</b-button>
                         </router-link>
@@ -44,24 +52,20 @@
                                                 للتحضير</label>
                                             <v-tooltip bottom color=var(--gray-medium)>
                                                 <template v-slot:activator="{ on, attrs }">
-                                                    <b-form-input v-model="product.time" type="number"
-                                                        v-bind="attrs" v-on="on"
+                                                    <b-form-input v-model="time" type="number" v-bind="attrs" v-on="on"
                                                         class="col-lg-7 col-md-11 col-sm-11 col-10 input-field"
                                                         name="time">
                                                     </b-form-input>
                                                 </template>
                                                 <span>الرجاء ادخال عدد الايام</span>
                                             </v-tooltip>
-                                            <!-- <b-form-input v-model="product.time" type="number"
-                                                class="col-lg-7 col-md-11 col-sm-11 col-10 input-field" name="time">
-                                            </b-form-input> -->
-                                            <v-tooltip color="error" right v-if="v$.product.time.$error">
+                                            <v-tooltip color="error" right v-if="v$.time.$error">
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <v-icon color="red" dark v-bind="attrs" v-on="on">
                                                         mdi-exclamation
                                                     </v-icon>
                                                 </template>
-                                                <span>{{ v$.product.time.$errors[0].$message }}</span>
+                                                <span>{{ v$.time.$errors[0].$message }}</span>
                                             </v-tooltip>
                                         </div>
                                     </div>
@@ -70,14 +74,14 @@
                                         <div class="my-input col-lg-12 row">
                                             <label for="age" class="col-lg-4 col-md-5 label-input">العمر</label>
                                             <v-select class="col-lg-7 col-md-11 col-sm-11 col-10 input-field"
-                                                :items="age" v-model="product.age" dense solo></v-select>
-                                            <v-tooltip color="error" right v-if="v$.product.age.$error">
+                                                :items="ageArray" v-model="age" dense solo></v-select>
+                                            <v-tooltip color="error" right v-if="v$.age.$error">
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <v-icon color="red" dark v-bind="attrs" v-on="on">
                                                         mdi-exclamation
                                                     </v-icon>
                                                 </template>
-                                                <span>{{ v$.product.age.$errors[0].$message }}</span>
+                                                <span>{{ v$.age.$errors[0].$message }}</span>
                                             </v-tooltip>
                                         </div>
                                     </div>
@@ -85,21 +89,21 @@
                                     <div class="form-row">
                                         <div class="my-input col-lg-12 row">
                                             <label for="party" class="col-lg-4 col-md-5 label-input">المناسبة</label>
-                                            <b-form-input list="my-list-id" v-model="product.party"
+                                            <b-form-input list="my-list-id" v-model="party"
                                                 class="col-lg-7 col-md-11 col-sm-11 col-10 input-field" name="party">
                                             </b-form-input>
 
                                             <datalist id="my-list-id">
-                                                <option v-for="party in party" :key="party.value">{{ party.text }}
+                                                <option v-for="party in partyArray" :key="party">{{ party }}
                                                 </option>
                                             </datalist>
-                                            <v-tooltip color="error" right v-if="v$.product.party.$error">
+                                            <v-tooltip color="error" right v-if="v$.party.$error">
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <v-icon color="red" dark v-bind="attrs" v-on="on">
                                                         mdi-exclamation
                                                     </v-icon>
                                                 </template>
-                                                <span>{{ v$.product.party.$errors[0].$message }}</span>
+                                                <span>{{ v$.party.$errors[0].$message }}</span>
                                             </v-tooltip>
                                         </div>
                                     </div>
@@ -114,8 +118,16 @@
                                     </div>
 
                                     <div class="float-left row-bottom">
-                                        <router-link to="/add-product4">
-                                            <b-button type="button" class="button-add">
+                                        <router-link to="/add-product4" v-if="this.route == 'add-product5'">
+                                            <b-button type="submit" class="button-add">
+                                                <font-awesome-icon icon="fas fa-arrow-right"
+                                                    class="icon-button-right" />
+                                                السابق
+                                            </b-button>
+                                        </router-link>
+                                        <router-link :to="{ name: 'edit-product4', params: { id: id } }"
+                                            v-else-if="this.route == 'edit-product5'">
+                                            <b-button type="submit" class="button-add">
                                                 <font-awesome-icon icon="fas fa-arrow-right"
                                                     class="icon-button-right" />
                                                 السابق
@@ -146,57 +158,54 @@ export default {
     },
     data() {
         return {
-            age: [
-                { value: 'childe', text: 'اطفال' },
-                { value: 'g2', text: 'شباب' },
-                { value: 'old', text: 'كبار' },
-            ],
-            party: [
-                { value: 'mother', text: 'عيد الام' },
-                { value: 'techer', text: 'عيد المعلم' },
-                { value: 'ramadan', text: 'رمضان' },
-            ],
+            ageArray: ["اطفال", "شباب", "كبار"],
+            partyArray: ['عيد الام', 'عيد المعلم', 'رمضان'],
+            age: '',
+            party: '',
+            time: '',
+            id: '',
+            route: ''
         };
     },
     validations() {
         return {
-            product: {
-                time: { minValue: helpers.withMessage('يجب ادخال رقم موجب', minValue(0)),
-                        required: helpers.withMessage('هذا الحقل مطلوب', required),  },
-                age: {},
-                party: {maxLength: helpers.withMessage('اقصى طول مسموح به هو 30 حرف', maxLength(30))},
-            }
+            time: {
+                minValue: helpers.withMessage('يجب ادخال رقم موجب', minValue(0)),
+                required: helpers.withMessage('هذا الحقل مطلوب', required),
+            },
+            age: { required: helpers.withMessage('هذا الحقل مطلوب', required)},
+            party: { maxLength: helpers.withMessage('اقصى طول مسموح به هو 30 حرف', maxLength(30)) },
         }
     },
     components: {
     },
     methods: {
         submitForm() {
-            this.v$.$validate();
+            this.v$.$validate()
             if (!this.v$.$error) {
-                this.sendData()
-                this.$router.replace({ name: 'add-product6' })
+                this.$store.state.product.age = this.age
+                this.$store.state.product.time = this.time
+                this.$store.state.product.party = this.party
+                if (this.$route.name == "edit-product5")
+                    this.$router.replace({ name: 'edit-product6' })
+                else
+                    this.$router.replace({ name: 'add-product6' })
             }
         },
-        sendData() {
-            const formData = new FormData();
-            formData.append('name', this.$store.state.product.address);
-            formData.append('discription', this.$store.state.product.discription);
-            formData.append('image', this.$store.state.product.image);
-            formData.append('selling_price', this.$store.state.product.sell);
-            formData.append('cost_price', this.$store.state.product.cost);
-            formData.append('selectedClassification', this.$store.state.product.selectedClassification);
-            formData.append('collection_id', this.$store.state.product.selectedGroup);
-            formData.append('return_or_replace', this.$store.state.product.replace);
-            formData.append('gift', this.$store.state.product.present);
-            formData.append('prepration_time', this.$store.state.product.time);
-            formData.append('age', this.$store.state.product.age);
-            formData.append('party', this.$store.state.product.party);
-            console.log(this.$store.state.product);
-            this.axios
-                .post("https://jsonplaceholder.typicode.com/posts", formData)
-                .then((res) => console.log(res));
-        },
+
+    },
+    mounted() {
+        this.route = this.$route.name
+        if (this.$route.name == "edit-product5") {
+            this.id = this.$route.params.id
+            this.axios.get("http://" + this.$store.state.ip + "api/product/show/" + this.id)
+                .then(res => {
+                    console.log(res.data)
+                    this.age = res.data.age
+                    this.time = res.data.prepration_time
+                    this.party = res.data.party
+                })
+        }
     },
     computed: {
         product() {
@@ -212,5 +221,8 @@ export default {
 @import '@/assets/css/Product/AddProduct.css';
 @import '@/assets/css/Product/AddProduct5.css';
 
+.add-product5 .v-label {
+    left: auto !important;
+}
 </style>
 

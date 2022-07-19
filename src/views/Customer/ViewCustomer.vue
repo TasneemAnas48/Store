@@ -18,10 +18,10 @@
                         <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
                             :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true">
                             <template v-slot:items="props">
-                                <td>{{ props.item.id }}</td>
-                                <td>{{ props.item.title }}</td>
-                                <td>{{ props.item.userId }}</td>
-                                <td>{{ props.item.userId }}</td>
+                                <td>{{ props.item.name }}</td>
+                                <td>{{ props.item.date }}</td>
+                                <td>{{ props.item.orders }}</td>
+                                <td>{{ props.item.total }}</td>
                             </template>
 
                             <template v-slot:[`item.chat`]="{ item }">
@@ -50,15 +50,11 @@ export default {
             pageCount: 0,
             search: '',
             headers: [
-                {
-                    text: 'الاسم',
-                    align: 'start',
-                    value: 'id',
-                },
-                { text: 'تاريخ الانضمام', value: 'title' },
-                { text: 'عدد الطلبات', value: 'userId' },
-                { text: 'المبلغ', value: 'userId' },
-                { text: 'مراسلة', value: 'chat' , sortable: false,},
+                { text: 'الاسم',value: 'name', align: 'center' },
+                { text: 'تاريخ الانضمام', value: 'date', align: 'center' },
+                { text: 'عدد الطلبات', value: 'orders', align: 'center' },
+                { text: 'المبلغ', value: 'total', align: 'center' },
+                { text: 'مراسلة', value: 'chat' , sortable: false},
             ],
             rows: [],
         };
@@ -67,14 +63,15 @@ export default {
     },
     methods:{
         getData(){
-            this.axios.get('https://jsonplaceholder.typicode.com/posts')
+            this.$store.state.id_store = localStorage.getItem("id_store")
+            this.axios.get("http://"+this.$store.state.ip+"api/mycustomer/myCustomer/"+ this.$store.state.id_store)
             .then(res => {
-                this.rows = res.data;
-                console.log(res.data);
+                this.rows = res.data.data
+                console.log(res.data)
             });
         },
         getId(item){
-            console.log(item.id)
+            console.log(item.name)
         }
     },
     mounted() {

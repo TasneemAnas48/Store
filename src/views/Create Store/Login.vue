@@ -57,6 +57,14 @@
                                 </template>
                                 <span>{{v$.password.$errors[0].$message}}</span>
                             </v-tooltip>
+                            <v-tooltip color="error" right v-if="!validate_">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                        mdi-exclamation
+                                    </v-icon>
+                                </template>
+                                <span>كلمة السر غير صحيحة </span>
+                            </v-tooltip>
                         </div>
 
                     </div> 
@@ -78,7 +86,7 @@ import useVuelidate from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
 
 export default {
-    name: "CreateStore2",
+    name: "LoginComponent",
     setup () {
         return { v$: useVuelidate() }
     },
@@ -87,6 +95,7 @@ export default {
             valid_email: true,
             email:'',
             password:'',
+            validate_: true,
 
         };
     },
@@ -103,22 +112,45 @@ export default {
         validateEmail() {
             this.v$.$validate()
             if (this.email != ''){
-                this.axios.post("http://"+this.$store.state.ip+"api/person/unique", {email : this.email})
+                this.axios.post("http://"+this.$store.state.ip+"api/settings/person/unique", {email : this.email})
                 .then((res) =>{
                     if (res.data.data != "error")
                         this.valid_email = false
                     else 
                         {
                             this.valid_email = true
-                            this.submitForm()
+                            this.validateLogin()
                         }
                 })
             }
+        },
+        validateLogin(){
+            this.axios.post("http://"+this.$store.state.ip+"api/settings/storeManager/login", {email : this.email, password : this.password})
+                .then((res) =>{
+                    // console.log(res.data)
+                    if (res.data.message != "success")
+                        this.validate_ = false
+                    else 
+                        {
+                            this.validate_ = true
+                            this.addlocalStorage(res.data.store_id, res.data.manager_id)
+                            this.submitForm()
+                        }
+                })
         },
         submitForm(){
             if (!this.v$.$error){
                 this.$router.replace({ name: 'dashboard' })
             }
+        },
+        addlocalStorage(store, manager){
+            console.log(store)
+            console.log(manager)
+            localStorage.setItem("id_store", store);
+            localStorage.setItem("id_manager", manager);
+            localStorage.setItem("auth", true);
+            this.$store.state.id_store = store
+            this.$store.state.id_manager = manager
         }
     },
 };
