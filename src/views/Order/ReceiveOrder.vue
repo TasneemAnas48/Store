@@ -1,6 +1,6 @@
 <template>
     <div class="body-page view" id="body-page">
-        <div class="body">
+        <div class="body" >
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center add">
@@ -27,7 +27,7 @@
                         </v-card-title>
                         <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
                             :fixed-header="true" :page.sync="page" @page-count="pageCount = $event"
-                            :hide-default-footer="true">
+                            :hide-default-footer="true" v-if="rows.length > 0">
                             <template v-slot:items="props">
                                 <td>{{ props.item.id }}</td>
                                 <td>{{ props.item.customer_name }}</td>
@@ -108,6 +108,11 @@
                                     @click="showDetailItem(item)" />
                             </template>
                         </v-data-table>
+                        <div v-else>
+                            <v-progress-circular :size="70" :width="7" color="var(--main-color)"
+                            indeterminate style="margin-top: 100px; margin-bottom: 150px;">
+                            </v-progress-circular>
+                        </div>
                         <div class="text-center">
                             <v-pagination color=var(--main-color) v-model="page" :length="pageCount" circle>
                             </v-pagination>
@@ -116,6 +121,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 <script>

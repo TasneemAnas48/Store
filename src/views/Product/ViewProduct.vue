@@ -1,6 +1,6 @@
 <template>
     <div class="body-page view view-pro" id="body-page">
-        <div class="body">
+        <div class="body" >
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center add">
@@ -19,7 +19,7 @@
                         </v-card-title>
                         <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
                             :fixed-header="true" :page.sync="page" @page-count="pageCount = $event"
-                            :hide-default-footer="true">
+                            :hide-default-footer="true" v-if="rows.length > 0">
 
                             <template v-slot:[`item.image`]="{ item }">
                                 <img :src="getImage(item)">
@@ -47,13 +47,6 @@
                                 <td v-else-if="item.review == 3">لايوجد</td>
                             </template>
 
-                            <!-- <template v-slot:[`item.image`]="{ item }">
-                                <div class="p-2"> -->
-                                    <!-- <img :src="http://"+this.$store.state.ip+"+uploads/books/"+item.image /> -->
-                                    <!-- <v-img :src="item.image" height="100px"></v-img> -->
-                                <!-- </div>
-                            </template> -->
-
                             <template v-slot:top>
 
                                 <v-dialog v-model="dialogDelete" max-width="500px">
@@ -78,6 +71,11 @@
                                 <font-awesome-icon icon="fas fa-edit" class=" fa-edit"  @click="editItem(item)"/>
                             </template>
                         </v-data-table>
+                        <div v-else>
+                            <v-progress-circular :size="70" :width="7" color="var(--main-color)"
+                            indeterminate style="margin-top: 100px; margin-bottom: 150px;">
+                            </v-progress-circular>
+                        </div>
                         <div class="text-center">
                             <v-pagination color=var(--main-color) v-model="page" :length="pageCount" circle>
                             </v-pagination>
@@ -162,10 +160,12 @@ export default {
             .then(res => {
                 this.rows = res.data
                 // console.log(res.data)
+                console.log(this.rows.length)
             });
         }
     },
     mounted(){
+        console.log(this.rows.length)
         this.getData()
         this.route = this.$route.name
         if (this.$route.name == "edit-group"){

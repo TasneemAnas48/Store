@@ -87,7 +87,7 @@
                             <v-app>
                                 
                                 <v-data-table ref="myTable" class="col-lg-12 my-table" :headers="headersSales"
-                                    :items="rowsSales" :hide-default-footer="true">
+                                    :items="rowsSales" :hide-default-footer="true" v-if="rowsSales.length > 0">
                                     <template v-slot:items="props">
                                         <td>{{ props.item.name }}</td>
                                         <td>{{ props.item.selling_price }}</td>
@@ -96,6 +96,11 @@
                                         <td>{{ props.item.Profit }}</td>
                                     </template>
                                 </v-data-table>
+                                <div v-else>
+                                    <v-progress-circular :size="70" :width="7" color="var(--main-color)"
+                                    indeterminate style="margin-top: 100px; margin-bottom: 150px;">
+                                    </v-progress-circular>
+                                </div>
                             </v-app>
                         </div>
                     </div>
@@ -118,9 +123,8 @@
                         </div>
                         <div class="card-body" style="padding: 0px">
                             <v-app>
-                                
                                 <v-data-table ref="myTable" class="col-lg-12 my-table" :headers="headersOrder"
-                                    :items="rowsOrder" :hide-default-footer="true">
+                                    :items="rowsOrder" :hide-default-footer="true" v-if="rowsOrder.length > 0">
                                     <template v-slot:items="props">
                                         <td>{{ props.item.name }}</td>
                                         <td>{{ props.item.$product }}</td>
@@ -129,6 +133,11 @@
                                         <td>{{ props.item.created_at }}</td>
                                     </template>
                                 </v-data-table>
+                                <div v-else>
+                                    <v-progress-circular :size="70" :width="7" color="var(--main-color)"
+                                    indeterminate style="margin-top: 100px; margin-bottom: 150px;">
+                                    </v-progress-circular>
+                                </div>
                             </v-app>
                         </div>
                     </div>
@@ -152,7 +161,7 @@
                         <div class="card-body" style="padding: 0px">
                             <v-app>
                                 <v-data-table ref="myTable" class="col-lg-12 my-table" :headers="headersRateStore"
-                                    :items="rowsRateStore" :hide-default-footer="true">
+                                    :items="rowsRateStore" :hide-default-footer="true" v-if="rowsRateStore.length > 0">
                                     <template v-slot:items="props">
                                         <td>{{ props.item.name }}</td>
                                         <td>{{ props.item.notes }}</td>
@@ -187,6 +196,11 @@
                                         </td>
                                     </template>
                                 </v-data-table>
+                                <div v-else>
+                                    <v-progress-circular :size="70" :width="7" color="var(--main-color)"
+                                    indeterminate style="margin-top: 100px; margin-bottom: 150px;">
+                                    </v-progress-circular>
+                                </div>
                             </v-app>
                         </div>
                     </div>
@@ -211,7 +225,7 @@
                             <v-app>
                                 
                                 <v-data-table ref="myTable" class="col-lg-12 my-table" :headers="headersRateProduct"
-                                    :items="rowsRateProduct" :hide-default-footer="true">
+                                    :items="rowsRateProduct" :hide-default-footer="true" v-if="rowsRateProduct.length > 0">
                                     <template v-slot:items="props">
                                         <td>{{ props.item.name }}</td>
                                         <td>{{ props.item.notes }}</td>
@@ -230,6 +244,11 @@
                                         <td v-else-if="item.value == 3">لايوجد</td>
                                     </template>
                                 </v-data-table>
+                                <div v-else>
+                                    <v-progress-circular :size="70" :width="7" color="var(--main-color)"
+                                    indeterminate style="margin-top: 100px; margin-bottom: 150px;">
+                                    </v-progress-circular>
+                                </div>
                             </v-app>
                         </div>
                     </div>

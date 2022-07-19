@@ -1,6 +1,6 @@
 <template>
     <div class="body-page view view-dis" id="body-page">
-        <div class="body">
+        <div class="body" >
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center add">
@@ -38,7 +38,6 @@
                                 </router-link>
                             </v-card>
                         </v-dialog>
-
                     </div>
                 </div>
                 <div class="card-body">
@@ -49,7 +48,7 @@
                             </b-form-input>
                         </v-card-title>
                         <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
-                            :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true">
+                            :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true" v-if="rows.length > 0">
                             <template v-slot:items="props">
                                 <td>{{ props.item.discounts_id }}</td>
                                 <td>{{ props.item.title }}</td>
@@ -76,6 +75,11 @@
                                 <font-awesome-icon icon="fas fa-edit" class=" fa-edit" @click="editItem(item)"/>
                             </template>
                         </v-data-table>
+                        <div v-else>
+                            <v-progress-circular :size="70" :width="7" color="var(--main-color)"
+                            indeterminate style="margin-top: 100px; margin-bottom: 150px;">
+                            </v-progress-circular>
+                        </div>
                         <div class="text-center">
                             <v-pagination color=var(--main-color) v-model="page" :length="pageCount" circle>
                             </v-pagination>
@@ -84,6 +88,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 <script>
