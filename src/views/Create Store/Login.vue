@@ -148,7 +148,7 @@ export default {
             console.log(manager)
             localStorage.setItem("id_store", store);
             localStorage.setItem("id_manager", manager);
-            localStorage.setItem("auth", true);
+            localStorage.setItem("auth", 'true');
             this.$store.state.id_store = store
             this.$store.state.id_manager = manager
         }

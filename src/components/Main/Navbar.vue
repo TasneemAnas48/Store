@@ -3,23 +3,7 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <div class="right row">
-                    <div class="dropdown">
-                        <font-awesome-icon icon="fa fa-bell" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-                        <span class="badge" v-if="messages != 0">{{ messages }}</span>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <b-card-header>
-                                الاشعارات
-                            </b-card-header>
-                            <div class="item" v-for="(item, index) in items" :key="index">
-                                <b-card-text>
-                                    <h5>{{ item.title }}</h5>
-                                    {{ item.subtitle }}
-                                </b-card-text>
-                                <b-dd-divider></b-dd-divider>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="dropdown">
                         <font-awesome-icon icon="fas fa-user" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
@@ -54,6 +38,23 @@
                                         </div>
                                     <!-- </router-link> -->
                                 </b-card-text>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <font-awesome-icon icon="fa fa-bell" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+                        <span class="badge" v-if="messages != 0">{{ messages }}</span>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <b-card-header>
+                                الاشعارات
+                            </b-card-header>
+                            <div class="item" v-for="(item, index) in items" :key="index">
+                                <b-card-text>
+                                    <h5>{{ item.title }}</h5>
+                                    {{ item.subtitle }}
+                                </b-card-text>
+                                <b-dd-divider></b-dd-divider>
                             </div>
                         </div>
                     </div>
@@ -117,7 +118,7 @@ export default {
             localStorage.setItem("id_store", '')
             localStorage.setItem("id_manager", '')
             localStorage.setItem("id_persone", '')
-            localStorage.setItem("auth", false)
+            localStorage.setItem("auth", 'false')
             this.$router.replace({ name: 'login'})
         },
 

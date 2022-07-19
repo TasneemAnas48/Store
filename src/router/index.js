@@ -291,7 +291,7 @@ const routes = [
     },
     
 ];
-const auth = localStorage.getItem("auth")
+
 
 const router = new VueRouter({
     mode: "history",
@@ -301,12 +301,11 @@ const router = new VueRouter({
 
 export default router;
 
-// router.beforeEach((to, from, next) => {
-    
-//     // console.log(auth)
-//     // if (auth == false) 
-//         // next({ name: 'login' })
-//     // else 
-//         next()
-//     })
+router.beforeEach((to, from, next) => {
+    const auth = localStorage.getItem("auth")
 
+    if ( to.path !== '/login' && auth == 'false' && to.path !== '/create-store1') 
+        next({ name: 'login' })
+    else 
+        next()
+})
