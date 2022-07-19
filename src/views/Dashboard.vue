@@ -334,8 +334,11 @@ export default {
                 this.rowsCustomer = res.data.data.customer
                 this.rating_product = res.data.data.rating_product
                 this.rowsOrder = res.data.data.order_accept
-                this.series.data = res.data.data.salls
-                console.log(this.series.data)
+                // this.series.data = res.data.data.salls
+                // for (let i = 0; i < 7; i++)
+                //     this.series2.data[i] = res.data.data.visit[i].count
+                // console.log(this.series2.data)
+
             });
         }
     },

@@ -29,6 +29,7 @@
                                 <td v-if="item.return_or_replace ==  '1'">ممكن</td>
                                 <td v-else-if="item.return_or_replace == '0'">غير ممكن</td>
                             </template>
+
                             <template v-slot:[`item.gift`]="{ item }">
                                 <td v-if="item.gift ==  '1'">ممكن</td>
                                 <td v-else-if="item.gift == '0'">غير ممكن</td>
@@ -45,6 +46,14 @@
                                     <v-icon color="green" >mdi-emoticon-excited-outline</v-icon>
                                 </td>
                                 <td v-else-if="item.review == 3">لايوجد</td>
+                            </template>
+
+                            <template v-slot:[`item.classification`]="{ item }">
+                                <div class="row" style="justify-content: center;">
+                                    <div class="classification" v-for="(i, index) in item.classification" :key="index">
+                                        <td>{{ i }}  </td>
+                                    </div>
+                                </div>
                             </template>
 
                             <template v-slot:top>
@@ -104,7 +113,7 @@ export default {
                 { text: 'سعر المبيع', value: 'selling_price', align: 'center' , width:'120' },
                 { text: 'سعر التكلفة', value: 'cost_price', align: 'center' , width:'140' },
                 { text: 'المجموعة', value: 'collection', align: 'center', width:'120' },
-                { text: 'التصنيف', value: 'classification', align: 'center', width:'120' },
+                { text: 'التصنيف', value: 'classification', align: 'center', width:'220' },
                 { text: 'تبديل', value: 'return_or_replace', align: 'center', width:'120' },
                 { text: 'تغليف كهدية', value: 'gift', align: 'center' , width:'140'},
                 { text: 'المناسبة', value: 'party', align: 'center', width:'120' },
@@ -186,5 +195,11 @@ export default {
 .view-pro img{
     width: 70px;
     height: 70px;
+}
+.view-pro .classification{
+    padding: 5px 8px 5px 8px;
+    background-color: var(--second-color);
+    border-radius: 20px;
+    margin: 2px;
 }
 </style>

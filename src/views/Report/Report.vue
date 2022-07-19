@@ -378,6 +378,9 @@ export default {
 @import '@/assets/css/Main/Dashboard.css';
 .activee{
     box-shadow: 1px 0px 14px 8px rgb(62 6 24 / 35%) !important;
-    transition: all 0.5s;
+}
+.mini-card:hover{
+    box-shadow: 1px 0px 14px 8px rgb(62 6 24 / 35%) !important;
+    transition: all 0.3s;
 }
 </style>

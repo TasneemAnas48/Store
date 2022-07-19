@@ -33,11 +33,7 @@ export default {
         this.$store.state.id_manager = localStorage.getItem("id_manager")
     },
 
-    computed: {
-        createStore() {
-            return this.$store.state.createStore;
-        }
-    },
+
 };
 
 </script>

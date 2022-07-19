@@ -147,8 +147,14 @@
                                 <template v-slot:items="props">
                                     <td>{{ props.item.name }}</td>
                                     <td>{{ props.item.email }}</td>
-                                    <td>{{ props.item.privillage }}</td>
                                 </template>
+                                <template v-slot:[`item.privillage`]="{ item }">
+                                <div class="row" style="justify-content: center;">
+                                    <div class="per" v-for="(i, index) in item.privillage" :key="index">
+                                        <td>{{ i }}  </td>
+                                    </div>
+                                </div>
+                            </template>
                             </v-data-table>
                         </div>
                     </v-app>
@@ -265,4 +271,10 @@ export default {
 
 @import '@/assets/css/Settingg/Setting.css';
 @import '@/assets/css/Settingg/Setting3.css';
+.setting3 .per{
+    padding: 5px 8px 5px 8px;
+    background-color: var(--second-color);
+    border-radius: 20px;
+    margin: 2px;
+}
 </style>

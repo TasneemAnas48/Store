@@ -81,7 +81,7 @@ export default {
                 { text: 'شرح', value: 'discription', align: 'center', },
                 { text: 'صورة', value: 'image' , align: 'center',},
                 { text: 'عدد المنتجات', value: 'number', align: 'center', },
-                { text: 'إدارة', value: 'mangement' , sortable: false,},
+                { text: 'إدارة', value: 'mangement', align: 'center' , sortable: false,},
             ],
             rows: [],
             editedIndex: -1,
