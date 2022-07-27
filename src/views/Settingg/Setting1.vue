@@ -95,7 +95,7 @@
                                 <div class="my-input col-lg-6 row" style="margin-top: -12px">
                                     <label for="logo" class="col-lg-4 col-md-3  label-input" style="margin-left: -12px">العلامة
                                         التجارية</label>
-                                    <v-file-input type="file" prepend-icon="mdi-camera" placeholder="اختيار صورة"
+                                    <v-file-input type="file" prepend-icon="mdi-camera" :placeholder="logo"
                                         @change="onFileSelected" class="col-lg-7 col-md-7 col-sm-11 col-11 input-field " filled
                                         color=var(--main-color)></v-file-input>
                                 </div>
@@ -103,7 +103,7 @@
                                 <div class=" col-lg-6 row" style="margin-top: -12px">
                                     <label for="cover" class="col-lg-4 col-md-3  label-input" style="margin-left: -12px">صورة
                                         الغلاف</label>
-                                    <v-file-input type="file" placeholder="اختيار صورة" @change="onFileSelected2"
+                                    <v-file-input type="file" @change="onFileSelected2" :placeholder="cover"
                                         class="col-lg-7 col-md-7 col-sm-11 col-11  input-field " filled prepend-icon="mdi-camera"
                                         color=var(--main-color)></v-file-input>
                                 </div>

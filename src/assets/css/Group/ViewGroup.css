@@ -93,3 +93,7 @@
 .view .my-table .v-input--switch{
     margin-right: -15px !important;
 }
+.group img{
+    height: 70px;
+    width: 70px
+}

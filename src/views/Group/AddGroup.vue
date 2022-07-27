@@ -61,10 +61,19 @@
                                         <div class="my-input col-lg-12 row" style="margin-top: -12px">
                                             <label for="img" class="col-lg-4 label-input"
                                                 style="margin-left: -15px">صورة</label>
+                                                
                                             <v-file-input type="file" prepend-icon="mdi-camera"
-                                                placeholder="اختيار صورة" @change="onFileSelected"
+                                                @change="onFileSelected" :placeholder="image"
                                                 class="col-lg-8 col-md-11 col-sm-11 col-10  input-field " filled color=var(--main-color)>
                                             </v-file-input>
+                                            <v-tooltip color="error" right v-if="v$.image.$error">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                                        mdi-exclamation
+                                                    </v-icon>
+                                                </template>
+                                                <span>{{ v$.image.$errors[0].$message }}</span>
+                                            </v-tooltip>
                                         </div>
 
                                     </div>
@@ -116,7 +125,7 @@ export default {
                 minLength: helpers.withMessage('يجب أن يتكون هذا الحقل من 10 أحرف على الأقل', minLength(10)),
                 maxLength: helpers.withMessage('أقصى طول مسموح به هو 50', maxLength(50))
             },
-            image: "",
+            image: { required: helpers.withMessage('هذا الحقل مطلوب', required) },
         }
     },
     mounted(){

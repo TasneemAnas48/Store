@@ -57,6 +57,7 @@
 .view .product-name {
     text-align: right;
     font-size: 18px;
+    color: var(--main-color);
 }
 
 .view .v-dialog {
@@ -69,4 +70,7 @@
 }
 .view .t{
     margin-left: 10px;
+}
+.view .v-card__actions{
+    border-bottom: 1px solid rgba(0,0,0,.12);
 }

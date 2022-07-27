@@ -6,7 +6,7 @@
             <div class="body row">
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <button @click="sales">
-                        <div class="card mini-card"  v-bind:class="{activee: report == 'sales'}">
+                        <div class="card mini-card report"  v-bind:class="{activee: report == 'sales'}">
                             <div class="card-body">
                                 <div class="row row-header">
                                     <img src="../../assets/img/add_product2.png" style="max-width: 100%;margin-top:30px" />
@@ -21,7 +21,7 @@
 
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <button @click="order">
-                        <div class="card mini-card" v-bind:class="{activee: report == 'order'}">
+                        <div class="card mini-card report" v-bind:class="{activee: report == 'order'}">
                             <div class="card-body">
                                 <div class="row row-header">
                                     <img src="../../assets/img/accept_order.png"
@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <button @click="rateStore">
-                        <div class="card mini-card" v-bind:class="{activee: report == 'rate-store'}">
+                        <div class="card mini-card report" v-bind:class="{activee: report == 'rate-store'}">
                             <div class="card-body">
                                 <div class="row row-header">
                                     <img src="../../assets/img/rate.png" style="
@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <button @click="rateProduct">
-                        <div class="card mini-card" v-bind:class="{activee: report == 'rate-product'}">
+                        <div class="card mini-card report" v-bind:class="{activee: report == 'rate-product'}">
                             <div class="card-body">
                                 <div class="row row-header">
                                     <img src="../../assets/img/product.png" style="margin-right: 37px; max-width: 52%" />
@@ -379,7 +379,7 @@ export default {
 .activee{
     box-shadow: 1px 0px 14px 8px rgb(62 6 24 / 35%) !important;
 }
-.mini-card:hover{
+.report:hover{
     box-shadow: 1px 0px 14px 8px rgb(62 6 24 / 35%) !important;
     transition: all 0.3s;
 }

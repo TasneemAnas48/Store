@@ -304,7 +304,7 @@ export default router;
 router.beforeEach((to, from, next) => {
     const auth = localStorage.getItem("auth")
 
-    if ( to.path !== '/login' && auth == 'false' && to.path !== '/create-store1') 
+    if ( to.path !== '/login' && auth == 'false'  && to.path !== '/create-store1' && to.path !== '/create-store2' && to.path !== '/create-store3') 
         next({ name: 'login' })
     else 
         next()

@@ -1,7 +1,7 @@
 <template>
     <div class="body-page " id="body-page">
         <div class="body invoice">
-            <div class="card">
+             <div class="card">
                 <div class="card-body">
                     <div class="header">
                         <div class="row">
@@ -12,11 +12,11 @@
                                 <tbody>
                                     <tr>
                                         <td class="head">رقم الفاتورة</td>
-                                        <td>3</td>
+                                        <td>{{invoice_id}}</td>
                                     </tr>
                                     <tr>
                                         <td class="head">تاريخ الفاتورة</td>
-                                        <td>3-5-2021</td>
+                                        <td>{{date}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -42,18 +42,18 @@
                                         </tr>
                                         <tr>
                                             <td class="text-right ">اسم المتجر</td>
-                                            <td class="text-right">خيط وسنارة</td>
+                                            <td class="text-right">{{store_name}}</td>
                                             <td style="min-width: 175px;"></td>
                                             <td class="text-right">اسم الزبون</td>
-                                            <td class="text-right">تسنيم</td>
+                                            <td class="text-right">{{customer_name}}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-right">ايميل المتجر</td>
-                                            <td class="text-right">branch@gmail.com</td>
+                                            <td class="text-right">{{store_email}}</td>
                                             <td style="min-width: 175px;"></td>
                                             
                                             <td class="text-right">ايميل الزبون</td>
-                                            <td class="text-right">tasneem@gmail.com</td>
+                                            <td class="text-right">{{customer_email}}</td>
                                         </tr>
                                         
                                     </tbody>
@@ -73,46 +73,35 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>حقيبة</td>
-                                    <td>2000</td>
-                                    <td>50%</td>
-                                    <td>1000</td>
+                                <tr v-for="(row, index) in rows" :key="index" >
+                                    <td>{{row.product_name}}</td>
+                                    <td>{{row.selling_price}}</td>
+                                    <td>{{row.discount_products}}</td>
+                                    <td>{{row.selling_price - ((row.selling_price * row.discount_products) / 100)}}</td>
                                 </tr>
-                                <tr>
-                                    <td>حقيبة</td>
-                                    <td>2000</td>
-                                    <td>50%</td>
-                                    <td>1000</td>
-                                </tr>
-                                <tr>
-                                    <td>حقيبة</td>
-                                    <td>2000</td>
-                                    <td>50%</td>
-                                    <td>1000</td>
-                                </tr>
+
                             </tbody>
                             <tfoot>
                                 <tr class="change-height">
                                     <td colspan="2" rowspan="1"></td>
                                     <td><b>المجموع</b></td>
-                                    <td>3000</td>
+                                    <td>{{total}}</td>
                                 </tr>
                                 
                                 <tr class="change-height">
                                     <td colspan="2" rowspan="1"></td>
                                     <td><b>خصم الفاتورة %</b></td>
-                                    <td>0%</td>
+                                    <td>{{discount_codes}}</td>
                                 </tr>
                                 <tr class="change-height">
                                     <td colspan="2" rowspan="1"></td>
                                     <td><b>الصافي</b></td>
-                                    <td>1000</td>
+                                    <td>{{total - ((total * discount_codes) / 100 )}}</td>
                                 </tr>
                                 <tr class="change-height">
                                     <td colspan="2" rowspan="1"></td>
                                     <td><b>المدفوع</b></td>
-                                    <td>3000</td>
+                                    <td>{{total - ((total * discount_codes) / 100 )}}</td>
                                 </tr>
 
                             </tfoot>
@@ -133,23 +122,45 @@
 </script>
 <script>
 export default {
-    name: "ProntInvoice",
+    name: "PrintInvoice",
     data() {
         return {
-            id:''
+            id:'',
+            invoice_id:'',
+            date:'',
+            store_name:'',
+            store_email:'',
+            customer_name:'',
+            customer_email:'',
+            discount_codes:'',
+            rows:[],
+            total:'',
         };
     },
     methods: {
         getData(){
-            this.$store.state.id_store = localStorage.getItem("id_store")
-            this.axios.get("http://"+this.$store.state.ip+"api/myorder/bill/" + this.id)
+            this.$store.state.id_manager = localStorage.getItem("id_manager")
+            this.axios.get("http://"+this.$store.state.ip+"api/myorder/bill/" + this.id + "/" + this.$store.state.id_manager)
             .then(res => {
                 // this.rows = res.data
-                console.log(res.data.data)
+                this.invoice_id = res.data.data[0].order_id
+                this.date = res.data.data[0].delivery_time
+                this.store_name = res.data.data[0].store_name
+                this.store_email = res.data.email
+                this.customer_name = res.data.data[0].customer_name
+                this.customer_email = res.data.data[0].customer_email
+                this.discount_codes = res.data.data[0].discount_codes
+                this.rows = res.data.data
+                console.log(res.data)
+                
             }).finally(() => {
-                window.print()
-            })
+                for (let i = 0; i < this.rows.length; i++)
+                    this.total = this.total + this.rows[i].selling_price -((this.rows[i].selling_price * this.rows[i].discount_products) / 100)
+                console.log(this.total)
+            
+            }).finally(() => window.print())
         },
+    
     },
     mounted() {
         this.id = this.$route.params.id

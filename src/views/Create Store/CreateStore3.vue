@@ -109,6 +109,9 @@ export default {
             formData.append('username', this.$store.state.createStore.username);
             formData.append('email', this.$store.state.createStore.email);
             formData.append('password', this.$store.state.createStore.password);
+            for (var pair of formData.entries()) {
+                console.log(pair)
+            }
             this.axios
                 .post("http://"+this.$store.state.ip+"api/settings/store/create", formData)
                 .then((res) => {

@@ -214,6 +214,8 @@ export default {
                 .post("http://" + this.$store.state.ip + "api/settings/store/update", formData)
                 .then((res) => {
                     console.log(res.data)
+                    if (res.data.status == "success")
+                        this.$router.replace({ name: 'dashboard' })
                 })
         },
     },

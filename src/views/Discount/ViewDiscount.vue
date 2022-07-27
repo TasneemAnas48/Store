@@ -48,7 +48,7 @@
                             </b-form-input>
                         </v-card-title>
                         <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
-                            :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true" v-if="rows.length > 0">
+                            :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true" v-if="status == 'OK'">
                             <template v-slot:items="props">
                                 <td>{{ props.item.discounts_id }}</td>
                                 <td>{{ props.item.title }}</td>
@@ -113,6 +113,7 @@ export default {
                 { text: 'ادارة', value: 'management' , align: 'center', sortable: false,},
             ],
             rows:[],
+            status:'',
             editedIndex: -1,
             today: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
 
@@ -134,6 +135,7 @@ export default {
             this.axios.get("http://"+this.$store.state.ip+"api/discountproduct/index/"+ this.$store.state.id_store)
             .then(res => {
                 this.rows = res.data;
+                this.status = res.statusText
                 console.log(this.rows);
             });
         },

@@ -1,5 +1,5 @@
 <template>
-    <div class="body-page view" id="body-page">
+    <div class="body-page group view" id="body-page">
         <div class="body">
             <div class="card">
                 <div class="card-header">
@@ -18,7 +18,7 @@
                             </b-form-input>
                         </v-card-title>
                         <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
-                            :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true" v-if="rows.length > 0">
+                            :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true" v-if="status == 'OK'">
 
                             <template v-slot:[`item.image`]="{ item }">
                                 <img :src="getImage(item)">
@@ -61,9 +61,7 @@
                 </div>
             </div>
         </div>
-
     </div>
-
 </template>
 
 <script>
@@ -85,7 +83,8 @@ export default {
             ],
             rows: [],
             editedIndex: -1,
-            delete: ''
+            delete: '',
+            status:'',
         };
     },
     
@@ -97,7 +96,7 @@ export default {
 
     methods: {
         getImage(item){
-            return "http://"+this.$store.state.ip+"uploads/books/"+item.image
+            return "http://"+this.$store.state.ip+"bayanImages/"+item.image
         },
         editItem(item){
             this.$router.replace({ name: 'edit-group', params: {id: item.id} })
@@ -128,6 +127,7 @@ export default {
             this.axios.get("http://"+this.$store.state.ip+"api/collection/collectionNane/"+ this.$store.state.id_store)
             .then(res => {
                 this.rows = res.data
+                this.status = res.statusText
                 console.log(res.data)
             });
         }

@@ -27,7 +27,7 @@
                         </v-card-title>
                         <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
                             :fixed-header="true" :page.sync="page" @page-count="pageCount = $event"
-                            :hide-default-footer="true" v-if="rows.length > 0">
+                            :hide-default-footer="true" v-if="status == 'OK'">
                             <template v-slot:items="props">
                                 <td>{{ props.item.id }}</td>
                                 <td>{{ props.item.customer_name }}</td>
@@ -41,18 +41,32 @@
                                         <v-spacer></v-spacer>
                                         <v-card-title style="color: var(--main-color)">تفاصيل الطلب</v-card-title>
                                         <v-divider style="margin-top:10px"></v-divider>
-                                        <v-card-actions style="padding-bottom: 30px">
-                                            <div class="row">
-                                                <div class="col-lg-6" style="margin-right:15px">
-                                                    <div class="product-name">حقيبة كروشيه</div>
-                                                    <div class="details"></div>
+                                        <v-card-actions v-if="detail.length == 0" style="justify-content: center;">
+                                            <v-progress-circular :size="50" :width="7" color="var(--main-color)"
+                                            indeterminate style="margin-top: 100px; margin-bottom: 150px;">
+                                            </v-progress-circular>
+                                        </v-card-actions>
+                                        <v-card-actions v-else style="padding-bottom: 30px"  v-for="(d, i) in detail" :key="i">
+                                            <div class="row" style="justify-content: center;align-items: center;">
+                                                <div class="col-lg-6" style="margin-right:30px">
+                                                    <div class="product-name">{{d.product}}</div>
+                                                    <div class="details">
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="t"> تغليف كهدية</p>
+                                                            <p v-if="d.gift == '0'" >غير مطلوب</p>
+                                                            <p v-else-if="d.gift == '1'" >مطلوب</p>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px" v-for="(o, index) in d.option" :key="index">
+                                                            <p class="t">{{o[1]}}</p>
+                                                            <p>{{o[0]}}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-5">
-                                                    <img src="../../assets/img/product.jpg"
+                                                    <img :src="getImage(d)"
                                                         class="img-thumbnail img product-img" />
                                                 </div>
                                             </div>
-
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
@@ -104,16 +118,22 @@ export default {
             ],
             rows: [],
             show: '',
+            status:'',
+            detail:'',
         };
     },
     components: {
     },
     methods: {
+        getImage(item){
+            return "http://"+this.$store.state.ip+"bayanImages/"+item.image
+        },
         getData(){
             this.$store.state.id_store = localStorage.getItem("id_store")
             this.axios.get("http://"+this.$store.state.ip+"api/myorder/all_my_order/"+ this.$store.state.id_store+"/3")
             .then(res => {
                 this.rows = res.data
+                this.status = res.statusText
                 console.log(res.data)
             });
         },
@@ -122,6 +142,7 @@ export default {
             this.show = item
             this.axios.get("http://"+this.$store.state.ip+"api/myorder/order_product/"+ this.show.id)
             .then(res => {
+                this.detail = res.data.data
                 console.log(res)
             });
         },

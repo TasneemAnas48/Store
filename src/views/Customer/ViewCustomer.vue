@@ -16,7 +16,7 @@
                             </b-form-input>
                         </v-card-title>
                         <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
-                            :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true" v-if="rows.length > 0">
+                            :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true" v-if="status == 'OK'">
                             <template v-slot:items="props" >
                                 <td>{{ props.item.name }}</td>
                                 <td>{{ props.item.date }}</td>
@@ -63,6 +63,7 @@ export default {
                 { text: 'مراسلة', value: 'chat' , sortable: false},
             ],
             rows: [],
+            status:'',
         };
     },
     components: {
@@ -73,6 +74,7 @@ export default {
             this.axios.get("http://"+this.$store.state.ip+"api/mycustomer/myCustomer/"+ this.$store.state.id_store)
             .then(res => {
                 this.rows = res.data.data
+                this.status = res.statusText
                 console.log(res.data)
             });
         },

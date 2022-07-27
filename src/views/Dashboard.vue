@@ -74,7 +74,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <apexchart type="area" height="350" :options="chartOptions" :series="series"></apexchart>
+                        <apexchart ref="chart_sales" type="area" height="350" :options="chartOptions" :series="series"></apexchart>
                         <div class="card-footer">
                             مخطط البيع السنوي لسنة 2021
                         </div>
@@ -109,6 +109,26 @@
             </div>
         </div>
 
+        <!-- visit chart -->
+        <div class="container">
+            <div class="body">
+                <div class="card" id="chart" style="margin: 0px">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center add">
+                            عدد الزيارات
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <apexchart ref="chart_visit" type="line" height="350" :options="chartOptions2" :series="series2"></apexchart>
+                        <div class="card-footer">
+                            مخطط الزيارات الاسبوعي
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
         <!-- customer table -->
         <div class="container">
             <div class="body row">
@@ -144,24 +164,6 @@
             </div>
         </div>
 
-        <!-- visit chart -->
-        <div class="container">
-            <div class="body">
-                <div class="card" id="chart" style="margin: 0px">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center add">
-                            عدد الزيارات
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <apexchart type="line" height="350" :options="chartOptions2" :series="series2"></apexchart>
-                        <div class="card-footer">
-                            مخطط الزيارات الاسبوعي
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- rating product -->
         <div class="container">
@@ -200,11 +202,7 @@ export default {
     data() {
         return {
             //sales chart
-            series: [
-                {
-                    data:  [0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0]
-                },
-            ],
+            series: [],
             chartOptions: {
                 chart: {
                     height: 350,
@@ -239,11 +237,7 @@ export default {
             },
 
             //visit chart
-            series2: [
-                {
-                    data: [30, 41, 35, 51, 49, 62, 23],
-                },
-            ],
+            series2: [],
             chartOptions2: {
                 chart: {
                     height: 350,
@@ -294,12 +288,6 @@ export default {
             ],
             rowsCustomer: [],
 
-
-
-            //rating
-            title:["لعبة", "كروشيه", "تطريز", "اكسسوار"],
-
-
             order_accept_count:'',
             order_recev_count:'',
             product_count:'',
@@ -309,8 +297,6 @@ export default {
             page: 1,
             pageCount: 0,
 
-
-
         };
     },
     components: {
@@ -318,13 +304,13 @@ export default {
     },
     methods: {
         getImage(item){
-            return "http://"+this.$store.state.ip+"uploads/books/"+item.image
+            return "http://"+this.$store.state.ip+"bayanImages/"+item.image
         },
         getData(){
             this.$store.state.id_store = localStorage.getItem("id_store")
             this.axios.get("http://"+this.$store.state.ip+"api/dashbord/"+ this.$store.state.id_store)
             .then(res => {
-                // this.rows = res.data;
+
                 console.log(res.data.data);
                 this.order_accept_count = res.data.data.order_accept_count
                 this.order_recev_count = res.data.data.order_recev_count
@@ -334,10 +320,23 @@ export default {
                 this.rowsCustomer = res.data.data.customer
                 this.rating_product = res.data.data.rating_product
                 this.rowsOrder = res.data.data.order_accept
-                // this.series.data = res.data.data.salls
-                // for (let i = 0; i < 7; i++)
-                //     this.series2.data[i] = res.data.data.visit[i].count
-                // console.log(this.series2.data)
+
+                this.$refs.chart_sales.updateSeries([{
+                    name: 'Sales',
+                    data: res.data.data.salls
+                }])
+
+                const visit_arr = []
+                for (let i = 0; i < 7; i++)
+                    visit_arr[i] = res.data.data.visit[i].count
+
+                console.log(visit_arr)
+
+                this.$refs.chart_visit.updateSeries([{
+                    name: 'Sales',
+                    data: visit_arr
+                }])
+                
 
             });
         }

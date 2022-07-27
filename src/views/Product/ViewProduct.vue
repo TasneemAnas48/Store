@@ -19,7 +19,7 @@
                         </v-card-title>
                         <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
                             :fixed-header="true" :page.sync="page" @page-count="pageCount = $event"
-                            :hide-default-footer="true" v-if="rows.length > 0">
+                            :hide-default-footer="true" v-if="status == 'OK'">
 
                             <template v-slot:[`item.image`]="{ item }">
                                 <img :src="getImage(item)">
@@ -125,7 +125,8 @@ export default {
             ],
             rows: [],
             editedIndex: -1,
-            delete: ''
+            delete: '',
+            status:'',
         };
     },
     components: {
@@ -137,7 +138,7 @@ export default {
     },
     methods: {
         getImage(item){
-            return "http://"+this.$store.state.ip+"uploads/books/"+item.image
+            return "http://"+this.$store.state.ip+"bayanImages/"+item.image
         },
         editItem(item){
             this.$router.replace({ name: 'edit-product1', params: {id: item.product_id} })
@@ -168,8 +169,9 @@ export default {
             this.axios.get("http://"+this.$store.state.ip+"api/product/index/"+ this.$store.state.id_store)
             .then(res => {
                 this.rows = res.data
-                // console.log(res.data)
-                console.log(this.rows.length)
+                this.status = res.statusText
+                console.log(res.data)
+                // console.log(this.rows.length)
             });
         }
     },

@@ -27,7 +27,7 @@
                         </v-card-title>
                         <v-data-table class="col-lg-12 my-table" :headers="headers" :items="rows" :search="search"
                             :fixed-header="true" :page.sync="page" @page-count="pageCount = $event"
-                            :hide-default-footer="true" v-if="rows.length > 0">
+                            :hide-default-footer="true" v-if="status == 'OK'">
                             <template v-slot:items="props">
                                 <td>{{ props.item.id }}</td>
                                 <td>{{ props.item.customer_name }}</td>
@@ -73,7 +73,12 @@
                                         <v-spacer></v-spacer>
                                         <v-card-title style="color: var(--main-color)">تفاصيل الطلب</v-card-title>
                                         <v-divider style="margin-top:10px"></v-divider>
-                                        <v-card-actions style="padding-bottom: 30px"  v-for="(d, i) in detail" :key="i">
+                                        <v-card-actions v-if="detail.length == 0" style="justify-content: center;">
+                                            <v-progress-circular :size="50" :width="7" color="var(--main-color)"
+                                            indeterminate style="margin-top: 100px; margin-bottom: 150px;">
+                                            </v-progress-circular>
+                                        </v-card-actions>
+                                        <v-card-actions v-else style="padding-bottom: 30px"  v-for="(d, i) in detail" :key="i">
                                             <div class="row" style="justify-content: center;align-items: center;">
                                                 <div class="col-lg-6" style="margin-right:30px">
                                                     <div class="product-name">{{d.product}}</div>
@@ -90,11 +95,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-5">
-                                                    <img src="../../assets/img/product.jpg"
+                                                    <img :src="getImage(d)"
                                                         class="img-thumbnail img product-img" />
                                                 </div>
                                             </div>
-
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
@@ -124,9 +128,7 @@
 
     </div>
 </template>
-<script>
 
-</script>
 <script>
 export default {
     name: "ReceiveOrder",
@@ -153,6 +155,7 @@ export default {
             accept: '',
             show: '',
             detail:'',
+            status:'',
         };
     },
     components: {
@@ -166,6 +169,9 @@ export default {
         },
     },
     methods: {
+        getImage(item){
+            return "http://"+this.$store.state.ip+"bayanImages/"+item.image
+        },
         deleteItem (item) {
             this.checkedIndex = this.rows.indexOf(item)
             this.delete = item
@@ -211,6 +217,7 @@ export default {
             this.axios.get("http://"+this.$store.state.ip+"api/myorder/all_my_order/"+ this.$store.state.id_store+"/1")
             .then(res => {
                 this.rows = res.data
+                this.status = res.statusText
                 console.log(res.data)
             });
         },
