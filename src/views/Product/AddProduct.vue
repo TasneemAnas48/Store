@@ -86,7 +86,7 @@
                                             <label for="img" class="col-lg-4 label-input"
                                                 style="margin-left: -15px">صورة</label>
                                             <v-file-input type="file" prepend-icon="mdi-camera" 
-                                                @change="onFileSelected"  :placeholder="image"
+                                                @change="onFileSelected" 
                                                 class="col-lg-8 col-md-11 col-sm-11 col-10  input-field " filled
                                                 color=var(--main-color)>
                                             </v-file-input>
@@ -186,7 +186,7 @@ export default {
                 // console.log(res.data)
                 this.address = res.data.product_name
                 this.discription = res.data.discription
-                this.image = res.data.image
+                // this.image = res.data.image
                 
                 // console.log(typeof this.image)
             })

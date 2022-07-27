@@ -209,7 +209,9 @@ export default {
                 { text: 'المنتجات', value: '1' },
                 { text: 'المجموعات', value: '2' },
                 { text: 'الزبائن', value: '3' },
-                { text: 'الطلبات', value: '4' }
+                { text: 'الطلبات', value: '4' },
+                { text: 'التقارير', value: '5' },
+                { text: 'الخصومات', value: '6' },
             ],
             checked: [],
             // getEmplotee: [],

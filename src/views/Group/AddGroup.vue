@@ -63,7 +63,7 @@
                                                 style="margin-left: -15px">صورة</label>
                                                 
                                             <v-file-input type="file" prepend-icon="mdi-camera"
-                                                @change="onFileSelected" :placeholder="image"
+                                                @change="onFileSelected" 
                                                 class="col-lg-8 col-md-11 col-sm-11 col-10  input-field " filled color=var(--main-color)>
                                             </v-file-input>
                                             <v-tooltip color="error" right v-if="v$.image.$error">
@@ -137,7 +137,7 @@ export default {
             .then(res => {
                 this.address = res.data.title
                 this.discription = res.data.discription
-                this.image = res.data.image
+                // this.image = res.data.image
             })
         }
     },
