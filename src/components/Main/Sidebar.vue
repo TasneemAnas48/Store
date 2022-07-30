@@ -16,7 +16,8 @@
         <div class="user">
             <div class="row">
                 <div class="user-img">
-                    <img :src="profileImg" />
+                    <img :src="getImage()">
+                    <!-- <img :src="getImage(item)"> -->
                 </div>
                 <div id="user-info" class="user-info">
                     <p class="logo_name">{{ store_name }}</p>
@@ -231,8 +232,10 @@ export default {
             this.name = res.data.person.name
             this.image = res.data.image
             this.store_name = res.data.name_store
-            // console.log(this.email)
-        });
+            // console.log(this.image)
+        }).finally(() => {
+            this.getImage()
+        })
         this.getPer()
     },
     watch: {
@@ -248,6 +251,9 @@ export default {
         },
     },
     methods:{
+        getImage(){
+            return "http://"+this.$store.state.ip+"uploads/stores/"+this.image
+        },
         getPer(){
             const len = localStorage.getItem("len")
             for (let i = 0; i < len; i++)

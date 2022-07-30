@@ -11,7 +11,7 @@
                             <div>
                                 <b-card-text style="margin-top:0px">
                                     <div class="row" style=" justify-content: center; margin-top:30px">
-                                        <img :src="profileImg" />
+                                        <img :src="getImage()" />
                                     </div>
                                     <div class="row" style=" justify-content: center;margin-top:30px">
                                         <h5 style="color: var(--main-color)">{{ name }}</h5>
@@ -120,6 +120,9 @@ export default {
             localStorage.setItem("id_persone", '')
             localStorage.setItem("auth", 'false')
             this.$router.replace({ name: 'login'})
+        },
+        getImage(){
+            return "http://"+this.$store.state.ip+"uploads/stores/"+this.image
         },
 
     },
