@@ -173,8 +173,8 @@ export default {
                 },
                 {
                     link: "#",
-                    name: "مراسلات",
-                    tooltip: "مراسلات",
+                    name: "محادثة",
+                    tooltip: "محادثة",
                     icon: "fa fa-comments",
                     style: "comments",
                 },
