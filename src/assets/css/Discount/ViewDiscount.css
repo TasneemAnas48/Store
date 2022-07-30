@@ -64,3 +64,30 @@
     color: #ffffff !important;
     cursor: auto !important;
 }
+
+.view-dis .fa-expand-arrows-alt {
+    color: var(--main-color);
+    background: var(--second-color);
+    border-radius: 7px;
+    padding: 7px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-left: 10px;
+    padding-left: 8px;
+    padding-right: 9px;
+}
+
+.view-dis .fa-expand-arrows-alt:hover {
+    color: white;
+    background-color: var(--main-color);
+    cursor: pointer;
+}
+
+.view-dis .details .right{
+    text-align: right;
+}
+
+.view-dis .details .left{
+    text-align: left;
+    font-weight: bold;
+}

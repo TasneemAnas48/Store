@@ -138,7 +138,7 @@ export default {
     },
     methods: {
         getImage(item){
-            return "http://"+this.$store.state.ip+"bayanImages/"+item.image
+            return "http://"+this.$store.state.ip+"uploads/product/"+item.image
         },
         editItem(item){
             this.$router.replace({ name: 'edit-product1', params: {id: item.product_id} })

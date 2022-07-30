@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header"  v-if="this.route == 'edit-code'">
                     <div class="d-flex justify-content-between align-items-center add">
-                        تعديل كود خصم
+                        اعادة تفعيل كود خصم
                         <router-link to="/view-discount">
                             <b-button class="button-view">عرض الخصومات</b-button>
                         </router-link>
@@ -23,7 +23,7 @@
                         <div class="col-lg-6">
                             <v-app>
                                 <form class="form-input">
-                                    <div class="form-row">
+                                    <div class="form-row"  v-if="this.route == 'add-code'">
                                         <div class="my-input col-lg-12 row">
                                             <label for="name" class="col-lg-4 col-md-3 label-input">الكود</label>
                                             <b-form-input v-model="name" class="col-lg-7 col-md-7 col-sm-11 col-11 input-field" name="name">
@@ -39,7 +39,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-row">
+                                    <div class="form-row" v-if="this.route == 'add-code'">
                                         <div class="my-input col-lg-12 row" style="margin-top: -12px">
                                             <label for="value" class="col-lg-4 col-md-3  label-input">نسبة الخصم</label>
                                             <b-form-input type="number" v-model="value" class="col-lg-7 col-md-7 col-sm-11 col-11 input-field" name="value">
@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-row">
+                                    <div class="form-row" v-if="this.route == 'add-code'">
                                         <div class="my-input col-lg-12 row">
                                             <label for="condition" class="col-lg-4 col-md-4 label-input" style="margin-top: -7px">الحد الادنى من
                                                 الشروط
@@ -129,7 +129,7 @@
                                     </div>
                                     <div class="float-left row-bottom" style="margin-top: 70px" v-else-if="this.route == 'edit-code'">
                                         <b-button type="button" class=" button-add" v-on:click="submitForm">
-                                            تعديل
+                                            تفعيل
                                         </b-button>
                                     </div>
                                 </form>
@@ -250,16 +250,12 @@ export default {
             this.axios
                 .post("http://" + this.$store.state.ip + "api/discountproduct/update",
                     {
-                        store_id : this.$store.state.id_store,
-                        id: this.id,
+                        // store_id : this.$store.state.id_store,
+                        // id: this.id,
                         discounts_id: this.discounts_id,
                         type: this.code.type,
-                        discount_code: this.code.name,
-                        value: this.code.value,
                         start_date: this.code.startDate,
                         end_date: this.code.endDate,
-                        condition: this.code.condition,
-                        condition_value: this.code.condition_value,
                     }).then((res) => {
                         console.log(res)
                         if (res.statusText == "OK")

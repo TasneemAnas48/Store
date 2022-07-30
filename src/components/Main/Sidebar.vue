@@ -34,7 +34,9 @@
             ">
             <div id="my-scroll" style="margin: 0px 14px 0 14px">
                 <ul class="nav-list" style="overflow: visible">
-                    <span v-for="(menuItem, index) in menuItems" :key="index">
+                <div v-for="(menuItem, index) in menuItems" :key="index">
+                <div v-for="(per, i) in per" :key="i">
+                    <span v-if="menuItem.name == per">
                         <li class="d-flex justify-content-center">
                             <router-link :to="menuItem.link" class="p-2">
                                 <font-awesome-icon :icon="menuItem.icon" :class="menuItem.style" class="icon" />
@@ -48,6 +50,8 @@
                             }}</span>
                         </li>
                     </span>
+                    </div>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -214,7 +218,7 @@ export default {
             name:'',
             store_name:'',
             image:'',
-
+            per:[],
         };
     },
     mounted() {
@@ -228,8 +232,8 @@ export default {
             this.image = res.data.image
             this.store_name = res.data.name_store
             // console.log(this.email)
-
         });
+        this.getPer()
     },
     watch: {
         isOpened() {
@@ -243,6 +247,14 @@ export default {
                     : this.menuClosedUserDisplayNone;
         },
     },
+    methods:{
+        getPer(){
+            const len = localStorage.getItem("len")
+            for (let i = 0; i < len; i++)
+                this.per[i] = localStorage.getItem("per: " + i)
+            console.log(this.per)
+        },
+    }
 };
 </script>
 

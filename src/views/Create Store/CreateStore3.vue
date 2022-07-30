@@ -14,7 +14,7 @@
                     <b-button type="button" class="button-add create button-login">تسجيل الدخول</b-button>
                 </router-link>
             </div>
-            <div class="line">
+            <div class="line" v-if="!mobile">
                 <div class="timeline">
                     <div class="event">
                         <div class="detail">معلومات المتجر</div>
@@ -30,9 +30,9 @@
             </div>
             <v-app>
                 <form class="form-input col-lg-12">
-                    <div class="form-row ">
+                    <div class="form-row">
                         <label for="lang" class="col-lg-3 label-input ">لغة الموقع</label>
-                        <v-select class="col-md-5 input-field" :items="items" color=var(--main-color) :label='selected'
+                        <v-select class="col-lg-5 select-lang input-field" :items="items" color=var(--main-color) :label='selected'
                             dense solo></v-select>
                     </div>
 
@@ -76,6 +76,7 @@ export default {
             selected: 'عربي',
             theme: 'light',
             items: ['عربي', 'انكليزي'],
+            mobile: false,
         }
     },
     watch: {
@@ -118,19 +119,28 @@ export default {
                     console.log(res.data)
                     this.$store.state.id_store = res.data.data.shop_id
                     this.$store.state.id_manager = res.data.data.manager_id
-                    // this.addlocalStorage(this.$store.state.id_store, this.$store.state.id_manager)
-                    // console.log(this.$store.state.id_store)
-                    // console.log(this.$store.state.id_manager)
+                    this.addlocalStorage(this.$store.state.id_store, this.$store.state.id_manager)
+                    console.log(this.$store.state.id_store)
+                    console.log(this.$store.state.id_manager)
                     if (res.statusText == "OK")
-                        this.createGroup()
+                        this.$router.replace({ name: 'confirm' })
+                        // this.createGroup()
                 })
+        },
+
+        addlocalStorage(store, manager){
+            console.log(store)
+            console.log(manager)
+            localStorage.setItem("id_store", store)
+            localStorage.setItem("id_manager", manager)
+            localStorage.setItem("try", 5)
         },
 
         createGroup(){
             const formData = new FormData()
             formData.append('title', "مجموعة اساسية")
             formData.append('discription', "مجموعة اساسية يتم انشاؤها تلقائيا")
-            formData.append('image', "")
+            formData.append('image', '')
             formData.append('store_id', this.$store.state.id_store)
             this.axios.post("http://"+this.$store.state.ip+"api/collection/create", formData)
                 .then((res) => {
@@ -139,7 +149,17 @@ export default {
                 //     this.$router.replace({ name: 'view-group' })
                 })
         },
+        checkDevice(){
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+                this.mobile = true
+            }else{
+                this.mobile = false
+            }
+        },
         
+    },
+    mounted(){
+        this.checkDevice()
     }
 };
 </script>

@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header"  v-if="this.route == 'edit-dinamic'">
                     <div class="d-flex justify-content-between align-items-center add">
-                        تعديل خصم منتج
+                        اعادة تفعيل خصم منتج
                         <router-link to="/view-discount">
                             <b-button class="button-view">عرض الخصومات</b-button>
                         </router-link>
@@ -23,7 +23,7 @@
                         <div class="col-lg-6">
                             <v-app>
                                 <form class="form-input">
-                                    <div class="form-row">
+                                    <div class="form-row" v-if="this.route == 'add-dinamic'">
                                         <div class="my-input col-lg-12 row">
                                             <label for="name" class="col-lg-4 col-md-3 label-input">العنوان</label>
                                             <b-form-input v-model="name" class="col-lg-7 col-md-7 col-sm-11 col-11 input-field" name="name">
@@ -39,7 +39,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-row">
+                                    <div class="form-row" v-if="this.route == 'add-dinamic'">
                                         <div class="my-input col-lg-12 row" style="margin-top: -12px">
                                             <label for="value" class="col-lg-4 col-md-3  label-input">نسبة الخصم</label>
                                             <b-form-input type="number" v-model="value" class="col-lg-7 col-md-7 col-sm-11 col-11 input-field" name="value">
@@ -80,7 +80,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-row">
+                                    <div class="form-row" v-if="this.route == 'add-dinamic'">
                                         <div class="my-input col-lg-12 row" style="margin-top: -12px">
                                             <label for="applied-to" class="col-lg-4  col-md-4 label-input">يطبق
                                                 على</label>
@@ -151,9 +151,9 @@
                                             إنشاء
                                         </b-button>
                                     </div>
-                                    <div class="float-left row-bottom" style="margin-top: 90px" v-else-if="this.route == 'edit-dinamic'">
+                                    <div class="float-left row-bottom" style="margin-top: 30px" v-else-if="this.route == 'edit-dinamic'">
                                         <b-button type="button" class=" button-add" v-on:click="submitForm">
-                                            تعديل
+                                            تفعيل
                                         </b-button>
                                     </div>
                                 </form>

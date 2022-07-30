@@ -50,9 +50,13 @@
 
 body {
     transition: all 0.5s ease;
-    padding-right: 100px;
+    padding-right: 7.5%;
 }
-
+@media (max-width: 992px) {
+    body {
+        padding-right: 0% !important;
+    }
+}
 .menu-logo {
     width: 30px;
     margin: 0 10px 0 10px;

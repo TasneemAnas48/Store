@@ -10,7 +10,7 @@
                     <b-button type="button" class="button-add create button-login">تسجيل الدخول</b-button>
                 </router-link>
             </div>
-            <div class="line">
+            <div class="line" v-if="!mobile">
                 <div class="timeline">
                     <div class="timeline">
                         <div class="event">
@@ -71,7 +71,7 @@
 
 
                     <div class="form-row ">
-                        <div class="my-input col-lg-6 row" style="margin-top: -12px">
+                        <div class="my-input col-lg-6 row" style="margin-top: -12px;padding-left: 30px;">
                             <label for="password" class="col-lg-4 label-input">كلمة السر</label>
                             <b-form-input class="col-lg-6 input-field" v-model="createStore.password"
                                 name="password" type="password"></b-form-input>
@@ -138,6 +138,7 @@ export default {
     data() {
         return {
             email: true,
+            mobile: false,
         };
     },
     validations () {
@@ -177,8 +178,18 @@ export default {
             if (!this.v$.$error){
                 this.$router.replace({ name: 'create-store3' })
             }
+        },
+        checkDevice(){
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+                this.mobile = true
+            }else{
+                this.mobile = false
+            }
         }
     },
+    mounted(){
+        this.checkDevice()
+    }
 };
 </script>
 

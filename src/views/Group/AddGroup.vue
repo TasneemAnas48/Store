@@ -85,6 +85,7 @@
                                         <b-button type="button" class=" button-add" v-on:click="submitForm">حفظ
                                         </b-button>
                                     </div>
+                                    
                                 </form>
                             </v-app>
                         </div>
@@ -114,7 +115,8 @@ export default {
             image: '',
             edit: false,
             id: '',
-            route:''
+            route:'',
+            
         };
     },
     validations() {
@@ -142,8 +144,35 @@ export default {
         }
     },
     methods: {
+        createGroup(){
+            const parts = [
+                new Blob(['..'], {
+                    type: 'image/jpeg',
+                }),
+                ' Same way as you do with blob',
+                new Uint16Array([33])
+            ];
+
+            const file = new File(parts, 'default-thumbnail.jpg', {
+                lastModified: new Date(),
+                type: "image/jpeg",
+            });
+            console.log(file)
+            const formData = new FormData()
+            formData.append('title', "مجموعة اساسية")
+            formData.append('discription', "مجموعة اساسية يتم انشاؤها تلقائيا")
+            formData.append('image', file)
+            formData.append('store_id', this.$store.state.id_store)
+            this.axios.post("http://"+this.$store.state.ip+"api/collection/create", formData)
+                .then((res) => {
+                console.log(res)
+                // if (res.data.status == "success")
+                //     this.$router.replace({ name: 'view-group' })
+                })
+        },
         onFileSelected(files) {
             this.image = files
+            console.log( this.image)
         },
         submitForm() {
             this.v$.$validate()
@@ -176,6 +205,7 @@ export default {
                 })
         },
         addData(formData){
+            
             this.axios.post("http://"+this.$store.state.ip+"api/collection/create", formData)
                 .then((res) => {
                 console.log(res)

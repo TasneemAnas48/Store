@@ -59,6 +59,11 @@ import ReportSales from "../views/Report/ReportSales.vue";
 import ReportOrder from "../views/Report/ReportOrder.vue";
 import ReportRateStore from "../views/Report/ReportRateStore.vue";
 import ReportRateProduct from "../views/Report/ReportRateProduct.vue";
+
+import Confirm from "../views/Create Store/Confirm.vue";
+import ForgetPassword from "../views/Create Store/ForgetPassword.vue";
+import ResetPassword from "../views/Create Store/ResetPassword.vue";
+import CreateHelper from "../views/Create Store/CreateHelper.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -289,6 +294,26 @@ const routes = [
         name: "report-rate-product",
         component: ReportRateProduct,
     },
+    {
+        path: "/confirm",
+        name: "confirm",
+        component: Confirm,
+    },
+    {
+        path: "/forget-password",
+        name: "forget-password",
+        component: ForgetPassword,
+    },
+    {
+        path: "/reset-password",
+        name: "reset-password",
+        component: ResetPassword,
+    },
+    {
+        path: "/create-helper",
+        name: "create-helper",
+        component: CreateHelper,
+    },
     
 ];
 
@@ -304,7 +329,11 @@ export default router;
 router.beforeEach((to, from, next) => {
     const auth = localStorage.getItem("auth")
 
-    if ( to.path !== '/login' && auth == 'false'  && to.path !== '/create-store1' && to.path !== '/create-store2' && to.path !== '/create-store3') 
+    if ( to.path !== '/login' && auth == 'false'  
+        && to.path !== '/create-store1' && to.path !== '/create-store2'  
+        && to.path !== '/create-store3' && to.path !== '/confirm' 
+        && to.path !== '/forget-password' && to.path !== '/reset-password'
+        && to.path !== '/create-helper') 
         next({ name: 'login' })
     else 
         next()

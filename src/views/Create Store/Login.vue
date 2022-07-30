@@ -47,8 +47,11 @@
                     <div class="form-row" style="justify-content: center;">
                         <div class="my-input col-lg-12 row" style="margin-top: -12px">
                             <label for="password" class="col-lg-4 label-input">كلمة السر</label>
+                            
                             <b-form-input class="col-lg-6  col-md-11 input-field" v-model="password"
                                 name="password" type="password"></b-form-input>
+                            
+                            
                             <v-tooltip color="error" right v-if="v$.password.$error">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-icon color="red" dark v-bind="attrs" v-on="on">
@@ -65,6 +68,9 @@
                                 </template>
                                 <span>كلمة السر غير صحيحة </span>
                             </v-tooltip>
+                            <!-- <router-link to="/forget-password"> -->
+                                <span class="forget col-lg-12" v-on:click="forget">هل نسيت كلمة السر ؟ </span>
+                            <!-- </router-link> -->
                         </div>
 
                     </div> 
@@ -74,6 +80,22 @@
                             <font-awesome-icon icon="fas fa-arrow-left" class="icon-button-left" />تسجيل دخول
                         </b-button>
                     </div>
+                    <template>
+                        <v-dialog v-model="dialog" max-width="500px">
+                            <v-card>
+                                <v-spacer></v-spacer>
+                                <v-card-title class="justify-content-center" style="padding-top: 30px;font-size:15px">طلب انشاء متجرك قيد المراجعة، ستصلك النتيجة على بريدك الالكتروني
+                                </v-card-title>
+                                <v-card-actions style="padding-bottom: 30px">
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="var(--main-color)" text @click="cancel" style="letter-spacing: 0px;">
+                                        شكرا لصبرك
+                                    </v-btn>
+                                    <v-spacer></v-spacer>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                    </template>
                 </form>
             </v-app>
         </div>
@@ -96,6 +118,7 @@ export default {
             email:'',
             password:'',
             validate_: true,
+            dialog: false
 
         };
     },
@@ -109,6 +132,12 @@ export default {
     },
 
     methods: {
+        cancel(){
+            this.dialog = false
+        },
+        forget(){
+            this.$router.replace({ name: 'forget-password' })
+        },
         validateEmail() {
             this.v$.$validate()
             if (this.email != ''){
@@ -127,21 +156,29 @@ export default {
         validateLogin(){
             this.axios.post("http://"+this.$store.state.ip+"api/settings/storeManager/login", {email : this.email, password : this.password})
                 .then((res) =>{
-                    // console.log(res.data)
-                    if (res.data.message != "success")
+                    
+                    if (res.data.message == "erorr")
                         this.validate_ = false
+                    else if (res.data.message == 'wait')
+                        this.dialog = true
                     else 
                         {
                             this.validate_ = true
                             this.addlocalStorage(res.data.store_id, res.data.manager_id)
                             this.submitForm()
                         }
+                    this.storePer(res)
                 })
         },
         submitForm(){
             if (!this.v$.$error){
                 this.$router.replace({ name: 'dashboard' })
             }
+        },
+        storePer(res){
+            localStorage.setItem("len", res.data.privilladge.length)
+            for (let i = 0; i < res.data.privilladge.length; i++)
+                localStorage.setItem("per: "+i, res.data.privilladge[i].name)
         },
         addlocalStorage(store, manager){
             console.log(store)
@@ -159,6 +196,17 @@ export default {
 <style lang="scss">
 @import '@/assets/css/Create Store/CreateStore.css';
 @import '@/assets/css/Create Store/login.css';
-
+.login .forget{
+    font-size: 14px;
+    color: var(--main-color);
+    padding-top:0px
+}
+.login .forget:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.login .v-dialog{
+    border-radius: 30px;
+}
 </style>
 

@@ -304,7 +304,7 @@ export default {
     },
     methods: {
         getImage(item){
-            return "http://"+this.$store.state.ip+"bayanImages/"+item.image
+            return "http://"+this.$store.state.ip+"uploads/product/"+item.image
         },
         getData(){
             this.$store.state.id_store = localStorage.getItem("id_store")
@@ -333,7 +333,7 @@ export default {
                 console.log(visit_arr)
 
                 this.$refs.chart_visit.updateSeries([{
-                    name: 'Sales',
+                    name: 'Visit',
                     data: visit_arr
                 }])
                 

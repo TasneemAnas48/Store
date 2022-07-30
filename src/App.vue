@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <nav-bar  v-if="!['create-store1', 'create-store2', 'create-store3', 'print-invoice', 'login', 'report-sales', 'report-order', 'report-rate-store', 'report-rate-product'].includes($route.name)" />
-        <side-bar v-if="!['create-store1', 'create-store2', 'create-store3','print-invoice', 'login', 'report-sales', 'report-order', 'report-rate-store', 'report-rate-product'].includes($route.name)" />
+        <nav-bar  v-if="!['create-store1', 'create-store2', 'create-store3', 'print-invoice', 'login', 'report-sales', 'report-order', 'report-rate-store', 'report-rate-product', 'confirm', 'forget-password', 'reset-password', 'create-helper'].includes($route.name)" />
+        <side-bar v-if="!['create-store1', 'create-store2', 'create-store3','print-invoice', 'login', 'report-sales', 'report-order', 'report-rate-store', 'report-rate-product', 'confirm', 'forget-password', 'reset-password', 'create-helper'].includes($route.name)" />
         <router-view />
     </div>
 </template>

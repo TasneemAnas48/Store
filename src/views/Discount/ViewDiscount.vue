@@ -74,6 +74,85 @@
                             <template v-slot:[`item.management`]="{ item }">
                                 <font-awesome-icon icon="fas fa-edit" class=" fa-edit" @click="editItem(item)"/>
                             </template>
+                            <template v-slot:top>
+                            <v-dialog v-model="dialogShow" max-width="500px">
+                                    <v-card>
+                                        <v-spacer></v-spacer>
+                                        <v-card-title style="color: var(--main-color)">تفاصيل الخصم</v-card-title>
+                                        <v-divider style="margin-top:10px"></v-divider>
+                                        
+                                        <v-card-actions style="padding-bottom: 30px" >
+                                            <div class="row" style="justify-content: center;align-items: center;" v-if="detail.type == '2'">
+                                                <div class="col-lg-9 details" style="margin-right:30px">
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="col-lg-6 left"> كود الخصم</p>
+                                                            <p class="col-lg-6 right"> {{detail.discount_code}}</p>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="col-lg-6 left" v-if="detail.condition == '2'"> الحد الادنى لمبلغ الشراء</p>
+                                                            <p class="col-lg-6 left" v-if="detail.condition == '1'"> الحد الادنى لعدد العناصر</p>
+                                                            <p class="col-lg-6 right"> {{detail.condition_value}}</p>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="col-lg-6 left"> نسبة الخصم </p>
+                                                            <p class="col-lg-6 right"> {{detail.value}}</p>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="col-lg-6 left">  تاريخ البدء </p>
+                                                            <p class="col-lg-6 right"> {{detail.start_date}}</p>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="col-lg-6 left">  تاريخ الانتهاء </p>
+                                                            <p class="col-lg-6 right"> {{detail.end_date}}</p>
+                                                        </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="row" style="justify-content: center;align-items: center;" v-if="detail.type == '1'">
+                                                <div class="col-lg-9 details" style="margin-right:30px">
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="col-lg-6 left">عنوان الخصم </p>
+                                                            <p class="col-lg-6 right"> {{detail.title}}</p>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="col-lg-6 left"> نسبة الخصم </p>
+                                                            <p class="col-lg-6 right"> {{detail.value}}</p>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="col-lg-6 left"> يطبق على </p>
+                                                            <p class="col-lg-6 right" v-if="detail.apply_to == 'p'">منتجات محددة</p>
+                                                            <p class="col-lg-6 right" v-if="detail.apply_to == 'c'">مجموعات محددة</p>
+                                                            <p class="col-lg-6 right" v-if="detail.apply_to == 'all'">جميع المنتجات </p>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px" v-if="detail.apply_to == 'p'">
+                                                            <p class="col-lg-6 left">المنتجات </p>
+                                                            <div class="col-lg-6 right" >
+                                                                <div v-for="(p,i) in detail.products" :key="i" style="padding:10px; background: var(--second-color);margin:20px">{{p}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px" v-if="detail.apply_to == 'c'">
+                                                            <p class="col-lg-6 left">المجموعات </p>
+                                                            <p class="col-lg-6 right" v-for="(p,i) in detail.products" :key="i">{{p}}</p>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="col-lg-6 left">  تاريخ البدء </p>
+                                                            <p class="col-lg-6 right"> {{detail.start_date}}</p>
+                                                        </div>
+                                                        <div class="row" style="margin-top: 0px">
+                                                            <p class="col-lg-6 left">  تاريخ الانتهاء </p>
+                                                            <p class="col-lg-6 right"> {{detail.end_date}}</p>
+                                                        </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+                                </template>
+                            <template v-slot:[`item.details`]="{ item }">
+                                <font-awesome-icon icon="fas fa-expand-arrows-alt" class="fa-expand-arrows-alt"
+                                    @click="showDetailItem(item)" />
+                            </template>
                         </v-data-table>
                         <div v-else>
                             <v-progress-circular :size="70" :width="7" color="var(--main-color)"
@@ -103,6 +182,7 @@ export default {
             pageCount: 0,
             search: '',
             dialogAdd: false,
+            dialogShow: false,
             headers: [
                 { text: 'رقم', value: 'discounts_id', align: 'center'},
                 { text: 'النوع', value: 'type', align: 'center' },
@@ -110,19 +190,36 @@ export default {
                 { text: 'تاريخ البدء', value: 'start_date', align: 'center' },
                 { text: 'تاريخ الانتهاء', value: 'end_date', align: 'center' },
                 { text: 'الحالة', value: 'status', align: 'center' },
-                { text: 'ادارة', value: 'management' , align: 'center', sortable: false,},
+                { text: 'تفاصيل الخصم', value: 'details' , align: 'center', sortable: false,},
+                { text: 'اعادة تفعيل', value: 'management' , align: 'center', sortable: false,},
             ],
             rows:[],
             status:'',
             editedIndex: -1,
             today: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-
+            detail:''
         };
     },
     components: {
     },
 
     methods: {
+        showDetailItem(item){
+            this.dialogShow = true;
+            this.show = item
+            if (item.type == '2')
+                this.axios.get("http://"+this.$store.state.ip+"api/discountproduct/show/" + item.discounts_id + "/2")
+                .then(res => {
+                    this.detail = res.data
+                    console.log(res.data)
+                });
+            else if(item.type == '1')
+                this.axios.get("http://"+this.$store.state.ip+"api/discountproduct/show/" + item.discounts_id + "/1")
+                    .then(res => {
+                        this.detail = res.data
+                        console.log(res.data)
+                    });
+        },
         editItem(item){
             if (item.type == "1")
                 this.$router.replace({ name: 'edit-dinamic', params: {id: item.discounts_id} })

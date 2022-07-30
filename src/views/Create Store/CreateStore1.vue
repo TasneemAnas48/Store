@@ -10,7 +10,7 @@
                 </router-link>
                 
             </div>
-            <div class="line">
+            <div class="line" v-if="!mobile">
                 <div class="timeline">
                     <div class="event-active">
                         <div class="detail">معلومات المتجر</div>
@@ -125,7 +125,7 @@ export default {
     },
     data() {
         return {
-            
+            mobile: false,
         };
     },
     validations() {
@@ -161,7 +161,17 @@ export default {
         onFileSelected2(files) {
             this.$store.state.createStore.cover = files;
         },
+        checkDevice(){
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+                this.mobile = true
+            }else{
+                this.mobile = false
+            }
+        }
     },
+    mounted(){
+        this.checkDevice()
+    }
 };
 </script>
 
