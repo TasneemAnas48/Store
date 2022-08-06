@@ -5,9 +5,14 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center add">
                         المنتجات
-                        <router-link to="/add-product1">
-                            <b-button class="button-view">إضافة منتج</b-button>
-                        </router-link>
+                        <div class="d-flex justify-content-end ">
+                            <router-link to="/grid-product" style="margin-left:15px">
+                                <b-button class="button-view"> عرض شبكة</b-button>
+                            </router-link>
+                            <router-link to="/add-product1">
+                                <b-button class="button-view">إضافة منتج</b-button>
+                            </router-link>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -178,16 +183,6 @@ export default {
     mounted(){
         console.log(this.rows.length)
         this.getData()
-        this.route = this.$route.name
-        if (this.$route.name == "edit-group"){
-            this.id = this.$route.params.id
-            this.edit = true
-            this.axios.get("http://"+this.$store.state.ip+"api/collection/show/" + this.id)
-            .then(res => {
-                this.address = res.data.title
-                this.discription = res.data.discription
-            })
-        }
     },
     
 };

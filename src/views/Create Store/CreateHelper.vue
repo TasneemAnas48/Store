@@ -1,5 +1,5 @@
 <template>
-    <div class="create-store login forget">
+    <div class="create-store login forget helper">
         <div class="side-left col-lg-5 d-none d-lg-block">
             <div class="image">
                 <img src="../../assets/img/create_store2.png" class="img-thumbnail img" />
@@ -9,6 +9,36 @@
             <div class="title col-lg-6 ">اكمال بيانات تسجيل الحساب</div>
             <v-app>
                 <form class="form-input">
+                    <div class="form-row" style="justify-content: center;margin-top: 50px">
+                        <div class="my-input col-lg-12 row" style="margin-top: -12px">
+                            <label for="name" class="col-lg-4 label-input">الاسم </label>
+                            <b-form-input class="col-lg-6 col-md-11 input-field" v-model.trim="name" name="name"
+                                type="text" style="padding-left: 30px;"></b-form-input>
+                            <v-tooltip color="error" right v-if="v$.name.$error">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                        mdi-exclamation
+                                    </v-icon>
+                                </template>
+                                <span>{{ v$.name.$errors[0].$message }}</span>
+                            </v-tooltip>
+                        </div>
+                    </div>
+                    <div class="form-row" style="justify-content: center;margin-top: 50px">
+                        <div class="my-input col-lg-12 row" style="margin-top: -12px">
+                            <label for="email" class="col-lg-4 label-input">الايميل </label>
+                            <b-form-input class="col-lg-6 col-md-11 input-field" v-model.trim="email" name="email"
+                                type="email" style="padding-left: 30px;"></b-form-input>
+                            <v-tooltip color="error" right v-if="v$.email.$error">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon color="red" dark v-bind="attrs" v-on="on">
+                                        mdi-exclamation
+                                    </v-icon>
+                                </template>
+                                <span>{{ v$.email.$errors[0].$message }}</span>
+                            </v-tooltip>
+                        </div>
+                    </div>
                     <div class="form-row" style="justify-content: center;margin-top: 50px">
                         <div class="my-input col-lg-12 row" style="margin-top: -12px">
                             <label for="password" class="col-lg-4 label-input">كلمة السر</label>
@@ -52,7 +82,7 @@
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required, helpers, minLength, sameAs } from '@vuelidate/validators'
+import { required, email, helpers, minLength, sameAs } from '@vuelidate/validators'
 
 export default {
     name: "ResetPassword",
@@ -63,12 +93,20 @@ export default {
         return {
             password: '',
             confrim: '',
-            
+            name:'',
+            email:''
 
         };
     },
     validations() {
         return {
+            name: {  
+                required: helpers.withMessage('هذا الحقل مطلوب', required) 
+            },
+            email: {  
+                required: helpers.withMessage('هذا الحقل مطلوب', required),
+                email: helpers.withMessage('يجب ادخال عنوان بريد الكتروني صحيح', email) 
+            },
             password: {
                 required: helpers.withMessage('هذا الحقل مطلوب', required),
                 minLength: helpers.withMessage('يجب ان تتكون كلمة السر من 8 رموز على الاقل', minLength(8))
@@ -85,10 +123,13 @@ export default {
             this.$store.state.id_manager = localStorage.getItem("id_manager")
             console.log(this.$store.state.id_manager)
             console.log(this.password)
-            this.axios.post("http://" + this.$store.state.ip + "api/settings/helper/register", )
-                .then((res) => {
+            this.axios.post("http://" + this.$store.state.ip + "api/settings/helper/register", 
+            {
+                username: this.name,
+                email: this.email,
+                password: this.password
+            }).then((res) => {
                     console.log(res)
-
                 })
         },
         submitForm() {
@@ -105,6 +146,13 @@ export default {
 <style lang="scss">
 @import '@/assets/css/Create Store/CreateStore.css';
 @import '@/assets/css/Create Store/login.css';
-
+.helper .title{
+    margin-top: 60px
+}
+@media (min-width: 992px){
+    .helper {
+        height: 720px !important;
+    }
+}
 </style>
 

@@ -123,7 +123,7 @@
                                                 </div>
                                                 <div class="check">
                                                     <v-checkbox v-for="option in options" :key="option.value"
-                                                        :value="option.text" v-model="checked" color=var(--main-color)
+                                                        :value="option.value" v-model="checked" color=var(--main-color)
                                                         :label="option.text"></v-checkbox>
                                                 </div>
                                             </v-container>
@@ -206,15 +206,15 @@ export default {
             name: '',
             email: '',
             options: [
-                { text: 'لوحة تحكم', value: '1' },
-                { text: 'مجموعات', value: '2' },
-                { text: 'منتجات', value: '3' },
-                { text: 'خصومات', value: '4' },
-                { text: 'طلبات', value: '5' },
-                { text: 'زبائن', value: '6' },
-                { text: 'تقارير', value: '7' },
-                { text: 'محادثة', value: '8' },
-                { text: 'إعدادات', value: '9' },
+                { text: 'لوحة تحكم', value: 7 },
+                { text: 'مجموعات', value: 2 },
+                { text: 'منتجات', value: 1 },
+                { text: 'خصومات', value: 6 },
+                { text: 'طلبات', value: 4 },
+                { text: 'زبائن', value: 3 },
+                { text: 'تقارير', value: 5 },
+                { text: 'محادثة', value: 9 },
+                { text: 'إعدادات', value: 8 },
             ],
             checked: [],
             // getEmplotee: [],

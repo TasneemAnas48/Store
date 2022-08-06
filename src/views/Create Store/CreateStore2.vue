@@ -71,7 +71,7 @@
 
 
                     <div class="form-row ">
-                        <div class="my-input col-lg-6 row" style="margin-top: -12px;padding-left: 30px;">
+                        <div class="my-input col-lg-6 row" style="margin-top: -12px;padding-left: 30px;margin-right:0px;">
                             <label for="password" class="col-lg-4 label-input">كلمة السر</label>
                             <b-form-input class="col-lg-6 input-field" v-model="createStore.password"
                                 name="password" type="password"></b-form-input>
@@ -85,7 +85,7 @@
                             </v-tooltip>
                         </div>
 
-                        <div class="my-input col-lg-6 row" style="margin-top: -12px;padding-left: 30px;">
+                        <div class="my-input col-lg-6 row" style="margin-top: -12px;padding-left: 30px;margin-right: -25px;">
                             <label for="confrim-password" class="col-lg-4 label-input">تأكيد كلمة السر</label>
                             <b-form-input class="col-lg-6 input-field" v-model="createStore.confrim"
                                 name="confrim-password" type="password"></b-form-input>

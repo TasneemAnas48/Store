@@ -287,41 +287,47 @@ export default {
                 });
         },
         editData(){
-            console.log(this.dinamic)
-            console.log(this.id)
+            console.log("eeeeeeeeeeeeeee")
+            // console.log(this.dinamic)
+            // console.log(this.id)
             this.$store.state.id_store = localStorage.getItem("id_store")
             this.axios
                 .post("http://" + this.$store.state.ip + "api/discountproduct/update",
                     {
-                        store_id : this.$store.state.id_store,
-                        id: this.id,
+                        // store_id : this.$store.state.id_store,
+                        // id: this.id,
                         discounts_id: this.discounts_id,
-                        type: this.dinamic.type,
-                        title: this.dinamic.name,
-                        value: this.dinamic.value,
+                        // type: this.dinamic.type,
+                        // title: this.dinamic.name,
+                        // value: this.dinamic.value,
                         start_date: this.dinamic.startDate,
                         end_date: this.dinamic.endDate,
-                        apply_to: this.dinamic.appliedTo,
-                        product: this.dinamic.product,
-                        groups: this.dinamic.group,
+                        // apply_to: this.dinamic.appliedTo,
+                        // product: this.dinamic.product,
+                        // groups: this.dinamic.group,
                         
                     }).then((res) => {
-                        // console.log(res)
+                        console.log(this.discounts_id)
+                        console.log(this.dinamic.startDate)
+                        console.log(this.dinamic.endDate)
+                        console.log(res)
                         if (res.statusText == "OK")
                             this.$router.replace({ name: 'view-discount' })
                 })
         },
         submitForm() {
             this.v$.$validate();
-            if (!this.v$.$error){
-                if (this.route == "add-dinamic"){
+            if (this.route == "add-dinamic"){
+                if (!this.v$.$error){
                     this.initData()
                     this.addData()
-                } else if (this.route == "edit-dinamic"){
+                } 
+            }
+            else if (this.route == "edit-dinamic"){
+                    // console.log("Rrrrrrrrrrr")
                     this.initData()
                     this.editData()
                 }
-            }
         },
         getGroup() {
             this.$store.state.id_store = localStorage.getItem("id_store")

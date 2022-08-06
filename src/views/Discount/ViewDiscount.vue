@@ -126,13 +126,15 @@
                                                         </div>
                                                         <div class="row" style="margin-top: 0px" v-if="detail.apply_to == 'p'">
                                                             <p class="col-lg-6 left">المنتجات </p>
-                                                            <div class="col-lg-6 right" >
-                                                                <div v-for="(p,i) in detail.products" :key="i" style="padding:10px; background: var(--second-color);margin:20px">{{p}}</div>
+                                                            <div class="col-lg-6 right " >
+                                                                <div v-for="(p,i) in detail.products" :key="i" class="item">{{p}}</div>
                                                             </div>
                                                         </div>
                                                         <div class="row" style="margin-top: 0px" v-if="detail.apply_to == 'c'">
                                                             <p class="col-lg-6 left">المجموعات </p>
-                                                            <p class="col-lg-6 right" v-for="(p,i) in detail.products" :key="i">{{p}}</p>
+                                                            <div class="col-lg-6 right " >
+                                                                <div v-for="(p,i) in detail.products" :key="i" class="item">{{p}}</div>
+                                                            </div>
                                                         </div>
                                                         <div class="row" style="margin-top: 0px">
                                                             <p class="col-lg-6 left">  تاريخ البدء </p>
@@ -248,5 +250,13 @@ export default {
 
 <style lang="scss">
 @import '@/assets/css/Discount/ViewDiscount.css';
-
+.view-dis .item{
+    width: max-content;
+    padding: 10px;
+    background: var(--second-color);
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    border-radius: 30px;
+}
 </style>

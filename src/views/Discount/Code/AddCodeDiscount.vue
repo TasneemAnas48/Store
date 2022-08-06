@@ -246,17 +246,20 @@ export default {
         },
         editData(){
             this.$store.state.id_store = localStorage.getItem("id_store")
-            console.log(this.code)
+            // console.log(this.code)
             this.axios
                 .post("http://" + this.$store.state.ip + "api/discountproduct/update",
                     {
                         // store_id : this.$store.state.id_store,
                         // id: this.id,
                         discounts_id: this.discounts_id,
-                        type: this.code.type,
+                        // type: this.code.type,
                         start_date: this.code.startDate,
                         end_date: this.code.endDate,
                     }).then((res) => {
+                        console.log(this.discounts_id)
+                        console.log(this.dinamic.startDate)
+                        console.log(this.dinamic.endDate)
                         console.log(res)
                         if (res.statusText == "OK")
                             this.$router.replace({ name: 'view-discount' })
@@ -264,15 +267,16 @@ export default {
         },
         submitForm() {
             this.v$.$validate();
-            if (!this.v$.$error){
-                if (this.route == "add-code"){
+            if (this.route == "add-code"){
+                if (!this.v$.$error){
                     this.initData()
                     this.addData()
-                } else if (this.route == "edit-code"){
+                } 
+            }
+            else if (this.route == "edit-code"){
                     this.initData()
                     this.editData()
                 }
-            }
         },
     },
     mounted(){

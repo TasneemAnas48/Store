@@ -12,6 +12,7 @@ import AddProduct5 from "../views/Product/AddProduct5.vue";
 import AddProduct6 from "../views/Product/AddProduct6.vue";
 
 import ViewProduct from "../views/Product/ViewProduct.vue";
+import GridProduct from "../views/Product/GridProduct.vue";
 
 import EditProduct1 from "../views/Product/AddProduct.vue";
 import EditProduct2 from "../views/Product/AddProduct2.vue";
@@ -152,6 +153,11 @@ const routes = [
         path: "/edit-product6/:id",
         name: "edit-product6",
         component: EditProduct6,
+    },
+    {
+        path: "/grid-product",
+        name: "grid-product",
+        component: GridProduct,
     },
 
     {

@@ -21,16 +21,34 @@
                                         <td>{{ props.item.created_at }}</td>
                                     </template>
                                     <template v-slot:[`item.value`]="{ item }">
-                                        <td v-if="item.value ==  0">
-                                            <v-icon color="red" >mdi-emoticon-sad-outline</v-icon>
+                                        <td v-if="item.review ==  0">
+                                            لايوجد
                                         </td>
-                                        <td v-else-if="item.value == 1">
-                                            <v-icon color="yellow" >mdi-emoticon-neutral-outline</v-icon>
+                                        <td v-else-if="item.review ==  1">
+                                            <v-icon color="yellow" >mdi-star</v-icon>
                                         </td>
                                         <td v-else-if="item.value == 2">
-                                            <v-icon color="green" >mdi-emoticon-excited-outline</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
                                         </td>
-                                        <td v-else-if="item.value == 3">لايوجد</td>
+                                        <td v-else-if="item.value == 3">
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                        </td>
+                                        <td v-else-if="item.value == 4">
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                        </td>
+                                        <td v-else-if="item.value == 5">
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                            <v-icon color="yellow" >mdi-star</v-icon>
+                                        </td>
                                     </template>
                                 </v-data-table>
                             </v-app>
