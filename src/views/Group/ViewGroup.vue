@@ -21,7 +21,7 @@
                             :page.sync="page" @page-count="pageCount = $event" :hide-default-footer="true" v-if="status == 'OK'">
 
                             <template v-slot:[`item.image`]="{ item }">
-                                <img :src="getImage(item)">
+                                <img :src="getImage(item)" v-if="item.image != null">
                             </template>
 
                             <template v-slot:top>

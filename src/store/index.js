@@ -60,6 +60,7 @@ export default new Vuex.Store({
         ip:'192.168.43.244:8000/',
         id_store:'',
         id_manager:'',
+        id_person:'',
     },
     getters: {},
     mutations: {},

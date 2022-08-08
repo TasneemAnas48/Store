@@ -116,6 +116,21 @@
                         <div class="col-lg-5 d-none d-xl-block d-lg-block">
                             <img src="../../assets/img/setting4.png" class="img-thumbnail img" />
                         </div>
+
+                        <v-dialog v-model="dialogEdit" max-width="500px">
+                                    <v-card>
+                                        <v-spacer></v-spacer>
+                                        <v-card-title class="justify-content-center" style="padding-top: 30px"> 
+                                            تم تعديل متجرك بنجاح
+                                        </v-card-title>
+                                        <v-card-actions style="padding-bottom: 30px">
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="green" text @click="close">موافق 
+                                            </v-btn>
+                                            <v-spacer></v-spacer>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
                     </div>
                 </div>
             </div>
@@ -141,6 +156,7 @@ export default {
             items: ['عربي', 'انكليزي'],
             password: '',
             valid_password: true,
+            dialogEdit: false,
         }
     },
     validations() {
@@ -157,6 +173,10 @@ export default {
         }
     },
     methods: {
+        close () {
+            this.dialogEdit = false
+            this.$router.replace({ name: 'dashboard' })
+        },
         validPassword(){
             console.log(this.$store.state.setting.id_persone)
             console.log(this.password)
@@ -215,7 +235,8 @@ export default {
                 .then((res) => {
                     console.log(res.data)
                     if (res.data.status == "success")
-                        this.$router.replace({ name: 'dashboard' })
+                        this.dialogEdit = true
+                        
                 })
         },
     },

@@ -116,9 +116,9 @@ export default {
             this.axios
                 .post("http://"+this.$store.state.ip+"api/settings/store/create", formData)
                 .then((res) => {
-                    console.log(res.data)
-                    this.$store.state.id_store = res.data.data.shop_id
-                    this.$store.state.id_manager = res.data.data.manager_id
+                    console.log(res)
+                    this.$store.state.id_store = res.data.shop_id
+                    this.$store.state.id_manager = res.data.manager_id
                     this.addlocalStorage(this.$store.state.id_store, this.$store.state.id_manager)
                     console.log(this.$store.state.id_store)
                     console.log(this.$store.state.id_manager)
@@ -145,8 +145,8 @@ export default {
             this.axios.post("http://"+this.$store.state.ip+"api/collection/create", formData)
                 .then((res) => {
                 console.log(res)
-                // if (res.data.status == "success")
-                //     this.$router.replace({ name: 'view-group' })
+                if (res.statusText == "OK")
+                    console.log("Group Created")
                 })
         },
         checkDevice(){

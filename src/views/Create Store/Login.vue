@@ -95,6 +95,20 @@
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
+                        <v-dialog v-model="dialogActive" max-width="500px">
+                            <v-card>
+                                <v-spacer></v-spacer>
+                                <v-card-title class="justify-content-center" style="padding-top: 30px;font-size:15px">عذرا، ان متجرك غير فعال
+                                </v-card-title>
+                                <v-card-actions style="padding-bottom: 30px">
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="var(--main-color)" text @click="close" style="letter-spacing: 0px;">
+                                        موافق 
+                                    </v-btn>
+                                    <v-spacer></v-spacer>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
                     </template>
                 </form>
             </v-app>
@@ -118,7 +132,8 @@ export default {
             email:'',
             password:'',
             validate_: true,
-            dialog: false
+            dialog: false,
+            dialogActive: false,
 
         };
     },
@@ -134,6 +149,9 @@ export default {
     methods: {
         cancel(){
             this.dialog = false
+        },
+        close(){
+            this.dialogActive = false
         },
         forget(){
             this.$router.replace({ name: 'forget-password' })
@@ -156,15 +174,18 @@ export default {
         validateLogin(){
             this.axios.post("http://"+this.$store.state.ip+"api/settings/storeManager/login", {email : this.email, password : this.password})
                 .then((res) =>{
+                    console.log(res.data)
                     
                     if (res.data.message == "erorr")
                         this.validate_ = false
                     else if (res.data.message == 'wait')
                         this.dialog = true
+                    else if (res.data.message == 'not_active')
+                        this.dialogActive = true
                     else 
                         {
                             this.validate_ = true
-                            this.addlocalStorage(res.data.store_id, res.data.manager_id)
+                            this.addlocalStorage(res.data.store_id, res.data.manager_id, res.data.person_id)
                             this.submitForm()
                         }
                     this.storePer(res)
@@ -180,14 +201,14 @@ export default {
             for (let i = 0; i < res.data.privilladge.length; i++)
                 localStorage.setItem("per: "+i, res.data.privilladge[i])
         },
-        addlocalStorage(store, manager){
-            console.log(store)
-            console.log(manager)
+        addlocalStorage(store, manager, person){
             localStorage.setItem("id_store", store);
             localStorage.setItem("id_manager", manager);
+            localStorage.setItem("id_person", person);
             localStorage.setItem("auth", 'true');
             this.$store.state.id_store = store
             this.$store.state.id_manager = manager
+            this.$store.state.id_person = person
         }
     },
 };
