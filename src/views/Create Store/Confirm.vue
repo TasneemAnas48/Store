@@ -131,9 +131,9 @@ export default {
             }
         },
         confrimCode() {
-            this.$store.state.product.id_store = localStorage.getItem("id_store")
-            this.$store.state.product.id_manager = localStorage.getItem("id_manager")
-            this.axios.post("http://" + this.$store.state.ip + "api/settings/storeManager/verify_email", { code: this.code, store_id: this.$store.state.product.id_store, manager_id: this.$store.state.product.id_manager })
+            this.$store.state.id_store = localStorage.getItem("id_store")
+            this.$store.state.id_manager = localStorage.getItem("id_manager")
+            this.axios.post("http://" + this.$store.state.ip + "api/settings/storeManager/verify_email", { code: this.code, store_id: this.$store.state.id_store, manager_id: this.$store.state.id_manager })
                 .then((res) => {
                     console.log(res.data)
                     if (res.data.message == 'false'){

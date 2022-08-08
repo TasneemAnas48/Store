@@ -124,7 +124,7 @@ export default {
                     console.log(this.$store.state.id_manager)
                     if (res.statusText == "OK")
                         this.$router.replace({ name: 'confirm' })
-                        // this.createGroup()
+                        this.createGroup()
                 })
         },
 

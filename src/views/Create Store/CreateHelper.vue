@@ -69,13 +69,28 @@
                             </v-tooltip>
                         </div>
                     </div>
+
                     <div class="buttons form-row " style="margin-top:50px;justify-content: flex-end;margin-left:30px">
                         <b-button type="button" class="button-add" v-on:click="submitForm">حفظ
                         </b-button>
                     </div>
-                    
+
                 </form>
             </v-app>
+            <v-dialog v-model="dialog" max-width="500px">
+                <v-card>
+                    <v-spacer></v-spacer>
+                    <v-card-title class="justify-content-center" style="padding-top: 30px">
+                        تم اكمال تسجيل حسابك بنجاح
+                    </v-card-title>
+                    <v-card-actions style="padding-bottom: 30px">
+                        <v-spacer></v-spacer>
+                        <v-btn color="green" text @click="close">موافق
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </div>
     </div>
 </template>
@@ -93,19 +108,20 @@ export default {
         return {
             password: '',
             confrim: '',
-            name:'',
-            email:''
+            name: '',
+            email: '',
+            dialog: false
 
         };
     },
     validations() {
         return {
-            name: {  
-                required: helpers.withMessage('هذا الحقل مطلوب', required) 
+            name: {
+                required: helpers.withMessage('هذا الحقل مطلوب', required)
             },
-            email: {  
+            email: {
                 required: helpers.withMessage('هذا الحقل مطلوب', required),
-                email: helpers.withMessage('يجب ادخال عنوان بريد الكتروني صحيح', email) 
+                email: helpers.withMessage('يجب ادخال عنوان بريد الكتروني صحيح', email)
             },
             password: {
                 required: helpers.withMessage('هذا الحقل مطلوب', required),
@@ -119,17 +135,23 @@ export default {
     },
 
     methods: {
+        close() {
+            this.dialog = false
+            this.$router.replace({ name: 'login' })
+        },
         reset() {
             this.$store.state.id_manager = localStorage.getItem("id_manager")
             console.log(this.$store.state.id_manager)
             console.log(this.password)
-            this.axios.post("http://" + this.$store.state.ip + "api/settings/helper/register", 
-            {
-                username: this.name,
-                email: this.email,
-                password: this.password
-            }).then((res) => {
+            this.axios.post("http://" + this.$store.state.ip + "api/settings/helper/register",
+                {
+                    username: this.name,
+                    email: this.email,
+                    password: this.password
+                }).then((res) => {
                     console.log(res)
+                    if (res.statusText == "OK")
+                        this.dialog = true
                 })
         },
         submitForm() {
@@ -146,10 +168,12 @@ export default {
 <style lang="scss">
 @import '@/assets/css/Create Store/CreateStore.css';
 @import '@/assets/css/Create Store/login.css';
-.helper .title{
+
+.helper .title {
     margin-top: 60px
 }
-@media (min-width: 992px){
+
+@media (min-width: 992px) {
     .helper {
         height: 720px !important;
     }
