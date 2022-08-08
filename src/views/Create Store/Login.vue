@@ -178,7 +178,7 @@ export default {
         storePer(res){
             localStorage.setItem("len", res.data.privilladge.length)
             for (let i = 0; i < res.data.privilladge.length; i++)
-                localStorage.setItem("per: "+i, res.data.privilladge[i].name)
+                localStorage.setItem("per: "+i, res.data.privilladge[i])
         },
         addlocalStorage(store, manager){
             console.log(store)

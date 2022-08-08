@@ -37,7 +37,7 @@
                 <ul class="nav-list" style="overflow: visible">
                 <div v-for="(menuItem, index) in menuItems" :key="index">
                 <div v-for="(per, i) in per" :key="i">
-                    <span v-if="menuItem.name == per">
+                    <span v-if="menuItem.id == per">
                         <li class="d-flex justify-content-center">
                             <router-link :to="menuItem.link" class="p-2">
                                 <font-awesome-icon :icon="menuItem.icon" :class="menuItem.style" class="icon" />
@@ -126,6 +126,7 @@ export default {
                 {
                     link: "/dashboard",
                     name: "لوحة التحكم",
+                    id: 7,
                     tooltip: "لوحة التحكم",
                     icon: "fa fa-home",
                     style: "home",
@@ -133,6 +134,7 @@ export default {
                 {
                     link: "/view-group",
                     name: "مجموعات",
+                    id: 2,
                     tooltip: "مجموعات",
                     icon: "fas fa-folder",
                     style: "folder",
@@ -140,6 +142,7 @@ export default {
                 {
                     link: "/view-product",
                     name: "منتجات",
+                    id: 1,
                     tooltip: "منتجات",
                     icon: "fa fa-tag",
                     style: "tag",
@@ -147,6 +150,7 @@ export default {
                 {
                     link: "/view-discount",
                     name: "خصومات",
+                    id: 6,
                     tooltip: "خصومات",
                     icon: "fa fa-percent",
                     style: "percent",
@@ -161,6 +165,7 @@ export default {
                 {
                     link: "/view-customer",
                     name: "زبائن",
+                    id: 3,
                     tooltip: "زبائن",
                     icon: "fas fa-users",
                     style: "users",
@@ -168,6 +173,7 @@ export default {
                 {
                     link: "/report",
                     name: "تقارير",
+                    id: 5,
                     tooltip: "تقارير",
                     icon: "fa fa-file-text",
                     style: "file",
@@ -175,6 +181,7 @@ export default {
                 {
                     link: "#",
                     name: "محادثة",
+                    id: 9,
                     tooltip: "محادثة",
                     icon: "fa fa-comments",
                     style: "comments",
@@ -182,6 +189,7 @@ export default {
                 {
                     link: "/setting1",
                     name: "إعدادات",
+                    id: 8,
                     tooltip: "إعدادات",
                     icon: "fa fa-cog",
                     style: "cog",

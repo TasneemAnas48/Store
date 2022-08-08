@@ -47,13 +47,27 @@
                                         </v-card-title>
                                         <v-card-actions style="padding-bottom: 30px">
                                             <v-spacer></v-spacer>
-                                            <v-btn color="var(--gray-medium)" text @click="closeDelete">موافق 
+                                            <v-btn color="green" text @click="closeDelete">موافق 
                                             </v-btn>
                                             <v-spacer></v-spacer>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
                             </template>
+                            <v-dialog v-model="dialog" max-width="500px">
+                                    <v-card>
+                                        <v-spacer></v-spacer>
+                                        <v-card-title class="justify-content-center" style="padding-top: 30px"> 
+                                            تم تأكيد حسابك، طلب انشاء متجرك قيد المراجعة
+                                        </v-card-title>
+                                        <v-card-actions style="padding-bottom: 30px">
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="green" text @click="close">موافق 
+                                            </v-btn>
+                                            <v-spacer></v-spacer>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
                         </div>
                     </div>
 
@@ -86,6 +100,7 @@ export default {
             confirm: true,
             re_create: false,
             dialogDelete: false,
+            dialog: false,
         };
     },
     validations() {
@@ -103,6 +118,10 @@ export default {
         closeDelete () {
             this.dialogDelete = false
             this.$router.replace({ name: 'create-store1' })
+        },
+        close () {
+            this.dialog = false
+            this.$router.replace({ name: 'login' })
         },
         submitForm() {
             this.v$.$validate()
@@ -123,6 +142,9 @@ export default {
                         this.confirm = false
                         if(this.try_ == 0)
                             this.reject()
+                    }
+                    else{
+                        this.dialog = true
                     }
                 })
         },
