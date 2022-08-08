@@ -158,6 +158,7 @@ export default {
                 {
                     link: "/receive-order",
                     name: "طلبات",
+                    id: 4,
                     tooltip: "طلبات",
                     icon: "fas fa-box",
                     style: "box",
