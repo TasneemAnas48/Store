@@ -172,6 +172,6 @@ export default {
     padding-left: 10px;
 }
 .grid .v-card{
-    border-radius: 20px;
+    border-radius: 20px !important;
 }    
 </style>
