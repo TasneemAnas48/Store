@@ -140,7 +140,7 @@ export default {
     },
     methods: {
         getImage(item){
-            return "http://"+this.$store.state.ip+"bayanImages/"+item.image
+            return "http://"+this.$store.state.ip+"uploads/product/"+item.image
         },
         acceptItem (item) {
             this.checkedIndex = this.rows.indexOf(item)

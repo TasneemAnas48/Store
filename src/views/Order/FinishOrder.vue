@@ -126,7 +126,7 @@ export default {
     },
     methods: {
         getImage(item){
-            return "http://"+this.$store.state.ip+"bayanImages/"+item.image
+            return "http://"+this.$store.state.ip+"uploads/product/"+item.image
         },
         getData(){
             this.$store.state.id_store = localStorage.getItem("id_store")

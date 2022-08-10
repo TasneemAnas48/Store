@@ -52,18 +52,18 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="text-right ">اسم المتجر</td>
+                                            <td class="text-right ">اسم </td>
                                             <td class="text-right">{{store_name}}</td>
                                             <td style="min-width: 175px;"></td>
-                                            <td class="text-right">اسم الزبون</td>
+                                            <td class="text-right">اسم </td>
                                             <td class="text-right">{{customer_name}}</td>
                                         </tr>
                                         <tr>
-                                            <td class="text-right">ايميل المتجر</td>
+                                            <td class="text-right">ايميل </td>
                                             <td class="text-right">{{store_email}}</td>
                                             <td style="min-width: 175px;"></td>
                                             
-                                            <td class="text-right">ايميل الزبون</td>
+                                            <td class="text-right">ايميل </td>
                                             <td class="text-right">{{customer_email}}</td>
                                         </tr>
                                         
