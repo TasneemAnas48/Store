@@ -24,9 +24,9 @@
                                 <td>{{ props.item.total }}</td>
                             </template>
 
-                            <template v-slot:[`item.chat`]="{ item }">
+                            <!-- <template v-slot:[`item.chat`]="{ item }">
                                 <font-awesome-icon icon="fa fa-comments" class="fa-comments" @click="getId(item)"/>
-                            </template>
+                            </template> -->
                         </v-data-table>
                         <div v-else>
                             <v-progress-circular :size="70" :width="7" color="var(--main-color)"
@@ -60,7 +60,7 @@ export default {
                 { text: 'تاريخ الانضمام', value: 'date', align: 'center' },
                 { text: 'عدد الطلبات', value: 'orders', align: 'center' },
                 { text: 'المبلغ', value: 'total', align: 'center' },
-                { text: 'مراسلة', value: 'chat' , sortable: false},
+                // { text: 'مراسلة', value: 'chat' , sortable: false},
             ],
             rows: [],
             status:'',

@@ -42,10 +42,20 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 //import composition-api
 import VueCompositionAPI from '@vue/composition-api'
 Vue.use(VueCompositionAPI)
-import { ref, reactive } from '@vue/composition-api'
+
+//import pusher
+import Echo from 'laravel-echo'
+window.Pusher = require('pusher-js')
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: "1ecb9f6c6b79e2404d36",
+    cluster: "us2",
+    forceTLS: true,
+    // authEndpoint: `http://192.168.43.244:8000/broadcasting/auth`,
+});
 
 
-
+// window.Echo.connector.pusher.config.httpPort = 8000
 
 Vue.config.productionTip = false
 

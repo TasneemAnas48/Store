@@ -311,7 +311,7 @@ export default {
             this.axios.get("http://"+this.$store.state.ip+"api/dashbord/"+ this.$store.state.id_store)
             .then(res => {
 
-                console.log(res.data.data);
+                // console.log(res.data.data);
                 this.order_accept_count = res.data.data.order_accept_count
                 this.order_recev_count = res.data.data.order_recev_count
                 this.product_count = res.data.data.product_count
@@ -327,15 +327,15 @@ export default {
                 }])
 
                 const visit_arr = []
-                for (let i = 0; i < 7; i++)
-                    visit_arr[i] = res.data.data.visit[i].count
+                // for (let i = 0; i < 7; i++)
+                    // visit_arr[i] = res.data.data.visit[i].count
 
-                console.log(visit_arr)
+                // console.log(visit_arr)
 
-                this.$refs.chart_visit.updateSeries([{
-                    name: 'Visit',
-                    data: visit_arr
-                }])
+                // this.$refs.chart_visit.updateSeries([{
+                //     name: 'Visit',
+                //     data: visit_arr
+                // }])
                 
 
             });

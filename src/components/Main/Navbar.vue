@@ -11,7 +11,7 @@
                             <div>
                                 <b-card-text style="margin-top:0px">
                                     <div class="row" style=" justify-content: center; margin-top:30px">
-                                        <img :src="getImage()" />
+                                        <img v-if="finish" :src="getImage()" />
                                     </div>
                                     <div class="row" style=" justify-content: center;margin-top:30px">
                                         <h5 style="color: var(--main-color)">{{ name }}</h5>
@@ -78,6 +78,7 @@ export default {
             email:'',
             name:'',
             image:'',
+            finish: false, 
 
             messages: 0,
 
@@ -110,7 +111,10 @@ export default {
             this.store_name = res.data.name_store
             // console.log(this.email)
 
-        });
+        })
+        .finally(() => {
+            this.finish = true
+        })
     },
     methods:{
         log_out(){

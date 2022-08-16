@@ -9,6 +9,7 @@
 <script>
 import NavBar from "@/components/Main/Navbar.vue";
 import SideBar from '@/components/Main/Sidebar.vue';
+import Pusher from 'pusher-js'
 export default {
     name: "App",
     data() {
@@ -18,19 +19,31 @@ export default {
     },
     components: {
         NavBar, SideBar
-        },
+    },
+
     mounted() {
-        let htmlElement = document.documentElement;
-        let CurrentTheme = localStorage.getItem("theme");
-        if (CurrentTheme === 'dark') {
-            htmlElement.setAttribute('theme', 'dark')
-            this.theme = 'dark'
-        } else {
-            htmlElement.setAttribute('theme', 'light');
-            this.theme = 'light'
-        }
-        this.$store.state.id_store = localStorage.getItem("id_store")
-        this.$store.state.id_manager = localStorage.getItem("id_manager")
+        
+
+        window.Echo.private("public-channel." + this.$store.state.id_person)
+        .listen(".NotificationEvent", (e) => {
+            console.log(e)
+        });
+
+
+
+
+                let htmlElement = document.documentElement
+                let CurrentTheme = localStorage.getItem("theme")
+                if (CurrentTheme === 'dark') {
+                    htmlElement.setAttribute('theme', 'dark')
+                    this.theme = 'dark'
+                } else {
+                    htmlElement.setAttribute('theme', 'light')
+                    this.theme = 'light'
+                }
+                this.$store.state.id_store = localStorage.getItem("id_store")
+                this.$store.state.id_manager = localStorage.getItem("id_manager")
+                this.$store.state.id_person = localStorage.getItem("id_person")
     },
 
 

@@ -16,12 +16,10 @@
         <div class="user">
             <div class="row">
                 <div class="user-img">
-                    <img :src="getImage()">
-                    <!-- <img :src="getImage(item)"> -->
+                    <img v-if="finish" :src="getImage()">
                 </div>
                 <div id="user-info" class="user-info">
                     <p class="logo_name">{{ store_name }}</p>
-                    <!-- <p class="user-email">{{ email }}</p> -->
                 </div>
             </div>
         </div>
@@ -229,6 +227,7 @@ export default {
             store_name:'',
             image:'',
             per:[],
+            finish:false,
         };
     },
     mounted() {
@@ -243,9 +242,10 @@ export default {
             this.store_name = res.data.name_store
             // console.log(this.image)
         }).finally(() => {
-            this.getImage()
+            this.finish = true
         })
         this.getPer()
+        
     },
     watch: {
         isOpened() {
@@ -267,7 +267,7 @@ export default {
             const len = localStorage.getItem("len")
             for (let i = 0; i < len; i++)
                 this.per[i] = localStorage.getItem("per: " + i)
-            console.log(this.per)
+            // console.log(this.per)
         },
     }
 };
