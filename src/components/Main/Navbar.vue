@@ -3,7 +3,6 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <div class="right row">
-                    
                     <div class="dropdown">
                         <font-awesome-icon icon="fas fa-user" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
@@ -44,15 +43,22 @@
                     <div class="dropdown">
                         <font-awesome-icon icon="fa fa-bell" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-                        <span class="badge" v-if="messages != 0">{{ messages }}</span>
+                        <span class="badge" v-if="messages != 0" >{{ messages }}</span>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <b-card-header>
                                 الاشعارات
                             </b-card-header>
-                            <div class="item" v-for="(item, index) in items" :key="index">
+                            <div class="item" style="background-color: var(--second-color);" v-for="(item, index) in notification_data" :key="index">
                                 <b-card-text>
                                     <h5>{{ item.title }}</h5>
-                                    {{ item.subtitle }}
+                                    <p style="margin-top: 13px;margin-bottom: -5px">{{ item.message }}</p>
+                                </b-card-text>
+                                <b-dd-divider></b-dd-divider>
+                            </div>
+                            <div class="item" v-for="(item, index) in notification" :key="index">
+                                <b-card-text>
+                                    <h5>{{ item.title }}</h5>
+                                    <p style="margin-top: 13px;margin-bottom: -5px">{{ item.message }}</p>
                                 </b-card-text>
                                 <b-dd-divider></b-dd-divider>
                             </div>
@@ -79,56 +85,69 @@ export default {
             name:'',
             image:'',
             finish: false, 
-
             messages: 0,
-
-            items: [
-                {
-                    title: 'طلب جديد',
-                    subtitle: `تم وصول طلب جديد من المستخدم تسنيم`,
-                },
-                {
-                    title: 'رسالة جديد',
-                    subtitle: `تم وصول رسالة جديدة من المستخدم تسنيم`,
-                },
-                {
-                    title: 'تقييم جديد',
-                    subtitle: 'لديك تقييم واحد جديد',
-                },
-
-            ],
+            notification: null,
+            notification_data: [],
         }
     },
     mounted() {
-        this.isOpened = this.isMenuOpen;
-        this.$store.state.id_manager = localStorage.getItem("id_manager")
-        this.axios.get("http://"+this.$store.state.ip+"api/settings/storeManager/my_Store_manager/"+ this.$store.state.id_manager)
-        .then(res => {
-            // console.log(res.data)
-            this.email = res.data.person.email
-            this.name = res.data.person.name
-            this.image = res.data.image
-            this.store_name = res.data.name_store
-            // console.log(this.email)
-
-        })
-        .finally(() => {
-            this.finish = true
-        })
+        this.getPusher()
+        this.getNotification()
+        this.getData()
     },
     methods:{
+        getPusher(){
+            // Pusher.logToConsole = true;
+            var id = localStorage.getItem("id_person")
+            var channel = this.$pusher.subscribe("public-channel." + id)
+            var that = this;
+            channel.bind('pusher:subscription_succeeded', function() {})
+            channel.bind('NotificationEvent', function(data) {
+                // console.log(data)
+                that.notification_data.push(data)
+                that.notification_data = that.notification_data.reverse()
+                console.log(that.notification_data)
+                that.increase_messsage()
+                console.log(that.messages)
+            });
+            // console.log(this.$pusher)
+        },
+        increase_messsage(){
+            this.messages = this.messages + 1
+            console.log(this.messages)
+        },
+        getNotification(){
+            var id = localStorage.getItem("id_person")
+            this.axios.get("http://"+this.$store.state.ip+"api/notification/getStore/"+ id)
+            .then(res => {
+                this.notification = res.data.data
+                this.notification = this.notification.reverse()
+            })
+        },
         log_out(){
             console.log("Log out")
             localStorage.setItem("id_store", '')
             localStorage.setItem("id_manager", '')
-            localStorage.setItem("id_persone", '')
+            localStorage.setItem("id_person", '')
+            localStorage.setItem("token", '')
             localStorage.setItem("auth", 'false')
             this.$router.replace({ name: 'login'})
         },
         getImage(){
-            return "http://"+this.$store.state.ip+"uploads/stores/"+this.image
+            return "http://"+this.$store.state.ip+"uploads/stores/" + this.image
         },
-
+        getData(){
+            this.$store.state.id_manager = localStorage.getItem("id_manager")
+            this.axios.get("http://"+this.$store.state.ip+"api/settings/storeManager/my_Store_manager/"+ this.$store.state.id_manager)
+            .then(res => {
+                this.email = res.data.person.email
+                this.name = res.data.person.name
+                this.image = res.data.image
+                this.store_name = res.data.name_store
+            }).finally(() => {
+                this.finish = true
+            });
+        },
     },
 };
 </script>

@@ -22,10 +22,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(fas, fa0, faCaretDown )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-// import sidebar
-// import VueSidebarMenuAkahon from "vue-sidebar-menu-akahon";
-// Vue.component('vue-sidebar-menu-akahon', VueSidebarMenuAkahon);
-
 //import axios
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -37,25 +33,24 @@ import vuetify from './plugins/vuetify'
 import '@babel/polyfill'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
-// import { mdiEmoticonExcitedOutline } from '@mdi/js';
 
 //import composition-api
 import VueCompositionAPI from '@vue/composition-api'
 Vue.use(VueCompositionAPI)
 
-//import pusher
-import Echo from 'laravel-echo'
-window.Pusher = require('pusher-js')
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: "1ecb9f6c6b79e2404d36",
-    cluster: "us2",
-    forceTLS: true,
-    // authEndpoint: `http://192.168.43.244:8000/broadcasting/auth`,
+//get token
+const token = localStorage.getItem("token")
+
+
+Pusher.logToConsole = true;
+Vue.use(require('vue-pusher'), {
+    api_key: '1ecb9f6c6b79e2404d36',
+    options: {
+        cluster: 'us2',
+        encrypted: true,
+        forceTLS: true,
+    }
 });
-
-
-// window.Echo.connector.pusher.config.httpPort = 8000
 
 Vue.config.productionTip = false
 

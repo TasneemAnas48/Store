@@ -61,6 +61,7 @@ export default new Vuex.Store({
         id_store:'',
         id_manager:'',
         id_person:'',
+        token:'',
     },
     getters: {},
     mutations: {},

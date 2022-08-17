@@ -1,7 +1,9 @@
 <template>
     <div id="app">
-        <nav-bar  v-if="!['create-store1', 'create-store2', 'create-store3', 'print-invoice', 'login', 'report-sales', 'report-order', 'report-rate-store', 'report-rate-product', 'confirm', 'forget-password', 'reset-password', 'create-helper'].includes($route.name)" />
-        <side-bar v-if="!['create-store1', 'create-store2', 'create-store3','print-invoice', 'login', 'report-sales', 'report-order', 'report-rate-store', 'report-rate-product', 'confirm', 'forget-password', 'reset-password', 'create-helper'].includes($route.name)" />
+        <nav-bar
+            v-if="!['create-store1', 'create-store2', 'create-store3', 'print-invoice', 'login', 'report-sales', 'report-order', 'report-rate-store', 'report-rate-product', 'confirm', 'forget-password', 'reset-password', 'create-helper'].includes($route.name)" />
+        <side-bar
+            v-if="!['create-store1', 'create-store2', 'create-store3', 'print-invoice', 'login', 'report-sales', 'report-order', 'report-rate-store', 'report-rate-product', 'confirm', 'forget-password', 'reset-password', 'create-helper'].includes($route.name)" />
         <router-view />
     </div>
 </template>
@@ -17,33 +19,24 @@ export default {
             theme: '',
         }
     },
+
     components: {
         NavBar, SideBar
     },
 
     mounted() {
-        
-
-        window.Echo.private("public-channel." + this.$store.state.id_person)
-        .listen(".NotificationEvent", (e) => {
-            console.log(e)
-        });
-
-
-
-
-                let htmlElement = document.documentElement
-                let CurrentTheme = localStorage.getItem("theme")
-                if (CurrentTheme === 'dark') {
-                    htmlElement.setAttribute('theme', 'dark')
-                    this.theme = 'dark'
-                } else {
-                    htmlElement.setAttribute('theme', 'light')
-                    this.theme = 'light'
-                }
-                this.$store.state.id_store = localStorage.getItem("id_store")
-                this.$store.state.id_manager = localStorage.getItem("id_manager")
-                this.$store.state.id_person = localStorage.getItem("id_person")
+        let htmlElement = document.documentElement
+        let CurrentTheme = localStorage.getItem("theme")
+        if (CurrentTheme === 'dark') {
+            htmlElement.setAttribute('theme', 'dark')
+            this.theme = 'dark'
+        } else {
+            htmlElement.setAttribute('theme', 'light')
+            this.theme = 'light'
+        }
+        this.$store.state.id_store = localStorage.getItem("id_store")
+        this.$store.state.id_manager = localStorage.getItem("id_manager")
+        this.$store.state.id_person = localStorage.getItem("id_person")
     },
 
 
@@ -54,23 +47,28 @@ export default {
 <style lang="scss">
 @import '@/assets/css/Main/App.css';
 
-*:focus, *:focus-visible { outline: none !important; }
+*:focus,
+*:focus-visible {
+    outline: none !important;
+}
 
 @font-face {
     font-family: "Almarai";
     src: local("Almarai"),
-    url(./fonts/Almarai-Regular.ttf) format("truetype");
+        url(./fonts/Almarai-Regular.ttf) format("truetype");
 }
 
-body{
+body {
     background: var(--second-color) !important;
     // height: auto;
     font-size: 15px;
 }
-.btn{
+
+.btn {
     color: white !important;
 }
-*{
+
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -84,5 +82,4 @@ body{
     text-align: center;
 
 }
-
 </style>

@@ -8,7 +8,7 @@
                     <div class="card mini-card">
                         <div class="card-body">
                             <div class="row row-header">
-                                <h3 class="color">{{order_recev_count}}</h3>
+                                <h3 class="color">{{ order_recev_count }}</h3>
                                 <img src="../assets/img/receive_order.png" style="max-width: 58%" />
                             </div>
                             <div class="row" style="justify-content: center">
@@ -21,7 +21,7 @@
                     <div class="card mini-card">
                         <div class="card-body">
                             <div class="row row-header">
-                                <h3 class="color">{{order_accept_count}}</h3>
+                                <h3 class="color">{{ order_accept_count }}</h3>
                                 <img src="../assets/img/accept_order.png" style="max-width: 70%; margin-right: 15px" />
                             </div>
                             <div class="row" style="justify-content: center">
@@ -34,7 +34,7 @@
                     <div class="card mini-card">
                         <div class="card-body">
                             <div class="row row-header">
-                                <h3 class="color">{{rate_count}}</h3>
+                                <h3 class="color">{{ rate_count }}</h3>
                                 <img src="../assets/img/rate.png" style="
                                         margin-bottom: 0px;
                                         margin-right: 23px;
@@ -52,7 +52,7 @@
                     <div class="card mini-card">
                         <div class="card-body">
                             <div class="row row-header">
-                                <h3 class="color">{{product_count}}</h3>
+                                <h3 class="color">{{ product_count }}</h3>
                                 <img src="../assets/img/product.png" style="margin-right: 37px; max-width: 52%" />
                             </div>
                             <div class="row" style="justify-content: center">
@@ -74,7 +74,8 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <apexchart ref="chart_sales" type="area" height="350" :options="chartOptions" :series="series"></apexchart>
+                        <apexchart ref="chart_sales" type="area" height="350" :options="chartOptions" :series="series">
+                        </apexchart>
                         <div class="card-footer">
                             مخطط البيع السنوي لسنة 2021
                         </div>
@@ -119,7 +120,8 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <apexchart ref="chart_visit" type="line" height="350" :options="chartOptions2" :series="series2"></apexchart>
+                        <apexchart ref="chart_visit" type="line" height="350" :options="chartOptions2"
+                            :series="series2"></apexchart>
                         <div class="card-footer">
                             مخطط الزيارات الاسبوعي
                         </div>
@@ -128,7 +130,7 @@
             </div>
         </div>
 
-        
+
         <!-- customer table -->
         <div class="container">
             <div class="body row">
@@ -150,7 +152,7 @@
                                         <td>{{ props.item.email }}</td>
                                     </template>
                                     <template v-slot:[`item.index`]="{ item }">
-                                        {{ rowsCustomer.indexOf(item)+1 }}
+                                        {{ rowsCustomer.indexOf(item) + 1 }}
                                     </template>
                                 </v-data-table>
                                 <div class="text-center">
@@ -173,12 +175,21 @@
                         المنتجات الاعلى تقييما
                     </div>
                 </div>
-                <div class="card-body row " >
+                <div class="card-body row ">
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12" v-for="(pro, i) in rating_product" :key="i">
-                        <b-card :title="pro.name" :img-src="getImage(pro)" img-alt="Image"
-                            img-top tag="article" style="max-width: 15rem; border-radius: 30px;" class="mb-2">
+                        <b-card :title="pro.name" :img-src="getImage(pro)" img-alt="Image" img-top tag="article"
+                            style="max-width: 15rem; border-radius: 30px;" class="mb-2">
                             <b-card-text>
-                                {{pro.count}} تقييما
+                                <p v-if="pro.count == 0">
+                                    <v-icon style="color: red">mdi-emoticon-sad-outline</v-icon>
+                                </p>
+                                <p v-else-if="pro.count == 1">
+                                    <v-icon style="color: yellow">mdi-emoticon-neutral-outline</v-icon>
+                                </p>
+                                <p v-else-if="pro.count == 2">
+                                    <v-icon style="color: green">mdi-emoticon-excited-outline</v-icon>
+                                </p>
+                                <p v-else-if="pro.count == 3">لايوجد</p>
                             </b-card-text>
                         </b-card>
                     </div>
@@ -270,29 +281,29 @@ export default {
 
             //order-table
             headers: [
-                { text: 'رقم الطلب', value: 'id', align: 'center',},
+                { text: 'رقم الطلب', value: 'id', align: 'center', },
                 { text: 'اسم الزبون', value: 'customer_name', align: 'center' },
                 { text: 'تاريخ الطلب', value: 'created_at', align: 'center' },
                 { text: 'تاريخ الحد الاقصى للتسليم', value: 'delivery_time', align: 'center' },
-                { text: 'قيمة الطلب', value: 'delivery_price' , align: 'center' },
+                { text: 'قيمة الطلب', value: 'delivery_price', align: 'center' },
             ],
             rowsOrder: [],
-            
+
             //customer-table
             headersCustomer: [
-                {text: '#',  value: 'index', align: 'center'},
+                { text: '#', value: 'index', align: 'center' },
                 { text: 'الاسم', value: 'name', align: 'center' },
                 { text: 'الايميل', value: 'email', align: 'center' },
                 { text: 'المبلغ', value: 'total', align: 'center' },
-                { text: 'عدد الطلبات', value: 'orders' , align: 'center' },
+                { text: 'عدد الطلبات', value: 'orders', align: 'center' },
             ],
             rowsCustomer: [],
 
-            order_accept_count:'',
-            order_recev_count:'',
-            product_count:'',
-            rate_count:'',
-            rating_product:'',
+            order_accept_count: '',
+            order_recev_count: '',
+            product_count: '',
+            rate_count: '',
+            rating_product: '',
 
             page: 1,
             pageCount: 0,
@@ -303,42 +314,42 @@ export default {
         apexchart: VueApexCharts,
     },
     methods: {
-        getImage(item){
-            return "http://"+this.$store.state.ip+"uploads/product/"+item.image
+        getImage(item) {
+            return "http://" + this.$store.state.ip + "uploads/product/" + item.image
         },
-        getData(){
+        getData() {
             this.$store.state.id_store = localStorage.getItem("id_store")
-            this.axios.get("http://"+this.$store.state.ip+"api/dashbord/"+ this.$store.state.id_store)
-            .then(res => {
+            this.axios.get("http://" + this.$store.state.ip + "api/dashbord/" + this.$store.state.id_store)
+                .then(res => {
 
-                // console.log(res.data.data);
-                this.order_accept_count = res.data.data.order_accept_count
-                this.order_recev_count = res.data.data.order_recev_count
-                this.product_count = res.data.data.product_count
-                this.rate_count = res.data.data.rate_count
+                    console.log(res.data.data);
+                    this.order_accept_count = res.data.data.order_accept_count
+                    this.order_recev_count = res.data.data.order_recev_count
+                    this.product_count = res.data.data.product_count
+                    this.rate_count = res.data.data.rate_count
 
-                this.rowsCustomer = res.data.data.customer
-                this.rating_product = res.data.data.rating_product
-                this.rowsOrder = res.data.data.order_accept
+                    this.rowsCustomer = res.data.data.customer
+                    this.rating_product = res.data.data.rating_product
+                    this.rowsOrder = res.data.data.order_accept
 
-                this.$refs.chart_sales.updateSeries([{
-                    name: 'Sales',
-                    data: res.data.data.salls
-                }])
+                    this.$refs.chart_sales.updateSeries([{
+                        name: 'Sales',
+                        data: res.data.data.salls
+                    }])
 
-                const visit_arr = []
-                // for (let i = 0; i < 7; i++)
-                    // visit_arr[i] = res.data.data.visit[i].count
+                    const visit_arr = []
+                    for (let i = 0; i < res.data.data.visit.length; i++)
+                        visit_arr[i] = res.data.data.visit[i].count
 
-                // console.log(visit_arr)
+                    console.log(visit_arr)
 
-                // this.$refs.chart_visit.updateSeries([{
-                //     name: 'Visit',
-                //     data: visit_arr
-                // }])
-                
+                    this.$refs.chart_visit.updateSeries([{
+                        name: 'Visit',
+                        data: visit_arr
+                    }])
 
-            });
+
+                });
         }
     },
     mounted() {

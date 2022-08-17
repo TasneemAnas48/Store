@@ -185,7 +185,7 @@ export default {
                     else 
                         {
                             this.validate_ = true
-                            this.addlocalStorage(res.data.store_id, res.data.manager_id, res.data.person_id)
+                            this.addlocalStorage(res.data.store_id, res.data.manager_id, res.data.person_id, res.data.token)
                             this.submitForm()
                         }
                     this.storePer(res)
@@ -201,14 +201,16 @@ export default {
             for (let i = 0; i < res.data.privilladge.length; i++)
                 localStorage.setItem("per: "+i, res.data.privilladge[i])
         },
-        addlocalStorage(store, manager, person){
+        addlocalStorage(store, manager, person, token){
             localStorage.setItem("id_store", store);
             localStorage.setItem("id_manager", manager);
             localStorage.setItem("id_person", person);
             localStorage.setItem("auth", 'true');
+            localStorage.setItem("token", token);
             this.$store.state.id_store = store
             this.$store.state.id_manager = manager
             this.$store.state.id_person = person
+            this.$store.state.token = token
         }
     },
 };
