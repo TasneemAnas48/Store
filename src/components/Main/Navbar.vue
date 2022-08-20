@@ -48,6 +48,12 @@
                             <b-card-header>
                                 الاشعارات
                             </b-card-header>
+                            <div  v-if="empty1 == true && empty2 == true">
+                                <b-card-text>
+                                    <p style="margin-top: 13px;margin-bottom: -5px; margin-right: 50px;">لايوجد اشعارات لعرضها</p>
+                                </b-card-text>
+                                <b-dd-divider></b-dd-divider>
+                            </div>
                             <div class="item" style="background-color: var(--second-color);" v-for="(item, index) in notification_data" :key="index">
                                 <b-card-text>
                                     <h5>{{ item.title }}</h5>
@@ -88,6 +94,8 @@ export default {
             messages: 0,
             notification: null,
             notification_data: [],
+            empty1: true, 
+            empty2: true,
         }
     },
     mounted() {
@@ -109,8 +117,10 @@ export default {
                 console.log(that.notification_data)
                 that.increase_messsage()
                 console.log(that.messages)
+                if (that.notification_data.length != 0)
+                    that.empty2 = false
             });
-            // console.log(this.$pusher)
+            
         },
         increase_messsage(){
             this.messages = this.messages + 1
@@ -122,6 +132,8 @@ export default {
             .then(res => {
                 this.notification = res.data.data
                 this.notification = this.notification.reverse()
+                if (this.notification.length != 0)
+                    this.empty1 = false
             })
         },
         log_out(){

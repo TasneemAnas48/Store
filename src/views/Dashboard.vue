@@ -180,16 +180,9 @@
                         <b-card :title="pro.name" :img-src="getImage(pro)" img-alt="Image" img-top tag="article"
                             style="max-width: 15rem; border-radius: 30px;" class="mb-2">
                             <b-card-text>
-                                <p v-if="pro.count == 0">
-                                    <v-icon style="color: red">mdi-emoticon-sad-outline</v-icon>
-                                </p>
-                                <p v-else-if="pro.count == 1">
-                                    <v-icon style="color: yellow">mdi-emoticon-neutral-outline</v-icon>
-                                </p>
-                                <p v-else-if="pro.count == 2">
+                                <p>
                                     <v-icon style="color: green">mdi-emoticon-excited-outline</v-icon>
                                 </p>
-                                <p v-else-if="pro.count == 3">لايوجد</p>
                             </b-card-text>
                         </b-card>
                     </div>
@@ -334,7 +327,7 @@ export default {
 
                     this.$refs.chart_sales.updateSeries([{
                         name: 'Sales',
-                        data: res.data.data.salls
+                        data: [2,5,14,11, 23,13,5,9,13, 7,40,4]
                     }])
 
                     const visit_arr = []
