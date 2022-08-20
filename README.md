@@ -1,5 +1,11 @@
 # business-project2
 
+## Demo Video
+```
+https://drive.google.com/file/d/1U-yQoaOmiAGZAqbWfSjdqXhE4bK1pF0J/view?usp=sharing
+```
+
+
 ## Project setup
 ```
 npm install
@@ -10,20 +16,6 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
