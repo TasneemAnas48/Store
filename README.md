@@ -3,6 +3,7 @@
 ## Demo Video
 ```
 https://drive.google.com/file/d/1U-yQoaOmiAGZAqbWfSjdqXhE4bK1pF0J/view?usp=sharing
+
 ```
 
 
@@ -10,8 +11,6 @@ https://drive.google.com/file/d/1U-yQoaOmiAGZAqbWfSjdqXhE4bK1pF0J/view?usp=shari
 ```
 npm install
 ```
-
-### Compiles and hot-reloads for development
 
 ### Compiles and hot-reloads for development
 ```
