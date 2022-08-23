@@ -1,9 +1,7 @@
 # business-project2
 
-## Demo Video
-```
-https://drive.google.com/file/d/1U-yQoaOmiAGZAqbWfSjdqXhE4bK1pF0J/view?usp=sharing
-```
+### Demo 
+Show [Demo Video](https://drive.google.com/file/d/1Pmzg4QriM8Qi4yncPq2RIL7XcWY4JHE2/view?usp=sharing)
 
 
 ## Project setup
@@ -15,7 +13,6 @@ npm install
 ```
 npm run serve
 ```
-
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
