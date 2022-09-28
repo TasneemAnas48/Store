@@ -1,4 +1,4 @@
-# business-project2
+# Store Dashboard
 
 ### Demo 
 Show [Demo Video](https://drive.google.com/file/d/1U-yQoaOmiAGZAqbWfSjdqXhE4bK1pF0J/view?usp=sharing)
